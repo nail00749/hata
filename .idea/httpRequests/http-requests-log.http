@@ -1,0 +1,164 @@
+GET http://localhost:3000
+Accept: application/json
+
+<> 2022-09-21T214221.200.txt
+
+###
+
+GET http://localhost:3000
+Accept: application/json
+
+<> 2022-09-21T213132.401.json
+
+###
+
+GET http://localhost:3000
+Accept: application/json
+
+<> 2022-09-21T213129.401.json
+
+###
+
+GET http://localhost:3000
+Accept: application/json
+
+<> 2022-09-21T212727.401.json
+
+###
+
+GET http://localhost:3000
+Accept: application/json
+
+<> 2022-09-21T212725.401.json
+
+###
+
+GET http://localhost:3000
+Accept: application/json
+
+<> 2022-09-21T212701.401.json
+
+###
+
+GET http://localhost:3000
+Accept: application/json
+
+<> 2022-09-21T212654.401.json
+
+###
+
+GET http://localhost:3000/api
+Accept: application/json
+
+<> 2022-09-21T212638.404.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "kolya1@ya.ru",
+  "password": "password"
+}
+
+<> 2022-09-19T163948.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "kolya1@ya.ru",
+  "password": "password"
+}
+
+<> 2022-09-19T163930.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "kolya1@ya.ru",
+  "password": "password"
+}
+
+<> 2022-09-19T163654.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "kolya1@ya.ru",
+  "password": "password"
+}
+
+<> 2022-09-19T163551.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "kolya1@ya.ru",
+  "password": "password"
+}
+
+<> 2022-09-19T163527.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "kolya1",
+  "password": "password"
+}
+
+<> 2022-09-19T163513.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "kolya1",
+  "password": "password"
+}
+
+<> 2022-09-19T163337.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "kolya1",
+  "password": "password"
+}
+
+<> 2022-09-19T163332.500.json
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "kolya1",
+  "password": "password"
+}
+
+<> 2022-09-19T163317.500.json
+
+###
+
