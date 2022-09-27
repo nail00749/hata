@@ -1,7 +1,14 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, UpdateDateColumn, VersionColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity, OneToMany,
+  UpdateDateColumn,
+  VersionColumn,
+} from 'typeorm';
 import { BaseEntity } from '../../baseEntity/base.entity';
 import { Exclude } from 'class-transformer';
-import { TokenEntity } from '../../tokens/entity/token.entity';
+import { ApartmentEntity } from '../../apartment/entities/apartment.entity';
+
 
 @Entity()
 export class UserEntity extends BaseEntity {
@@ -20,9 +27,11 @@ export class UserEntity extends BaseEntity {
   @Column({name: 'last_name', nullable: true})
   lastName: string
 
-  @OneToOne(() => TokenEntity)
-  @JoinColumn()
-  tokenEntity: TokenEntity
+  @OneToMany(() => ApartmentEntity, apartment => apartment.owner)
+  apartments: ApartmentEntity[]
+
+  @Column({name: 'refresh_tokens', type: 'simple-array', default: []})
+  refreshTokens: string[]
 
   @CreateDateColumn({name: 'created_at'})
   createdAt: Date

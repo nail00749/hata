@@ -5,6 +5,7 @@ import { UserEntity } from '../users/entity/users.entity';
 import { JwtService } from '@nestjs/jwt';
 import { UserAuthDto } from '../users/dto/userAuthDto';
 import { UserModel } from '../users/user.model';
+import { TokenEntity } from '../tokens/entity/token.entity';
 
 @Injectable()
 export class AuthService {
@@ -35,21 +36,67 @@ export class AuthService {
   }
 
   async login(userDto: UserAuthDto) {
-    const user = await this.validateUser(userDto.email, userDto.password);
+    const user = await this.validateUser(userDto.email, userDto.password) as UserEntity;
     if (!user) {
-      throw new HttpException('Пользователь не найден', HttpStatus.FORBIDDEN);
+      throw new HttpException('Error email or password', HttpStatus.FORBIDDEN);
     }
 
-    const token = this.generateToken(user as UserEntity);
-    return token;
+    const tokens = this.generateToken(user as UserEntity);
+    user.refreshTokens.push(tokens.refresh_token);
+    await this.usersService.saveUser(user);
+    return tokens;
   }
 
   generateToken(user: UserEntity) {
     const payload = { email: user.email, sub: user.id };
     return {
-      access_token: this.jwtService.sign(payload),
-      refresh_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(payload, {
+        secret: process.env.JWT_SECRET,
+      }),
+      refresh_token: this.jwtService.sign(payload, {
+        secret: process.env.JWT_REFRESH_SECRET,
+        expiresIn: '30d',
+      }),
     };
+  }
+
+  async refreshToken(refreshToken: string) {
+    if (!refreshToken) {
+      throw new HttpException('Error refresh token', HttpStatus.FORBIDDEN);
+    }
+
+    const userData = await this.jwtService.verifyAsync(refreshToken, {
+      secret: process.env.JWT_REFRESH_SECRET,
+    });
+    if (!userData) {
+      throw new HttpException('Error refresh token', HttpStatus.NOT_FOUND);
+    }
+
+    const user = await this.usersService.findByEmail(userData.email);
+    if (!user) {
+      throw new HttpException('Error refresh token', HttpStatus.NOT_FOUND);
+    }
+
+    const tokens = this.generateToken(user);
+    const indexToken = user.refreshTokens.findIndex(t => t === refreshToken);
+    if (indexToken === -1) {
+      throw  new HttpException('Error refresh token', HttpStatus.NOT_FOUND);
+    }
+    user.refreshTokens[indexToken] = tokens.refresh_token;
+    await this.usersService.saveUser(user);
+    return tokens;
+  }
+
+  async logout(refreshToken: string) {
+    if (!refreshToken) {
+      throw new HttpException('not found token', HttpStatus.NOT_FOUND);
+    }
+
+    const userData = await this.jwtService.verifyAsync(refreshToken, {
+      secret: process.env.JWT_REFRESH_SECRET,
+    });
+
+    return this.usersService.removeToken(userData.sub, refreshToken);
   }
 
 

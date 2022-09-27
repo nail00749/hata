@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { UserAuthDto } from '../users/dto/userAuthDto';
 import { AuthService } from './auth.service';
-import { FastifyReply } from 'fastify';
+import { FastifyReply, FastifyRequest } from 'fastify';
 import { UsersService } from '../users/users.service';
 import { Public } from '../decotarors/public.decorator';
 
@@ -19,21 +19,19 @@ export class AuthController {
   @Public()
   @Post('login')
   async login(@Body() userDto: UserAuthDto, @Res() response: FastifyReply) {
-    const tokens = this.authService.login(userDto);
-    //todo set cookie
-    response.setCookie('refreshToken', '', {
+    const tokens = await this.authService.login(userDto);
+    /*response.setCookie('refreshToken', tokens.refresh_token, {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       httpOnly: true,
     });
-
-    return tokens;
+    response.serialize(tokens);*/
+    response.send(tokens);
   }
 
   @Public()
   @Get('refresh')
-  async refresh(@Res() response: FastifyReply) {
-    //todo set cookie
-    await this.usersService.refreshToken(response.cookies['refreshToken']);
+  async refresh(@Req() request: FastifyRequest, @Res() response: FastifyReply) {
+    await this.authService.refreshToken(request.cookies['refreshToken']);
     response.setCookie('refreshToken', '', {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       httpOnly: true,
@@ -43,8 +41,7 @@ export class AuthController {
   @Public()
   @Post('logout')
   async logout(@Res() response: FastifyReply) {
-    await this.usersService.logout('', response.cookies['refreshToken']);
-
+    await this.authService.logout(response.cookies['refreshToken']);
     response.clearCookie('refreshToken');
     return response.status(200);
   }

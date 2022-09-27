@@ -8,7 +8,8 @@ async function bootstrap() {
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET,
   })
-  await app.listen(3000);
+  app.enableCors()
+  await app.listen(5000);
 }
 
 bootstrap();

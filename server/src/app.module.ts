@@ -11,6 +11,8 @@ import { TokensModule } from './tokens/tokens.module';
 import { TokenEntity } from './tokens/entity/token.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { ApartmentModule } from './apartment/apartment.module';
+import { ApartmentEntity } from './apartment/entities/apartment.entity';
 
 @Module({
   imports: [
@@ -25,20 +27,22 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
       synchronize: true,
       logging: ['error'],
       autoLoadEntities: true,
-      entities: [UserEntity, TokenEntity]
+      entities: [UserEntity, TokenEntity, ApartmentEntity],
     }),
     UsersModule,
     AuthModule,
     RolesModule,
-    TokensModule
+    TokensModule,
+    ApartmentModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard
-    }
+      useClass: JwtAuthGuard,
+    },
   ],
 })
-export class AppModule {}
+export class AppModule {
+}

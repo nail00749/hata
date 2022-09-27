@@ -1,14 +1,16 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entity/users.entity';
 import { Repository } from 'typeorm';
 import { UserModel } from './user.model';
 import { hash } from '../helpers/hashing';
 import { UserAuthDto } from './dto/userAuthDto';
+import { TokenEntity } from '../tokens/entity/token.entity';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
+              @InjectRepository(TokenEntity) private tokenRepository: Repository<TokenEntity>
   ) {
   }
 
@@ -30,23 +32,14 @@ export class UsersService {
     return new UserModel(user);
   }
 
-  async logout(userId: string, refreshToken: string) {
+  async removeToken(userId: string, refreshToken: string) {
     const user = await this.userRepository.findOne({ where: { id: userId } });
-    user.tokenEntity.refreshTokens = user.tokenEntity.refreshTokens.filter(token => token !== refreshToken);
+    user.refreshTokens = user.refreshTokens.filter(token => token !== refreshToken);
     await this.userRepository.save(user);
+    return HttpStatus.OK
   }
 
-  async refreshToken(refreshToken: string) {
-      //validate refresh token
-      const isValidToken = false
-      const tokenFromDB = 'token'
-
-      if(!isValidToken || !tokenFromDB) {
-        throw new UnauthorizedException()
-      }
-
-
-
+  saveUser(user: UserEntity){
+    return this.userRepository.save(user)
   }
-
 }
