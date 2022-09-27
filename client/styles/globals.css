@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
@@ -21,6 +25,21 @@ a {
   }
   body {
     color: white;
-    background: black;
+    background: #171616;
+    height: 100%;
+    margin: 0;
+    /*background-repeat: no-repeat;
+    background-attachment: fixed;*/
+    /*background-image: linear-gradient(to right bottom, #574feb, #515ff0, #4e6df3, #4f7af5, #5486f6, #6e92f7, #849ff7, #98acf8, #b8bff9, #d3d3fb, #eae9fd, #ffffff);*/
   }
+}
+
+#__next {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  display: flex;
 }
