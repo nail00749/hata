@@ -13,7 +13,7 @@ export const Input: FC<InputProps> = ({ value, placeholder, ...inputProps }) => 
     <label
       className = 'relative m-3 drop-shadow-xl'
     >
-      <div
+      <span
         className = {`
         ${isCenterLabel ? 'text-[10px]' : 'text-[xs]'} 
         mb-1 
@@ -22,17 +22,30 @@ export const Input: FC<InputProps> = ({ value, placeholder, ...inputProps }) => 
         left-2.5
         z-10
         transition-all
-        text-white 
+        text-black 
         `}
         style = {{
           fontSize: isCenterLabel ? 10 : undefined,
         }}
       >
         {placeholder}
-      </div>
+      </span>
       <input
         value = {value}
-        className = {`rounded-md p-2.5 pl-4 placeholder:text-stone-500 hover:scale-105 focus:scale-110 text-white`}
+        className = {`
+        rounded-md 
+        p-2.5 
+        pl-4 
+        placeholder:text-black 
+        text-black 
+        border-solid 
+        border-2 
+        border-sky-500 
+        hover:scale-105 
+        focus:scale-110  
+        focus:border-sky-500
+        focus:outline-none
+        `}
         //placeholder = {placeholder}
         onFocus = {() => setFocus(true)}
         onBlur = {() => setFocus(false)}
