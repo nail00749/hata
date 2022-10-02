@@ -13,7 +13,6 @@ interface ToggleButtonGroupProps {
 export const ToggleButtonGroup: FC<ToggleButtonGroupProps> = ({ children, value, onClick, orientation = 'horizontal'  }) => {
   return (
     <div>
-      тип жилья
       <div
         className={`flex ${orientation === 'veritical' ? 'flex-col' : ''}`}
       >

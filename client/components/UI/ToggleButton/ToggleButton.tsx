@@ -31,7 +31,6 @@ export const ToggleButton: FC<ToggleButtonProps> = ({
         border-solid border-2 border-sky-500
         ${orientation === 'horizontal' ? 'first:border-l-2 last:border-l-0 border-l-0 border-r-1' : 'first:border-b-0 last:border-b-2 border-t-1 border-b-0'}
         ${orientation === 'horizontal' ? 'first:rounded-l-xl last:rounded-r-xl' : 'first:rounded-t-xl last:rounded-b-xl'}
-        
         ${active ? 'bg-sky-200' : ''}
       `}
       {...otherProps}
