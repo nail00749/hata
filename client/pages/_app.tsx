@@ -6,6 +6,7 @@ import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import store from '../store';
+import 'leaflet/dist/leaflet.css';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -25,9 +26,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           ComponentPreviews = {ComponentPreviews}
           useInitialHook = {useInitial}
         >
-
           <Component {...pageProps} />
-
         </DevSupport>)}
     </Provider>);
 }

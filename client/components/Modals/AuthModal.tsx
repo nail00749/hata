@@ -1,18 +1,22 @@
 import { Modal } from './Modal';
 import { FC } from 'react';
-import { IModal } from './IModal';
 import { Button } from '../UI/Button';
 import { LoginForm } from '../Forms/LoginForm';
 import { RegisterForm } from '../Forms/RegisterForm';
 import { useToggle } from '../../hooks/useToggle';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { hideModal } from '../../store/slices/AuthSlice';
 
-export const AuthModal: FC<IModal> = ({ open, handlerVisible }) => {
+export const AuthModal: FC = () => {
+  const { openModal } = useAppSelector(state => state.authSlice);
   const [isLogin, changeToggle] = useToggle(true);
+  const dispatch = useAppDispatch()
+  const handlerVisible = () => dispatch(hideModal())
 
   return (
     <Modal
       title = {isLogin ? 'Войти' : 'Зарегистрироваться'}
-      open = {open}
+      open = {openModal}
       handlerVisible = {handlerVisible}
     >
       {

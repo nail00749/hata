@@ -1,19 +1,24 @@
 import Link from 'next/link';
 import { navigationLinks } from '../../routing/routing';
 import { AuthModal } from '../Modals/AuthModal';
-import { AuthMenu } from '../Account/AuthMenu';
-import React, { useState } from 'react';
+import { ProfileMenu } from '../Account/ProfileMenu';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../../hooks/redux';
+import { initState } from '../../store/slices/AuthSlice';
 
 export const Navigation = () => {
-  const [open, setOpen] = useState(false);
-  const handlerOpen = () => setOpen(prev => !prev);
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(initState())
+  }, []);
+
 
   return (
     <header
       className = 'h-20'
     >
       <nav
-        className = 'flex justify-between items-center p-3 shadow-lg rounded-b-md bg-neutral-800'
+        className = 'flex justify-between items-center p-3 shadow-lg rounded-b-md '
       >
         <ul
           className = 'flex '
@@ -31,16 +36,9 @@ export const Navigation = () => {
             )
           }
         </ul>
-        {
-          <AuthMenu
-            openModal = {() => setOpen(true)}
-          />
-        }
+        <ProfileMenu />
       </nav>
-      <AuthModal
-        open = {open}
-        handlerVisible = {handlerOpen}
-      />
+      <AuthModal />
 
     </header>
   );
