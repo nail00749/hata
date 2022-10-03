@@ -3,15 +3,13 @@ import { Input } from '../UI/Input';
 import { Button } from '../UI/Button';
 import { useLoginMutation } from '../../services/authAPI';
 import { IPayloadAuth } from '../../models/IPayloadAuth';
-import { useRouter } from 'next/router';
 
 interface LoginFormProps {
   closeModal: () => void;
 }
 
 export const LoginForm: FC<LoginFormProps> = ({ closeModal }) => {
-  const router = useRouter();
-  const [login, { isLoading, isSuccess, error, isError }] = useLoginMutation();
+  const [login, { isLoading, isSuccess }] = useLoginMutation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -41,6 +39,7 @@ export const LoginForm: FC<LoginFormProps> = ({ closeModal }) => {
           value = {email}
           onChange = {(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
           placeholder = 'email'
+          type='email'
         />
         <Input
           value = {password}
@@ -49,7 +48,7 @@ export const LoginForm: FC<LoginFormProps> = ({ closeModal }) => {
           type = 'password'
         />
         <Button
-          //isLoading = {isLoading}
+          isLoading = {isLoading}
           type = {'submit'}
         >
           Войти

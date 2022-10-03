@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef } from 'react';
+import React, { ReactNode, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { HeaderModal } from './HeaderModal';
 
@@ -14,7 +14,7 @@ export const Modal: React.FC<ModalProps> = ({ children, title, open, handlerVisi
 
   return open ? createPortal(
     <div
-      className = 'fixed z-10 inset-0 flex justify-center items-center  bg-translucentBlack'
+      className = 'fixed z-40 inset-0 flex justify-center items-center  bg-translucentBlack'
       ref = {containerRef}
       //onClick = {handlerVisible}
     >

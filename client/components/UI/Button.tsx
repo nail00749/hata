@@ -25,7 +25,7 @@ export const Button: FC<ButtonProps> = ({
 
   return (
     <button
-      className = {`flex justify-center items-center px-3 py-2 drop-shadow-xl rounded-xl text-indigo-50 hover:scale-105 ${color} disabled:bg-neutral-700`}
+      className = {`max-w-max flex justify-center items-center px-3 py-2 drop-shadow-xl rounded-xl text-indigo-50 hover:scale-105 ${color} disabled:bg-neutral-700`}
       disabled = {isLoading}
       {...otherProps}
     >

@@ -50,10 +50,6 @@ a {
   flex-direction: column;
 }
 
-main {
-  display: flex;
-}
-
 .leaflet-control-geosearch .results > * {
   color: black;
 }
