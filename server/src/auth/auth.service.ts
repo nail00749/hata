@@ -42,8 +42,8 @@ export class AuthService {
     }
 
     const tokens = this.generateToken(user as UserEntity);
-    user.refreshTokens.push(tokens.refresh_token);
-    await this.usersService.saveUser(user);
+    //user.refreshTokens.push(tokens.refresh_token);
+    //await this.usersService.saveUser(user);
     return tokens;
   }
 
@@ -53,14 +53,14 @@ export class AuthService {
       access_token: this.jwtService.sign(payload, {
         secret: process.env.JWT_SECRET,
       }),
-      refresh_token: this.jwtService.sign(payload, {
+      /*refresh_token: this.jwtService.sign(payload, {
         secret: process.env.JWT_REFRESH_SECRET,
         expiresIn: '30d',
-      }),
+      }),*/
     };
   }
 
-  async refreshToken(refreshToken: string) {
+  /*async refreshToken(refreshToken: string) {
     if (!refreshToken) {
       throw new HttpException('Error refresh token', HttpStatus.FORBIDDEN);
     }
@@ -85,7 +85,7 @@ export class AuthService {
     user.refreshTokens[indexToken] = tokens.refresh_token;
     await this.usersService.saveUser(user);
     return tokens;
-  }
+  }*/
 
   async logout(refreshToken: string) {
     if (!refreshToken) {

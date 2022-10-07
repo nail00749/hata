@@ -31,18 +31,18 @@ export class AuthController {
   @Public()
   @Get('refresh')
   async refresh(@Req() request: FastifyRequest, @Res() response: FastifyReply) {
-    await this.authService.refreshToken(request.cookies['refreshToken']);
+    /*await this.authService.refreshToken(request.cookies['refreshToken']);
     response.setCookie('refreshToken', '', {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       httpOnly: true,
-    });
+    });*/
   }
 
   @Public()
   @Post('logout')
   async logout(@Res() response: FastifyReply) {
-    await this.authService.logout(response.cookies['refreshToken']);
-    response.clearCookie('refreshToken');
+    /*await this.authService.logout(response.cookies['refreshToken']);
+    response.clearCookie('refreshToken');*/
     return response.status(200);
   }
 
