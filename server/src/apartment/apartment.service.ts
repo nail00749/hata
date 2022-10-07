@@ -10,8 +10,17 @@ export class ApartmentService {
   constructor(@InjectRepository(ApartmentEntity) private readonly apartmentRepository: Repository<ApartmentEntity>) {
   }
 
-  create(createApartmentDto: CreateApartmentDto) {
-    return 'This action adds a new apartment';
+  create(createApartmentDto: CreateApartmentDto, user: any) {
+    const apartment = new ApartmentEntity()
+    apartment.coordinates = createApartmentDto.coordinates
+    apartment.countRooms = createApartmentDto.countRooms
+    apartment.rentType = createApartmentDto.rentType
+    apartment.price = createApartmentDto.price
+    apartment.address = createApartmentDto.address
+    apartment.description = createApartmentDto.description
+    apartment.houseArea = createApartmentDto.houseArea
+    apartment.comforts = createApartmentDto.comforts
+    apartment.owner = user
   }
 
   findAll() {

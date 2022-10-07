@@ -10,6 +10,9 @@ export enum Currency {
 
 @Entity()
 export class ApartmentEntity extends BaseEntity {
+  @Column()
+  rentType: string;
+
   @Column({ name: 'count_rooms', default: 1 })
   countRooms: number;
 
@@ -23,13 +26,19 @@ export class ApartmentEntity extends BaseEntity {
   address: string;
 
   @Column({ type: 'simple-json' })
-  coords: { lat: string, lng: string };
+  coordinates: { lat: number, lng: number };
 
   @Column({ nullable: true })
   description: string;
 
   @Column({ type: 'simple-array', default: [] })
   images: string[];
+
+  @Column({ name: 'house_area', nullable: true })
+  houseArea: number;
+
+  @Column({ type: 'simple-array', nullable: true })
+  comforts: string[];
 
   @ManyToOne(() => UserEntity, user => user.apartments)
   owner: UserEntity;
