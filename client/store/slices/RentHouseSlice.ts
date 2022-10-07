@@ -1,0 +1,53 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { LatLng } from 'leaflet';
+
+
+interface rentHouseState {
+  rentType: string;
+  coordinates: {
+    lat: number
+    lng: number
+  };
+  address: string;
+  price: number;
+  currency: string;
+  description: string;
+  images?: FileList
+  houseArea: number,
+  countRooms: number,
+}
+
+const initialState: rentHouseState = {
+  rentType: '',
+  coordinates: {
+    lat: 0,
+    lng: 0,
+  },
+  address: '',
+  price: 0,
+  currency: '',
+  description: '',
+  images: undefined,
+  houseArea: 0,
+  countRooms: 0,
+};
+
+const rentHouseSlice = createSlice({
+  name: 'rentHouseSlice',
+  initialState,
+  reducers: {
+    setCoords: (state, action: PayloadAction<LatLng>) => {
+      state.coordinates = action.payload;
+    },
+    setTypeRent: (state, action: PayloadAction<string>) => {
+      state.rentType = action.payload;
+    },
+    setFiles: (state, action: PayloadAction<FileList>) => {
+      state.images = action.payload;
+    }
+  },
+});
+
+export const { setCoords, setTypeRent, setFiles } = rentHouseSlice.actions;
+
+export default rentHouseSlice.reducer;

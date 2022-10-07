@@ -3,6 +3,7 @@ import { ComponentPreview, Previews } from '@react-buddy/ide-toolbox';
 import { PaletteTree } from './palette';
 import { Layout } from '../components/UI/Layout';
 import Page from '../pages';
+import { InfoRent } from '../components/Rent/InfoRent';
 
 const ComponentPreviews = () => {
   return (
@@ -12,6 +13,9 @@ const ComponentPreviews = () => {
       </ComponentPreview>
       <ComponentPreview path = '/Page'>
         <Page />
+      </ComponentPreview>
+      <ComponentPreview path = '/InfoRent'>
+        <InfoRent />
       </ComponentPreview>
     </Previews>
   );

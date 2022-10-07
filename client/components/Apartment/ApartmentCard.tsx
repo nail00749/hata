@@ -9,8 +9,8 @@ interface ApartmentCardProps {
 }
 
 export const ApartmentCard: FC<ApartmentCardProps> = ({ apartment }) => {
-
-  return (
+ return null
+  /*return (
     <Link
       href = {`apartment/${apartment.title}`}
     >
@@ -32,5 +32,5 @@ export const ApartmentCard: FC<ApartmentCardProps> = ({ apartment }) => {
           </div>
       </div>
     </Link>
-  );
+  );*/
 };

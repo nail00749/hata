@@ -38,8 +38,9 @@ export const RegisterForm: FC<RegisterFormProps> = ({ toggleForm }) => {
         className = 'flex flex-col items-center justify-between m-3'
       >
         <Input
-          value = {email}
+          type='email'
           placeholder = {'Email'}
+          value = {email}
           onChange = {(e: ChangeEvent<HTMLInputElement>) => {
             setEmail(e.target.value);
           }}
