@@ -20,7 +20,7 @@ export class CreateApartmentDto {
 
   description: string;
 
-  images: FileList[]
+  /*images: FileList[]*/
 
   houseArea: number;
 

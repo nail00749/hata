@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entity/users.entity';
 import { Repository } from 'typeorm';
@@ -16,6 +16,10 @@ export class UsersService {
 
   findByEmail(email: string) {
     return this.userRepository.findOne({ where: { email } });
+  }
+
+  findById(id: string) {
+    return this.userRepository.findOne({ where: { id } });
   }
 
   async create(userDto: UserAuthDto): Promise<UserModel> {

@@ -6,33 +6,43 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
   Req,
   UseInterceptors,
-  UploadedFiles,
+  UploadedFiles, Res,
 } from '@nestjs/common';
 import { ApartmentService } from './apartment.service';
 import { CreateApartmentDto } from './dto/create-apartment.dto';
 import { UpdateApartmentDto } from './dto/update-apartment.dto';
 import { Public } from '../decotarors/public.decorator';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { ParseFromObject } from '../pipes/ParseFromObject';
+import { FileMultipleInterceptor } from '../interceptors/FileMultipleInterceptor';
+import { RequestWithUserInterface } from '../models/RequestWithUser.interface';
+import { editFileName } from '../utils/editFileName';
+import { FastifyReply } from 'fastify';
 
 @Controller('apartment')
 export class ApartmentController {
   constructor(private readonly apartmentService: ApartmentService) {
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post()
-  /*@UseInterceptors(AnyFilesInterceptor())*/
-  async create(@Req() req, @Body() createApartmentDto: CreateApartmentDto, /*@UploadedFiles() files: Array<Express.Multer.File>*/) {
-    console.log(createApartmentDto);
-    //return this.apartmentService.create(createApartmentDto, req.user);
-    return null
+  @UseInterceptors(FileMultipleInterceptor('images', 10, {
+    storage: diskStorage({
+      destination: './src/static',
+      filename: editFileName
+    }),
+  }))
+  async create(@Req() req: RequestWithUserInterface,
+               @Body(new ParseFromObject<CreateApartmentDto>({ fields: ['coordinates'] }))
+                 createApartmentDto: CreateApartmentDto,
+               @UploadedFiles() files: Express.Multer.File[],
+               @Res() reply: FastifyReply
+               ) {
+    await this.apartmentService.create(createApartmentDto, req.user, files);
+    reply.status(201)
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.apartmentService.findAll();

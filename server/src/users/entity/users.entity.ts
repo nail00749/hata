@@ -6,11 +6,12 @@ import {
   VersionColumn,
 } from 'typeorm';
 import { BaseEntity } from '../../baseEntity/base.entity';
-import { Exclude } from 'class-transformer';
 import { ApartmentEntity } from '../../apartment/entities/apartment.entity';
 
 
-@Entity()
+@Entity({
+  name: 'users'
+})
 export class UserEntity extends BaseEntity {
   @Column({unique: true})
   email: string

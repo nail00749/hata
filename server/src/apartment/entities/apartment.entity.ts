@@ -1,14 +1,11 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../../baseEntity/base.entity';
 import { UserEntity } from '../../users/entity/users.entity';
+import { CurrencyEnum } from '../../models/Currency.enum';
 
-export enum Currency {
-  RUB = 'rub',
-  USD = 'usd',
-  EUR = 'eur'
-}
-
-@Entity()
+@Entity({
+  name: 'apartments'
+})
 export class ApartmentEntity extends BaseEntity {
   @Column()
   rentType: string;
@@ -19,7 +16,7 @@ export class ApartmentEntity extends BaseEntity {
   @Column({ default: 1 })
   price: number;
 
-  @Column({ type: 'enum', enum: Currency, default: Currency.RUB })
+  @Column({ type: 'enum', enum: CurrencyEnum, default: CurrencyEnum.RUB })
   currency: string;
 
   @Column()
