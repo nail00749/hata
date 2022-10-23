@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LatLng } from 'leaflet';
 
 
-interface rentHouseState {
+export interface rentHouseState {
   rentType: string;
   coordinates: {
     lat: number
@@ -44,10 +44,14 @@ const rentHouseSlice = createSlice({
     },
     setFiles: (state, action: PayloadAction<FileList>) => {
       state.images = action.payload;
-    }
+    },
+    setData: <K extends keyof rentHouseState>(state: any, action: PayloadAction<{ key: K, value: string | number }>) => {
+      const { payload } = action;
+      state[payload.key] = payload.value;
+    },
   },
 });
 
-export const { setCoords, setTypeRent, setFiles } = rentHouseSlice.actions;
+export const { setCoords, setTypeRent, setFiles, setData } = rentHouseSlice.actions;
 
 export default rentHouseSlice.reducer;

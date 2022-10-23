@@ -1,34 +1,25 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authSlice from './slices/AuthSlice';
+import { configureStore,  } from '@reduxjs/toolkit';
 import { authAPI } from '../services/authAPI';
-import alertSlice from './slices/AlertSlice';
 import { errorMiddleware } from './middlewares/ErrorMiddleware';
-import rentHouseSlice from './slices/RentHouseSlice';
 import { apartmentAPI } from '../services/apartmentAPI';
+import { Context, createWrapper } from 'next-redux-wrapper';
+import { reducer } from './reducers';
 
 
-const makeStore = () => configureStore({
-  reducer: {
-    authSlice,
-    alertSlice,
-    rentHouseSlice,
-    [authAPI.reducerPath]: authAPI.reducer,
-    [apartmentAPI.reducerPath]: apartmentAPI.reducer,
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    serializableCheck: false,
-  }).prepend([
+export const makeStore = (context: Context) =>
+  configureStore({
+  reducer,
+  middleware: (gDM) => gDM().prepend([
     authAPI.middleware,
     apartmentAPI.middleware,
     errorMiddleware,
-  ]),
-});
-
-const store = makeStore();
-export default store;
-
-export type RootState = ReturnType<AppStore['getState']>
-
-export type AppDispatch = typeof store.dispatch
+  ])
+})
 
 export type AppStore = ReturnType<typeof makeStore>
+export type RootState = ReturnType<AppStore['getState']>
+export type AppDispatch = AppStore['dispatch']
+
+export const wrapper = createWrapper<AppStore>(makeStore, {debug: true})
+
+

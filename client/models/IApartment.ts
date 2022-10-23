@@ -1,4 +1,5 @@
 export interface IApartment {
+  id?: string
   rentType: string;
   countRooms: number;
   price: number;

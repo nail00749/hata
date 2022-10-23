@@ -4,9 +4,9 @@ import { DevSupport } from '@react-buddy/ide-toolbox';
 import { ComponentPreviews, useInitial } from '../dev';
 import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
-import { Provider } from 'react-redux';
-import store from '../store';
+import { wrapper } from '../store';
 import 'leaflet/dist/leaflet.css';
+import { Provider } from 'react-redux';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -16,19 +16,23 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+function MyApp({ Component, ...rest }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
+  const { store, props } = wrapper.useWrappedStore(rest);
 
   return (
     <Provider store = {store}>
-      {getLayout(
-        <DevSupport
-          ComponentPreviews = {ComponentPreviews}
-          useInitialHook = {useInitial}
-        >
-          <Component {...pageProps} />
-        </DevSupport>)}
-    </Provider>);
+      {
+        getLayout(
+          <DevSupport
+            ComponentPreviews = {ComponentPreviews}
+            useInitialHook = {useInitial}
+          >
+            <Component {...props.pageProps} />
+          </DevSupport>,
+        )}
+    </Provider>
+  );
 }
 
 export default MyApp;

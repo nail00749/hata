@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface authState {
   isAuth: boolean;
@@ -21,9 +21,10 @@ const authSlice = createSlice({
     initState: (state) => {
       state.isAuth = Boolean(localStorage.getItem('token'));
     },
-    fetchAuthSuccess: (state) => {
+    fetchAuthSuccess: (state, action: PayloadAction<string>) => {
       state.isAuth = true;
       state.isLoad = false;
+      localStorage.setItem('token', action.payload)
     },
     logOut: (state) => {
       state.isAuth = false;

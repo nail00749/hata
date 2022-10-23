@@ -4,9 +4,8 @@ import { TextArea } from '../UI/TextArea';
 import { FileInput } from '../UI/FileInput';
 import React, { ChangeEvent } from 'react';
 import { Button } from '../UI/Button';
-import { setFiles } from '../../store/slices/RentHouseSlice';
+import { rentHouseState, setData, setFiles } from '../../store/slices/RentHouseSlice';
 import { useCreateApartmentMutation } from '../../services/apartmentAPI';
-import { IApartmentCreate } from '../../models/IApartment';
 
 export const InfoRent = () => {
   const dispatch = useAppDispatch();
@@ -19,11 +18,23 @@ export const InfoRent = () => {
     }
   };
 
+  const handlerData = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setData({key: e.target.name as keyof rentHouseState, value: e.target.value}))
+  };
+
+  const handlerDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch(setData({key: e.target.name as keyof rentHouseState, value: e.target.value}))
+  }
+
   const sendData = () => {
     const formData = new FormData();
     const { images, ...data } = rentData;
     for (const [k, v] of Object.entries(data)) {
-      formData.append(k, v.toString());
+      if (typeof v === 'object') {
+        formData.append(k, JSON.stringify(v));
+      } else {
+        formData.append(k, v.toString());
+      }
     }
     if (images) {
       for (const image of images) {
@@ -38,16 +49,25 @@ export const InfoRent = () => {
       className = 'p-2 flex flex-col'
     >
       <Input
+        onChange={handlerData}
+        value={rentData.price}
+        name='price'
         placeholder = {'Стоимость'}
         type = 'number'
         required
       />
       <Input
+        onChange={handlerData}
+        value={rentData.countRooms}
+        name='countRooms'
         placeholder = {'Количество комнат'}
         type = 'number'
         required
       />
       <Input
+        onChange={handlerData}
+        value={rentData.houseArea}
+        name='houseArea'
         placeholder = {'Общая площадь'}
         type = 'number'
       />
@@ -57,6 +77,9 @@ export const InfoRent = () => {
         accept = {'image/*'}
       />
       <TextArea
+        onChange={handlerDescription}
+        value={rentData.description}
+        name='description'
         placeholder = {'Доп информация'}
         rows = {3}
       />
@@ -66,7 +89,7 @@ export const InfoRent = () => {
         <Button
           onClick = {sendData}
         >
-          Разместить объеявление
+          Разместить объявление
         </Button>
       </div>
 
