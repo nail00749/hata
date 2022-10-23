@@ -1,8 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from '../store/baseQuery';
 import { extractRehydrationInfo } from '../store/extraRehydrationInfo';
-import { IApartment, IApartmentCreate } from '../models/IApartment';
-
+import { IApartment } from '../models/IApartment';
 
 
 export const apartmentAPI = createApi({
@@ -10,10 +9,10 @@ export const apartmentAPI = createApi({
   reducerPath: 'apartmentAPI',
   extractRehydrationInfo,
   endpoints: (build) => ({
-    getApartments: build.query<IApartment[], undefined>({
+    getApartments: build.query<IApartment[], void>({
       query: () => ({
         url: '/apartment',
-      })
+      }),
     }),
     createApartment: build.mutation<IApartment, FormData>({
       query: (body) => ({
@@ -22,9 +21,12 @@ export const apartmentAPI = createApi({
         body,
       }),
     }),
-  })
+  }),
 
 });
 
-export const {useGetApartmentsQuery, useCreateApartmentMutation} = apartmentAPI
+export const {
+  useGetApartmentsQuery,
+  useCreateApartmentMutation,
+} = apartmentAPI;
 

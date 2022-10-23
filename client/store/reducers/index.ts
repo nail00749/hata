@@ -16,17 +16,11 @@ const rootReducer = combineReducers({
 
 export const reducer = (state: any, action: any) => {
   if (action.type === HYDRATE) {
-    const nextState = {
+    return {
       ...state,
       ...action.payload
     }
-    //todo
-    // if (state.count) nextState.count = state.count // preserve count value on client side navigation
-    return nextState
   } else {
     return rootReducer(state, action)
   }
-
 }
-
-export type RootState = ReturnType<typeof rootReducer>

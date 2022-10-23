@@ -24,12 +24,12 @@ const initialState: rentHouseState = {
     lng: 0,
   },
   address: '',
-  price: 0,
+  price: 1,
   currency: '',
   description: '',
   images: undefined,
-  houseArea: 0,
-  countRooms: 0,
+  houseArea: 1,
+  countRooms: 1,
 };
 
 const rentHouseSlice = createSlice({

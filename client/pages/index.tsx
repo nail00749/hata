@@ -7,8 +7,7 @@ import { IApartment } from '../models/IApartment';
 
 
 export default function Page() {
-  /*const {data} = useGetApartmentsQuery(undefined, {
-  })*/
+  const {data} = useGetApartmentsQuery()
 
 
   return (
@@ -19,14 +18,14 @@ export default function Page() {
       <div
         className = 'flex flex-wrap'
       >
-        {/*{
+        {
           data &&
           data.map((apartment: IApartment) =>
           <ApartmentCard
             apartment={apartment}
           />
           )
-        }*/}
+        }
       </div>
     </div>
   );
