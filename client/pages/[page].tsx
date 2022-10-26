@@ -8,9 +8,11 @@ import {
 import { wrapper } from '../store';
 import { ApartmentsList } from '../components/Apartment/ApartmentsList';
 import { Pagination } from '../components/UI/Pagination';
+import { useRouter } from 'next/router';
 
 const Page = () => {
-  const { data } = useGetApartmentsQuery({ skip: 0, limit: 20 });
+  const { query } = useRouter();
+  const { data } = useGetApartmentsQuery({ skip: (Number(query.page) - 1) * 20, limit: 20 });
 
   return (
     <div

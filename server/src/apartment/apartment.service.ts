@@ -6,6 +6,7 @@ import { ApartmentEntity } from './entities/apartment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../users/entity/users.entity';
 import { CurrencyEnum } from 'src/models/Currency.enum';
+import { QueryLimitDto } from '../dtos/queryLimit.dto';
 
 @Injectable()
 export class ApartmentService {
@@ -20,14 +21,24 @@ export class ApartmentService {
       ...createApartmentDto,
       currency: CurrencyEnum.RUB,
       owner: user,
-      images: files.map(file => file.filename)
+      images: files.map(file => file.filename),
     };
     await this.apartmentRepository.save(apartment);
     return apartment;
   }
 
-  findAll() {
-    return this.apartmentRepository.find({skip: 0, take: 20})
+  async findAll(queryLimitDto: QueryLimitDto) {
+    const limit = queryLimitDto.limit || 20;
+    const skip = queryLimitDto.skip || 0;
+    const allCount = await this.apartmentRepository.count()
+    const apartments = await this.apartmentRepository.find({
+        skip, take: limit,
+      },
+    );
+    return {
+      apartments,
+      allCount: allCount
+    }
   }
 
   findOne(id: number) {

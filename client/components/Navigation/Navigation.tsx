@@ -9,7 +9,10 @@ import { initState } from '../../store/slices/AuthSlice';
 export const Navigation = () => {
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(initState())
+    setTimeout(() => {
+      dispatch(initState())
+    }, 100)
+
   }, []);
 
 

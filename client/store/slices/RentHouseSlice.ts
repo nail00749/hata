@@ -12,9 +12,9 @@ export interface rentHouseState {
   price: number;
   currency: string;
   description: string;
-  images?: FileList
-  houseArea: number,
-  countRooms: number,
+  images?: FileList | null
+  houseArea: number;
+  countRooms: number;
 }
 
 const initialState: rentHouseState = {
@@ -27,7 +27,7 @@ const initialState: rentHouseState = {
   price: 1,
   currency: '',
   description: '',
-  images: undefined,
+  images: null,
   houseArea: 1,
   countRooms: 1,
 };

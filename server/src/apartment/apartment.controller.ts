@@ -8,7 +8,7 @@ import {
   Delete,
   Req,
   UseInterceptors,
-  UploadedFiles, Res,
+  UploadedFiles, Res, Query,
 } from '@nestjs/common';
 import { ApartmentService } from './apartment.service';
 import { CreateApartmentDto } from './dto/create-apartment.dto';
@@ -20,6 +20,7 @@ import { FileMultipleInterceptor } from '../interceptors/FileMultipleInterceptor
 import { RequestWithUserInterface } from '../models/RequestWithUser.interface';
 import { editFileName } from '../utils/editFileName';
 import { FastifyReply } from 'fastify';
+import { QueryLimitDto } from '../dtos/queryLimit.dto';
 
 @Controller('apartment')
 export class ApartmentController {
@@ -44,8 +45,9 @@ export class ApartmentController {
   }
 
   @Get()
-  findAll() {
-    return this.apartmentService.findAll();
+  @Public()
+  findAll(@Query() queryLimitDto: QueryLimitDto) {
+    return this.apartmentService.findAll(queryLimitDto);
   }
 
   @Get(':id')

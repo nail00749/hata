@@ -1,1 +1,1 @@
-export type VariantType = 'success' | 'error' | 'warning' | 'outlined'
+export type VariantType = 'success' | 'error' | 'warning' | 'outlined' | 'active'

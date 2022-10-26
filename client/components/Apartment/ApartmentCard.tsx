@@ -21,7 +21,7 @@ export const ApartmentCard: FC<ApartmentCardProps> = ({ apartment }) => {
         <div>
           <Image
             className = 'rounded-xl'
-            src = {BaseURL + apartment.images[0] || homeDefault}
+            src = {apartment.images && apartment.images[0] ? BaseURL + apartment.images[0] : homeDefault}
             alt = {''}
             width = {200}
             height = {200}
