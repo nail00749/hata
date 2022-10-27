@@ -1,164 +1,500 @@
-GET http://localhost:3000
-Accept: application/json
-
-<> 2022-09-21T214221.200.txt
-
-###
-
-GET http://localhost:3000
-Accept: application/json
-
-<> 2022-09-21T213132.401.json
-
-###
-
-GET http://localhost:3000
-Accept: application/json
-
-<> 2022-09-21T213129.401.json
-
-###
-
-GET http://localhost:3000
-Accept: application/json
-
-<> 2022-09-21T212727.401.json
-
-###
-
-GET http://localhost:3000
-Accept: application/json
-
-<> 2022-09-21T212725.401.json
-
-###
-
-GET http://localhost:3000
-Accept: application/json
-
-<> 2022-09-21T212701.401.json
-
-###
-
-GET http://localhost:3000
-Accept: application/json
-
-<> 2022-09-21T212654.401.json
-
-###
-
-GET http://localhost:3000/api
-Accept: application/json
-
-<> 2022-09-21T212638.404.json
-
-###
-
-POST http://localhost:3000/users
+POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-  "email": "kolya1@ya.ru",
-  "password": "password"
+  "email": "string@ya.ru",
+  "password": "string"
 }
 
-<> 2022-09-19T163948.500.json
+<> 2022-09-27T013045.201.json
 
 ###
 
-POST http://localhost:3000/users
+POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-  "email": "kolya1@ya.ru",
-  "password": "password"
+  "email": "string@ya.ru",
+  "password": "string"
 }
 
-<> 2022-09-19T163930.500.json
+<> 2022-09-26T224042.201.json
 
 ###
 
-POST http://localhost:3000/users
+POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-  "email": "kolya1@ya.ru",
-  "password": "password"
+  "email": "string@ya.ru",
+  "password": "string"
 }
 
-<> 2022-09-19T163654.500.json
+<> 2022-09-26T222210.201.json
 
 ###
 
-POST http://localhost:3000/users
-Content-Type: application/json
+GET http://localhost:5000/auth/refresh
 
-{
-  "email": "kolya1@ya.ru",
-  "password": "password"
-}
-
-<> 2022-09-19T163551.500.json
+<> 2022-09-24T024717.403.json
 
 ###
 
-POST http://localhost:3000/users
-Content-Type: application/json
-
-{
-  "email": "kolya1@ya.ru",
-  "password": "password"
-}
-
-<> 2022-09-19T163527.500.json
+GET http://localhost:5000/auth/refresh
 
 ###
 
-POST http://localhost:3000/users
+POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-  "email": "kolya1",
-  "password": "password"
+  "email": "string@ya.ru",
+  "password": "string"
 }
 
-<> 2022-09-19T163513.500.json
+<> 2022-09-24T024705.201.json
 
 ###
 
-POST http://localhost:3000/users
+POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-  "email": "kolya1",
-  "password": "password"
+  "email": "string@ya.ru",
+  "password": "string"
 }
 
-<> 2022-09-19T163337.500.json
+<> 2022-09-24T024618.201.json
 
 ###
 
-POST http://localhost:3000/users
-Content-Type: application/json
+GET http://localhost:5000/auth/refresh
 
-{
-  "email": "kolya1",
-  "password": "password"
-}
-
-<> 2022-09-19T163332.500.json
+<> 2022-09-23T231250.403.json
 
 ###
 
-POST http://localhost:3000/users
+GET http://localhost:5000/auth/refresh
+
+<> 2022-09-23T231231.403.json
+
+###
+
+GET http://localhost:5000/auth/refresh
+
+<> 2022-09-23T230953.403.json
+
+###
+
+GET http://localhost:5000/auth/refresh
+
+<> 2022-09-23T230855.403.json
+
+###
+
+GET http://localhost:5000/auth/refresh
+
+<> 2022-09-23T230803.403.json
+
+###
+
+GET http://localhost:5000/auth/refresh
+
+<> 2022-09-23T230629.403.json
+
+###
+
+GET http://localhost:5000/auth/refresh
+
+<> 2022-09-23T230604.500.json
+
+###
+
+GET http://localhost:5000/auth/refresh
+
+<> 2022-09-23T230537.500.json
+
+###
+
+GET http://localhost:5000/auth/refresh
+
+<> 2022-09-23T230428.500.json
+
+###
+
+GET http://localhost:5000/auth/refresh
+
+<> 2022-09-23T230224.500.json
+
+###
+
+GET http://localhost:5000/auth/refresh
+
+<> 2022-09-23T230149.500.json
+
+###
+
+POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-  "email": "kolya1",
-  "password": "password"
+  "email": "string@ya.ru",
+  "password": "string"
 }
 
-<> 2022-09-19T163317.500.json
+<> 2022-09-23T230143.201.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T230139.201.json
+
+###
+
+GET http://localhost:5000/auth/refresh
+
+<> 2022-09-23T230128.500.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T230124.201.json
+
+###
+
+GET http://localhost:5000/auth/refresh
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T205621.201.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "st11ring"
+}
+
+<> 2022-09-23T205613.403.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "st11ring"
+}
+
+<> 2022-09-23T205609.403.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "st11ring"
+}
+
+<> 2022-09-23T205606.403.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "st11ring"
+}
+
+<> 2022-09-23T205558.403.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "st11ring"
+}
+
+<> 2022-09-23T205549.403.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "st11ring"
+}
+
+<> 2022-09-23T205313.403.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T203827.201.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T203819.201.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T203721.201.json
+
+###
+
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T203706.201.json
+
+###
+
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T203348.201.json
+
+###
+
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T203114.201.json
+
+###
+
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T202926.201.json
+
+###
+
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T202901.403.json
+
+###
+
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T202339.201.json
+
+###
+
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T202321.403.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T202222.500.json
+
+###
+
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T202219.201.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T202148.500.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T201519.500.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T201413.500.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T200846.201.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+<> 2022-09-23T200513.201.json
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "string@ya.ru",
+  "password": "string"
+}
 
 ###
 

@@ -7,12 +7,13 @@ import {
 } from '../services/apartmentAPI';
 import { wrapper } from '../store';
 import { ApartmentsList } from '../components/Apartment/ApartmentsList';
-import { Pagination } from '../components/UI/Pagination';
+import { Pagination } from '../components/Navigation/Pagination';
 import { useRouter } from 'next/router';
+import { apartmentPageSize } from '../constants/apartmentPageSize';
 
 const Page = () => {
   const { query } = useRouter();
-  const { data } = useGetApartmentsQuery({ skip: (Number(query.page) - 1) * 20, limit: 20 });
+  const { data } = useGetApartmentsQuery({ skip: (Number(query.page) - 1) * 20, limit: apartmentPageSize });
 
   return (
     <div
@@ -50,7 +51,7 @@ export default Page;
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (params) => {
-    store.dispatch(getApartments.initiate({ skip: 0, limit: 2 }));
+    store.dispatch(getApartments.initiate({ skip: 0, limit: apartmentPageSize }));
     await Promise.all(getRunningOperationPromises());
 
     return {

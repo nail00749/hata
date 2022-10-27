@@ -24,7 +24,7 @@ const authSlice = createSlice({
     fetchAuthSuccess: (state, action: PayloadAction<string>) => {
       state.isAuth = true;
       state.isLoad = false;
-      localStorage.setItem('token', action.payload)
+      //localStorage.setItem('token', action.payload)
     },
     logOut: (state) => {
       state.isAuth = false;

@@ -37,7 +37,6 @@ export const authAPI = createApi({
         }
       },
     }),
-    //getMeInfo
   }),
 });
 

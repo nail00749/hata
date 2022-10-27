@@ -4,7 +4,52 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63ef995f-2102-43f0-a4cf-a1e462adac14" name="Changes" comment="add server dir" />
+    <list default="true" id="63ef995f-2102-43f0-a4cf-a1e462adac14" name="Changes" comment="add pagination component apartment and some refactor">
+      <change afterPath="$PROJECT_DIR$/client/constants/apartmentPageSize.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/hooks/useGetAddress.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/hooks/useInfinityScroll.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/hooks/useInput.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11603f8c-2807-44b6-8564-3663df4f7bde.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11603f8c-2807-44b6-8564-3663df4f7bde/storage_v2/_src_/database/master.YiqNvw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11603f8c-2807-44b6-8564-3663df4f7bde/storage_v2/_src_/database/master.YiqNvw/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11603f8c-2807-44b6-8564-3663df4f7bde/storage_v2/_src_/database/master.YiqNvw/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/11603f8c-2807-44b6-8564-3663df4f7bde/storage_v2/_src_/database/master.YiqNvw/schema/public.abK9xQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b7296683-f910-4700-b726-6deedacdc0d7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b7296683-f910-4700-b726-6deedacdc0d7.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/hata.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/hata.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-19T163317.500.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-19T163332.500.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-19T163337.500.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-19T163513.500.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-19T163527.500.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-19T163551.500.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-19T163654.500.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-19T163930.500.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-19T163948.500.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-21T212638.404.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-21T212654.401.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-21T212701.401.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-21T212725.401.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-21T212727.401.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-21T213129.401.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-21T213132.401.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/2022-09-21T214221.200.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/client/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/Navigation/Spinner.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/components/UI/Spinner.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/UI/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/components/UI/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/components/UI/Pagination.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/components/Navigation/Pagination.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/[page].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/pages/[page].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/services/authAPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/services/authAPI.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/store/baseQuery.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/store/baseQuery.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/store/slices/AuthSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/store/slices/AuthSlice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/tokens/tokens.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/tokens/tokens.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/tokens/tokens.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/tokens/tokens.service.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,13 +63,18 @@
         <option value="com.haulmont.rcb.index" />
         <option value="com.haulmont.rcb.useInitial" />
         <option value="TypeScript JSX File" />
-        <option value="TypeScript File" />
         <option value="com.haulmont.rcb.arrow_function_component" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/server" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HttpClientSelectedEnvironments">
     <file url="jar://$APPLICATION_HOME_DIR$/plugins/restClient/lib/restClient.jar!/com/intellij/ws/rest/client/requests/collection/ws-requests.http" environment="test" />
@@ -39,37 +89,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "true",
-    "WebServerToolWindowPanel.toolwindow.highlight.mappings": "true",
-    "WebServerToolWindowPanel.toolwindow.highlight.symlinks": "true",
-    "WebServerToolWindowPanel.toolwindow.show.date": "false",
-    "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
-    "WebServerToolWindowPanel.toolwindow.show.size": "false",
-    "last_opened_file_path": "C:/Users/nail-/Desktop/hata/client/public",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "ts.external.directory.path": "C:\\Users\\nail-\\Desktop\\hata\\server\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.mappings&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.symlinks&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/nail-/Desktop/hata/client/public&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\nail-\\Desktop\\hata\\server\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
-        <entry key="com.haulmont.rcb.reactComponents" value="true" />
-        <entry key="com.haulmont.rcb.reactInspector" value="false" />
+        <entry key="com.haulmont.rcb.reactComponents" value="false" />
+        <entry key="com.haulmont.rcb.reactInspector" value="true" />
       </map>
     </option>
   </component>
@@ -78,12 +128,13 @@
       <recent name="C:\Users\nail-\Desktop\hata\client\public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\nail-\Desktop\hata\client\components\Navigation" />
       <recent name="C:\Users\nail-\Desktop\hata\client\store\slices" />
       <recent name="C:\Users\nail-\Desktop\hata\client\components\Modals" />
       <recent name="C:\Users\nail-\WebstormProjects\hata\server\src\users\entity" />
     </key>
   </component>
-  <component name="RunManager" selected="HTTP Request.rest-api | //login">
+  <component name="RunManager" selected="npm.start:dev">
     <configuration name="rest-api | //login admin" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/rest-api.http" index="2" requestIdentifier="//login admin" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -104,17 +155,49 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <configuration name="dev" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start:dev" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/server/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start:dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+      <item itemvalue="HTTP Request.rest-api | //login" />
+      <item itemvalue="HTTP Request.rest-api | //login admin" />
+      <item itemvalue="HTTP Request.rest-api | //refresh" />
+      <item itemvalue="HTTP Request.rest-api | //register" />
+      <item itemvalue="npm.dev" />
+      <item itemvalue="npm.start:dev" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.rest-api | //login" />
+        <item itemvalue="HTTP Request.rest-api | //register" />
         <item itemvalue="HTTP Request.rest-api | //refresh" />
         <item itemvalue="HTTP Request.rest-api | //login admin" />
-        <item itemvalue="HTTP Request.rest-api | //register" />
+        <item itemvalue="HTTP Request.rest-api | //login" />
         <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\nail-\AppData\Roaming\Subversion</configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="63ef995f-2102-43f0-a4cf-a1e462adac14" name="Changes" comment="" />
@@ -142,7 +225,16 @@
       <workItem from="1664204024750" duration="8805000" />
       <workItem from="1664223529156" duration="3009000" />
       <workItem from="1664270834603" duration="13542000" />
-      <workItem from="1664310497374" duration="227000" />
+      <workItem from="1664310497374" duration="662000" />
+      <workItem from="1665592009016" duration="8902000" />
+      <workItem from="1666266488045" duration="8042000" />
+      <workItem from="1666457024131" duration="135000" />
+      <workItem from="1666457222346" duration="2482000" />
+      <workItem from="1666539871909" duration="11866000" />
+      <workItem from="1666630199420" duration="10126000" />
+      <workItem from="1666710812918" duration="12000000" />
+      <workItem from="1666797387388" duration="5662000" />
+      <workItem from="1666856369064" duration="322000" />
     </task>
     <task id="LOCAL-00001" summary="init nest project">
       <created>1663688722862</created>
@@ -172,7 +264,63 @@
       <option name="project" value="LOCAL" />
       <updated>1663929440378</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="add base ui and auth jwt">
+      <created>1664311024724</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1664311024724</updated>
+    </task>
+    <task id="LOCAL-00006" summary="jwt auth">
+      <created>1664311094582</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1664311094582</updated>
+    </task>
+    <task id="LOCAL-00007" summary="apartment entity">
+      <created>1664311147040</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1664311147040</updated>
+    </task>
+    <task id="LOCAL-00008" summary="file interceptor and apartment logic">
+      <created>1666543625209</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1666543625209</updated>
+    </task>
+    <task id="LOCAL-00009" summary="redux logic wrapper and apartments base files">
+      <created>1666543781585</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1666543781585</updated>
+    </task>
+    <task id="LOCAL-00010" summary="add scss and fix inputComponent">
+      <created>1666549839117</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1666549839117</updated>
+    </task>
+    <task id="LOCAL-00011" summary="test merge">
+      <created>1666549990001</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1666549990001</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add pagination component apartment and some refactor">
+      <created>1666803079490</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1666803079490</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,6 +347,14 @@
     <MESSAGE value="add base logic user auth" />
     <MESSAGE value="add auth mechanism" />
     <MESSAGE value="add server dir" />
-    <option name="LAST_COMMIT_MESSAGE" value="add server dir" />
+    <MESSAGE value="add base ui and auth jwt" />
+    <MESSAGE value="jwt auth" />
+    <MESSAGE value="apartment entity" />
+    <MESSAGE value="file interceptor and apartment logic" />
+    <MESSAGE value="redux logic wrapper and apartments base files" />
+    <MESSAGE value="add scss and fix inputComponent" />
+    <MESSAGE value="test merge" />
+    <MESSAGE value="add pagination component apartment and some refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="add pagination component apartment and some refactor" />
   </component>
 </project>
