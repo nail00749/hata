@@ -1,33 +1,37 @@
-import React, { ReactNode, useRef } from 'react';
-import { createPortal } from 'react-dom';
-import { HeaderModal } from './HeaderModal';
+import React, { ReactNode } from 'react';
+import { Portal } from './Portal';
+import { useMount } from '../../hooks/useMount';
+
+import { Layout } from './Layout';
 
 interface ModalProps {
   title: string;
   open: boolean;
   handlerVisible: () => void;
-  children?: ReactNode;
+  children: ReactNode;
 }
 
-export const Modal: React.FC<ModalProps> = ({ children, title, open, handlerVisible }) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
 
-  return open ? createPortal(
-    <div
-      className = 'fixed z-40 inset-0 flex justify-center items-center  bg-translucentBlack'
-      ref = {containerRef}
-      //onClick = {handlerVisible}
-    >
-      <div
-        className = 'bg-white opacity-100 min-h-[150px] min-w-[350px] text-black flex flex-col rounded-md flex flex-col '
+export const Modal: React.FC<ModalProps> = ({ children, title, open, handlerVisible }) => {
+  const { mounted } = useMount(open);
+
+
+  if (!mounted) {
+    return null;
+  }
+
+
+  return (
+    <Portal>
+      <Layout
+        title = {title}
+        handlerVisible = {handlerVisible}
+        open = {open}
       >
-        <HeaderModal title = {title} handlerVisible = {handlerVisible} />
-        <div
-          className = 'pb-5'
-        >
-          {children}
-        </div>
-      </div>
-    </div>,
-    document.querySelector('#portal') as Element) : null;
+        {children}
+      </Layout>
+    </Portal>
+  );
+
+
 };
