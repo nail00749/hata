@@ -1,15 +1,15 @@
 import { useRegisterMutation } from '../../services/authAPI';
 import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import { IPayloadAuth } from '../../models/IPayloadAuth';
-import { Input } from '../UI/Input';
-import { Button } from '../UI/Button';
+import { Input } from '../UI/Input/Input';
+import { Button } from '../UI/Button/Button';
 
 interface RegisterFormProps {
   toggleForm: () => void;
 }
 
 export const RegisterForm: FC<RegisterFormProps> = ({ toggleForm }) => {
-  const [register, { isLoading, isSuccess, error, isError }] = useRegisterMutation();
+  const [register, { isLoading, isSuccess }] = useRegisterMutation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -38,7 +38,7 @@ export const RegisterForm: FC<RegisterFormProps> = ({ toggleForm }) => {
         className = 'flex flex-col items-center justify-between m-3'
       >
         <Input
-          type='email'
+          type = 'email'
           placeholder = {'Email'}
           value = {email}
           onChange = {(e: ChangeEvent<HTMLInputElement>) => {

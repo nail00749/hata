@@ -20,6 +20,7 @@
     "react-dom": "18.2.0",
     "react-leaflet": "^4.1.0",
     "react-redux": "^8.0.4",
+    "react-transition-group": "^4.4.5",
     "sass": "^1.55.0"
   },
   "devDependencies": {
@@ -28,6 +29,7 @@
     "@types/node": "18.7.18",
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",
+    "@types/react-transition-group": "^4.4.5",
     "autoprefixer": "^10.4.12",
     "eslint": "8.23.1",
     "eslint-config-next": "12.3.1",

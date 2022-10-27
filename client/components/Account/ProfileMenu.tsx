@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { Button } from '../UI/Button';
+import { Button } from '../UI/Button/Button';
 import { AuthMenu } from './AuthMenu';
 import { showModal } from '../../store/slices/AuthSlice';
 

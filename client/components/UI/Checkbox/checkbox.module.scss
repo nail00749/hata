@@ -1,0 +1,27 @@
+.checkbox {
+  @apply flex justify-center items-center mb-2;
+
+  input {
+	z-index: -1;
+	@apply absolute opacity-0
+  }
+
+  span {
+	@apply flex
+  }
+
+  input + span::before {
+	content: '';
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 100% 100%;
+	@apply w-6 h-6 border-sky-500 border-solid border-2 rounded mr-1
+  }
+
+  input:checked + span::before {
+	background-image: url('/check-mark.svg');
+  }
+
+
+}

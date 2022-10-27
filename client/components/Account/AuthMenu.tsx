@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Button } from '../UI/Button';
+import { Button } from '../UI/Button/Button';
 import { useAppDispatch } from '../../hooks/redux';
 import { logOut } from '../../store/slices/AuthSlice';
 
@@ -18,34 +18,29 @@ export const AuthMenu = () => {
   const handlerLogOut = () => dispatch(logOut());
 
   return (
-    <div
+    <button
+      onClick = {() => setShowMenu(!showMenu)}
       className = {`
       relative
       rounded-2xl
       border-solid border-2 border-neutral-800-500
-      p-1
+      p-2
       px-3
       flex justify-center items-center
-      hover:shadow-2xlh
-      hover:scale-105
       `}
     >
-      <button
-        onClick = {() => setShowMenu(!showMenu)}
-      >
         <Image
           className = 'ml-3'
           src = {'/profile.svg'}
           width = {20}
           height = {20}
         />
-      </button>
       {
         showMenu &&
         <div
           className = {`
           absolute
-          z-10
+          z-20
           top-9 right-0.5
           bg-white
           py-3
@@ -81,6 +76,6 @@ export const AuthMenu = () => {
           </div>
         </div>
       }
-    </div>
+    </button>
   );
 };

@@ -50,35 +50,4 @@ a {
   color: black;
 }
 
-.inputBox {
-  position: relative;
-  width: 300px;
-  @apply m-3 drop-shadow-lg;
-}
-.inputBox input {
-  position: relative;
-  width: 100%;
-  padding: 15px 10px;
-  font-size: 1rem;
-  @apply rounded-md border-solid border-2 border-sky-500;
-}
-.inputBox input:focus {
-  @apply border-sky-600 outline-none scale-105;
-}
-.inputBox span {
-  z-index: 2;
-  position: absolute;
-  color: black;
-  left: 0;
-  padding: 15px 10px;
-  font-size: 1rem;
-  transition: 0.5s;
-}
-.inputBox input:valid ~ span,
-.inputBox input:focus ~ span {
-  transform: translateY(-16px);
-  font-size: 0.75rem;
-  color: grey;
-}
-
 /*# sourceMappingURL=globals.css.map */

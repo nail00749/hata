@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { Input } from '../UI/Input';
+import { Input } from '../UI/Input/Input';
 import { TextArea } from '../UI/TextArea';
 import { FileInput } from '../UI/FileInput';
 import React, { ChangeEvent } from 'react';
-import { Button } from '../UI/Button';
+import { Button } from '../UI/Button/Button';
 import { rentHouseState, setData, setFiles } from '../../store/slices/RentHouseSlice';
 import { useCreateApartmentMutation } from '../../services/apartmentAPI';
 

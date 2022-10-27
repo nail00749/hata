@@ -54,39 +54,3 @@ a {
   color: black;
 }
 
-.inputBox {
-  position: relative;
-  width: 300px;
-  @apply m-3 drop-shadow-lg;
-
-  input {
-	position: relative;
-	width: 100%;
-	padding: 15px 10px;
-	font-size: 1rem;
-	@apply rounded-md border-solid border-2 border-sky-500
-  }
-
-  input:focus {
-	@apply border-sky-600 outline-none scale-105
-  }
-
-  span {
-	z-index: 2;
-	position: absolute;
-	color: black;
-	left: 0;
-	padding: 15px 10px;
-	font-size: 1rem;
-	transition: .5s;
-  }
-
-  input:valid ~ span,
-  input:focus ~ span {
-	transform: translateY(-16px);
-	font-size: .75rem;
-	color: grey;
-  }
-
-
-}

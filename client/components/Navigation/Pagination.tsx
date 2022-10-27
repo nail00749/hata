@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { Button } from '../UI/Button';
+import { Button } from '../UI/Button/Button';
 import { useRouter } from 'next/router';
 
 interface PaginationProps {
