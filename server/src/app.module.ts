@@ -8,11 +8,13 @@ import { AuthModule } from './auth/auth.module';
 import { UserEntity } from './users/entity/users.entity';
 import { RolesModule } from './roles/roles.module';
 import { TokensModule } from './tokens/tokens.module';
-import { TokenEntity } from './tokens/entity/token.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { ApartmentModule } from './apartment/apartment.module';
 import { ApartmentEntity } from './apartment/entities/apartment.entity';
+import { RefreshGuard } from './auth/refresh.guard';
+import { BookingsModule } from './bookings/bookings.module';
+import { BookingEntity } from './bookings/entities/booking.entity';
 
 @Module({
   imports: [
@@ -27,21 +29,31 @@ import { ApartmentEntity } from './apartment/entities/apartment.entity';
       synchronize: true,
       logging: ['error'],
       autoLoadEntities: true,
-      entities: [UserEntity, TokenEntity, ApartmentEntity],
+      entities: [UserEntity, ApartmentEntity, BookingEntity],
+      //entities: [
+      //         'src/**/*.entity{.ts, .js}',
+      //         'dist/**/*.entity{.ts, .js}'
+      //       ],
     }),
     UsersModule,
     AuthModule,
     RolesModule,
     TokensModule,
     ApartmentModule,
+    BookingsModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
     {
       provide: APP_GUARD,
+      useClass: RefreshGuard,
+    },
+    {
+      provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
+
   ],
 })
 export class AppModule {

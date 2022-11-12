@@ -41,8 +41,12 @@ export class ApartmentService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} apartment`;
+  findOne(id: string) {
+    return this.apartmentRepository.findOne({
+      where: {
+        id
+      }
+    })
   }
 
   update(id: number, updateApartmentDto: UpdateApartmentDto) {

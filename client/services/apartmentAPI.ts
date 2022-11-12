@@ -1,10 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from '../store/baseQuery';
+import { baseQuery, baseQueryWithReAuth } from '../store/baseQuery';
 import { extractRehydrationInfo } from '../store/extraRehydrationInfo';
 import { IApartment } from '../models/IApartment';
 
 export const apartmentAPI = createApi({
-  baseQuery,
+  baseQuery: baseQueryWithReAuth,
   reducerPath: 'apartmentAPI',
   extractRehydrationInfo,
   endpoints: (build) => {
@@ -17,6 +17,19 @@ export const apartmentAPI = createApi({
             limit,
           },
         }),
+      }),
+      getOneApartment: build.query<IApartment, string>({
+        query: (id) => ({
+          url: `/apartment/${id}`,
+        }),
+        transformResponse: (response, meta, arg) => {
+          let apartment = response as IApartment;
+          if (apartment.comforts) {
+            const comforts = JSON.parse(String(apartment.comforts));
+            apartment.comforts = comforts;
+          }
+          return apartment;
+        },
       }),
       createApartment: build.mutation<IApartment, FormData>({
         query: (body) => ({
@@ -34,8 +47,9 @@ export const apartmentAPI = createApi({
 export const {
   useGetApartmentsQuery,
   useCreateApartmentMutation,
+  useGetOneApartmentQuery,
   util: { getRunningOperationPromises },
 } = apartmentAPI;
 
 
-export const { getApartments } = apartmentAPI.endpoints;
+export const { getApartments, getOneApartment } = apartmentAPI.endpoints;

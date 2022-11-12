@@ -15,11 +15,11 @@ const Page = () => {
 
   return (
     <div
-      className = 'flex '
+      className = 'flex flex-auto'
     >
       <Filters />
       <div
-        className = 'flex flex-col flex-wrap items-center'
+        className = 'flex flex-col flex-wrap justify-between flex-[1_1_100%]'
       >
         {
           data &&

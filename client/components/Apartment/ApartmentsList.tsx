@@ -12,7 +12,7 @@ export const ApartmentsList: FC<ApartmentsListProps> = ({  apartments }) => {
   return (
 
     <div
-      className='flex flex-wrap'
+      className='grid sm:grid-cols-2 md:grid-cols-3'
     >
       {
         apartments.map(apartment =>

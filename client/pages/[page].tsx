@@ -1,5 +1,5 @@
 import { Layout } from '../components/UI/Layout';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { Filters } from '../components/Filters';
 import {
   getApartments,
@@ -12,16 +12,22 @@ import { useRouter } from 'next/router';
 import { apartmentPageSize } from '../constants/apartmentPageSize';
 
 const Page = () => {
-  const { query } = useRouter();
+  const { query, ...router } = useRouter();
   const { data } = useGetApartmentsQuery({ skip: (Number(query.page) - 1) * 20, limit: apartmentPageSize });
+
+  useEffect(() => {
+    if(!data) {
+      router.push('/')
+    }
+  }, []);
 
   return (
     <div
-      className = 'flex '
+      className = 'flex flex-auto'
     >
       <Filters />
       <div
-        className = 'flex flex-col flex-wrap items-center'
+        className = 'flex flex-col flex-wrap justify-between flex-[1_1_100%]'
       >
         {
           data &&

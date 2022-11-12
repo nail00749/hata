@@ -1,21 +1,30 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Button } from '../UI/Button/Button';
 import { useAppDispatch } from '../../hooks/redux';
 import { logOut } from '../../store/slices/AuthSlice';
+import { useLazyLogOutQuery } from '../../services/authAPI';
 
 export const AuthMenu = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [showMenu, setShowMenu] = useState(false);
+  const [trigger, { isSuccess, isLoading }] = useLazyLogOutQuery();
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(logOut());
+    }
+  }, [isSuccess]);
 
   const handleLink = (link: string) => () => {
     router.push(link).then(() => setShowMenu(false));
   };
 
-  const handlerLogOut = () => dispatch(logOut());
+  const handlerLogOut = () => trigger();
+
 
   return (
     <button
@@ -29,12 +38,12 @@ export const AuthMenu = () => {
       flex justify-center items-center
       `}
     >
-        <Image
-          className = 'ml-3'
-          src = {'/profile.svg'}
-          width = {20}
-          height = {20}
-        />
+      <Image
+        className = 'ml-3'
+        src = {'/profile.svg'}
+        width = {20}
+        height = {20}
+      />
       {
         showMenu &&
         <div
@@ -70,6 +79,7 @@ export const AuthMenu = () => {
             <Button
               onClick = {handlerLogOut}
               variant = 'error'
+              isLoading = {isLoading}
             >
               Выйти
             </Button>

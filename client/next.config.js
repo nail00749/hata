@@ -4,7 +4,8 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: [
-        'localhost'
+        'localhost',
+        '192.168.0.111'
     ]
   }
 }

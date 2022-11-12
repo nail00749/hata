@@ -17,7 +17,7 @@ import { Public } from '../decotarors/public.decorator';
 import { diskStorage } from 'multer';
 import { ParseFromObject } from '../pipes/ParseFromObject';
 import { FileMultipleInterceptor } from '../interceptors/FileMultipleInterceptor';
-import { RequestWithUserInterface } from '../models/RequestWithUser.interface';
+import { RequestWithUser } from '../models/RequestWithUser.interface';
 import { editFileName } from '../utils/editFileName';
 import { FastifyReply } from 'fastify';
 import { QueryLimitDto } from '../dtos/queryLimit.dto';
@@ -30,18 +30,18 @@ export class ApartmentController {
   @Post()
   @UseInterceptors(FileMultipleInterceptor('images', 10, {
     storage: diskStorage({
-      destination: './src/static',
-      filename: editFileName
+      destination: 'dist/./src/static',
+      filename: editFileName,
     }),
   }))
-  async create(@Req() req: RequestWithUserInterface,
+  async create(@Req() req: RequestWithUser,
                @Body(new ParseFromObject<CreateApartmentDto>({ fields: ['coordinates'] }))
                  createApartmentDto: CreateApartmentDto,
                @UploadedFiles() files: Express.Multer.File[],
-               @Res() reply: FastifyReply
-               ) {
+               @Res() reply: FastifyReply,
+  ) {
     await this.apartmentService.create(createApartmentDto, req.user, files);
-    reply.status(201)
+    reply.status(201);
   }
 
   @Get()
@@ -51,8 +51,9 @@ export class ApartmentController {
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
-    return this.apartmentService.findOne(+id);
+    return this.apartmentService.findOne(id);
   }
 
   @Patch(':id')

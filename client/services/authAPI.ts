@@ -1,12 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from '../store/baseQuery';
+import { baseQuery, baseQueryWithReAuth } from '../store/baseQuery';
 import { HYDRATE } from 'next-redux-wrapper';
 import { IPayloadAuth } from '../models/IPayloadAuth';
 import { fetchAuthSuccess } from '../store/slices/AuthSlice';
+import { IToken } from '../models/IToken';
 
 
 export const authAPI = createApi({
-  baseQuery,
+  baseQuery: baseQueryWithReAuth,
   reducerPath: 'authAPI',
   extractRehydrationInfo: (action, { reducerPath }) => {
     if (action.type === HYDRATE) {
@@ -37,7 +38,17 @@ export const authAPI = createApi({
         }
       },
     }),
+    refresh: build.query<IToken, void>({
+      query: () => ({
+        url: 'auth/refresh'
+      })
+    }),
+    logOut: build.query<any, void>({
+      query: () => ({
+        url: 'auth/logout'
+      })
+    })
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation } = authAPI;
+export const { useRegisterMutation, useLoginMutation, useLazyLogOutQuery } = authAPI;

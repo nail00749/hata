@@ -5,7 +5,7 @@ import {
   UpdateDateColumn,
   VersionColumn,
 } from 'typeorm';
-import { BaseEntity } from '../../baseEntity/base.entity';
+import { BaseEntity } from '../../database/baseEntity/base.entity';
 import { ApartmentEntity } from '../../apartment/entities/apartment.entity';
 
 

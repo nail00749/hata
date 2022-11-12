@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
 interface authState {
   isAuth: boolean;
@@ -14,7 +15,7 @@ const initialState: authState = {
   isAuth: false,
 };
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
   name: 'authSlice',
   initialState,
   reducers: {
@@ -24,12 +25,14 @@ const authSlice = createSlice({
     fetchAuthSuccess: (state, action: PayloadAction<string>) => {
       state.isAuth = true;
       state.isLoad = false;
-      //localStorage.setItem('token', action.payload)
+      localStorage.setItem('token', action.payload);
     },
     logOut: (state) => {
       state.isAuth = false;
-      localStorage.clear();
-      sessionStorage.clear();
+      if (typeof window !== 'undefined') {
+        localStorage.clear();
+        sessionStorage.clear();
+      }
     },
     showModal: (state) => {
       state.openModal = true;
@@ -38,9 +41,18 @@ const authSlice = createSlice({
       state.openModal = false;
     },
   },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      return {
+        ...state,
+        ...action.payload.auth,
+      };
+
+    },
+  },
 
 });
 
 export const { fetchAuthSuccess, showModal, hideModal, initState, logOut } = authSlice.actions;
 
-export default authSlice.reducer;
+//export default authSlice.reducer;

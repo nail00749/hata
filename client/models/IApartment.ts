@@ -1,5 +1,6 @@
 export interface IApartment {
-  id?: string
+  id?: string;
+  title: string;
   rentType: string;
   countRooms: number;
   price: number;
@@ -8,7 +9,7 @@ export interface IApartment {
   coordinates: {
     lat: number;
     lng: number;
-  }
+  };
   description: string;
   images: string[];
   houseArea: number;
@@ -16,5 +17,5 @@ export interface IApartment {
   owner?: string;
 }
 
-export type IApartmentCreate = Omit<IApartment, 'images'> & {images: FileList | undefined}
+export type IApartmentCreate = Omit<IApartment, 'images'> & { images: FileList | undefined | null }
 

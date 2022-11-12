@@ -1,57 +1,64 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LatLng } from 'leaflet';
+import { IApartmentCreate } from '../../models/IApartment';
 
 
 export interface rentHouseState {
-  rentType: string;
-  coordinates: {
-    lat: number
-    lng: number
-  };
-  address: string;
-  price: number;
-  currency: string;
-  description: string;
-  images?: FileList | null
-  houseArea: number;
-  countRooms: number;
+  apartment: IApartmentCreate;
 }
 
 const initialState: rentHouseState = {
-  rentType: '',
-  coordinates: {
-    lat: 0,
-    lng: 0,
+  apartment: {
+    title: '',
+    rentType: '',
+    coordinates: {
+      lat: 0,
+      lng: 0,
+    },
+    comforts: [],
+    address: '',
+    price: 1,
+    currency: '',
+    description: '',
+    houseArea: 1,
+    countRooms: 1,
+    images: null,
   },
-  address: '',
-  price: 1,
-  currency: '',
-  description: '',
-  images: null,
-  houseArea: 1,
-  countRooms: 1,
 };
 
 const rentHouseSlice = createSlice({
   name: 'rentHouseSlice',
   initialState,
   reducers: {
-    setCoords: (state, action: PayloadAction<LatLng>) => {
-      state.coordinates = action.payload;
+    setCoords: (state, action: PayloadAction<{ coordinates: LatLng, address: string }>) => {
+      const { payload } = action;
+      state.apartment.coordinates = payload.coordinates;
+      state.apartment.address = payload.address;
     },
     setTypeRent: (state, action: PayloadAction<string>) => {
-      state.rentType = action.payload;
+      state.apartment.rentType = action.payload;
     },
     setFiles: (state, action: PayloadAction<FileList>) => {
-      state.images = action.payload;
+      state.apartment.images = action.payload;
     },
     setData: <K extends keyof rentHouseState>(state: any, action: PayloadAction<{ key: K, value: string | number }>) => {
       const { payload } = action;
-      state[payload.key] = payload.value;
+      state.apartment[payload.key] = payload.value;
+    },
+    setComforts: (state, action: PayloadAction<string>) => {
+      const { payload } = action;
+      const copy = state.apartment.comforts;
+      const index = copy.findIndex(c => c === payload);
+      if (!~index) {
+        copy.push(payload);
+      } else {
+        copy.splice(index, 1);
+      }
+      state.apartment.comforts = copy;
     },
   },
 });
 
-export const { setCoords, setTypeRent, setFiles, setData } = rentHouseSlice.actions;
+export const { setCoords, setTypeRent, setFiles, setData, setComforts } = rentHouseSlice.actions;
 
 export default rentHouseSlice.reducer;

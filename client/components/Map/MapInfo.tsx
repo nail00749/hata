@@ -1,22 +1,19 @@
-import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { icon, LatLng } from 'leaflet';
+import { FC } from 'react';
 import { LocationMarker } from './LocationMarker';
 import { SearchField } from './SearchField';
-import { FC } from 'react';
-import { useAppDispatch } from '../../hooks/redux';
-import { setCoords } from '../../store/slices/RentHouseSlice';
 
-interface MapProps {
+interface MapInfoProps {
+  position: LatLng;
 }
 
-const Map: FC<MapProps> = () => {
-
+const MapInfo: FC<MapInfoProps> = ({ position }) => {
   return (
     <div
-      className='z-3 pr-6 my-4'
+      className = 'z-3 pr-6 my-4 col-span-1 sm:col-span-2 max-w-full'
       style = {{
         minWidth: 300,
-        maxWidth: 720,
         height: 400,
         zIndex: 3,
       }}
@@ -32,11 +29,15 @@ const Map: FC<MapProps> = () => {
           url = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
           attribution = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
-        <SearchField />
-        <LocationMarker />
+        <Marker
+          position = {position}
+          icon = {icon({ iconUrl: 'http://localhost:3000/marker.svg', iconSize: [50, 50] })}
+        >
+
+        </Marker>
       </MapContainer>
     </div>
   );
 };
 
-export default Map;
+export default MapInfo;

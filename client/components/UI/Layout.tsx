@@ -10,12 +10,13 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Navigation />
-      <main>
+      <main
+        className='flex flex-col flex-auto'
+      >
         {children}
       </main>
       <Alert/>
       <div id = 'portal' />
-
     </>
   );
 };

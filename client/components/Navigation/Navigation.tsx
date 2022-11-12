@@ -12,13 +12,11 @@ export const Navigation = () => {
     setTimeout(() => {
       dispatch(initState())
     }, 100)
-
   }, []);
-
 
   return (
     <header
-      className = 'h-20'
+      className = 'h-20 '
     >
       <nav
         className = 'flex justify-between items-center p-3 shadow-lg rounded-b-md '

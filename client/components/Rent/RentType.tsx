@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { setTypeRent } from '../../store/slices/RentHouseSlice';
 
 export const RentType = () => {
-  const { rentType } = useAppSelector(state => state.rentHouseSlice);
+  const { apartment } = useAppSelector(state => state.rentHouseSlice);
   const dispatch = useAppDispatch()
 
   const handlerType = (value: string) => dispatch(setTypeRent(value))
@@ -12,7 +12,7 @@ export const RentType = () => {
   return (
     <div>
       <ToggleButtonGroup
-        value = {rentType}
+        value = {apartment.rentType}
         onClick = {handlerType}
       >
         <ToggleButton value = 'flat'>Квартира</ToggleButton>

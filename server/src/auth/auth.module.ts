@@ -5,19 +5,23 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
+import { RefreshStrategy } from './refresh.strategy';
 
 @Module({
   imports: [
     forwardRef(() => UsersModule),
     PassportModule,
+    PassportModule.register({
+        defaultStrategy: 'cookie-strategy'
+    }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: {
-        expiresIn: '7d',
+        expiresIn: '15m',
       },
     }),
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, RefreshStrategy],
   exports: [AuthService],
   controllers: [AuthController],
 })

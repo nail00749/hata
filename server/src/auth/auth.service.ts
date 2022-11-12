@@ -38,7 +38,7 @@ export class AuthService {
   async login(userDto: UserAuthDto) {
     const user = await this.validateUser(userDto.email, userDto.password) as UserEntity;
     if (!user) {
-      throw new HttpException('Error email or password', HttpStatus.FORBIDDEN);
+      throw new HttpException('Такого пользователя нет', HttpStatus.FORBIDDEN);
     }
 
     const tokens = this.generateToken(user as UserEntity);
@@ -53,39 +53,47 @@ export class AuthService {
       access_token: this.jwtService.sign(payload, {
         secret: process.env.JWT_SECRET,
       }),
-      /*refresh_token: this.jwtService.sign(payload, {
+      refresh_token: this.jwtService.sign(payload, {
         secret: process.env.JWT_REFRESH_SECRET,
         expiresIn: '30d',
-      }),*/
+      }),
     };
   }
 
-  /*async refreshToken(refreshToken: string) {
+  async validRefreshToken(token: string) {
+    const isValid = await this.jwtService.verifyAsync(token, {
+      secret: process.env.JWT_REFRESH_SECRET,
+    });
+    return isValid;
+  }
+
+  async refreshToken(refreshToken: string) {
+    console.log(refreshToken);
     if (!refreshToken) {
-      throw new HttpException('Error refresh token', HttpStatus.FORBIDDEN);
+      throw new HttpException('Нет токена', HttpStatus.FORBIDDEN);
     }
 
     const userData = await this.jwtService.verifyAsync(refreshToken, {
       secret: process.env.JWT_REFRESH_SECRET,
     });
     if (!userData) {
-      throw new HttpException('Error refresh token', HttpStatus.NOT_FOUND);
+      throw new HttpException('Ошибка верификации токена', HttpStatus.NOT_FOUND);
     }
 
     const user = await this.usersService.findByEmail(userData.email);
     if (!user) {
-      throw new HttpException('Error refresh token', HttpStatus.NOT_FOUND);
+      throw new HttpException('Нет такого пользователя', HttpStatus.NOT_FOUND);
     }
 
     const tokens = this.generateToken(user);
     const indexToken = user.refreshTokens.findIndex(t => t === refreshToken);
-    if (indexToken === -1) {
+    /*if (indexToken === -1) {
       throw  new HttpException('Error refresh token', HttpStatus.NOT_FOUND);
-    }
-    user.refreshTokens[indexToken] = tokens.refresh_token;
-    await this.usersService.saveUser(user);
+    }*/
+    /*user.refreshTokens[indexToken] = tokens.refresh_token;
+    await this.usersService.saveUser(user);*/
     return tokens;
-  }*/
+  }
 
   async logout(refreshToken: string) {
     if (!refreshToken) {

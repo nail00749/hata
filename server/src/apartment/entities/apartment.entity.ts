@@ -1,14 +1,18 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
-import { BaseEntity } from '../../baseEntity/base.entity';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { BaseEntity } from '../../database/baseEntity/base.entity';
 import { UserEntity } from '../../users/entity/users.entity';
 import { CurrencyEnum } from '../../models/Currency.enum';
+import { BookingEntity } from '../../bookings/entities/booking.entity';
 
 @Entity({
-  name: 'apartments'
+  name: 'apartments',
 })
 export class ApartmentEntity extends BaseEntity {
   @Column()
   rentType: string;
+
+  @Column({name: 'title', default: 'some title'})
+  title: string;
 
   @Column({ name: 'count_rooms', default: 1 })
   countRooms: number;
@@ -39,4 +43,7 @@ export class ApartmentEntity extends BaseEntity {
 
   @ManyToOne(() => UserEntity, user => user.apartments)
   owner: UserEntity;
+
+  @OneToMany(() => BookingEntity, (booking) => booking.apartment)
+  bookings: BookingEntity[]
 }

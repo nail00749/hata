@@ -20,30 +20,37 @@ export class AuthController {
   @Post('login')
   async login(@Body() userDto: UserAuthDto, @Res() response: FastifyReply) {
     const tokens = await this.authService.login(userDto);
-    /*response.setCookie('refreshToken', tokens.refresh_token, {
+    //todo secure true if https
+    response.setCookie('refreshToken', tokens.refresh_token, {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+      path: '/',
     });
-    response.serialize(tokens);*/
     response.send(tokens);
   }
 
   @Public()
   @Get('refresh')
-  async refresh(@Req() request: FastifyRequest, @Res() response: FastifyReply) {
-    /*await this.authService.refreshToken(request.cookies['refreshToken']);
-    response.setCookie('refreshToken', '', {
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-      httpOnly: true,
-    });*/
+  refresh(@Req() request: FastifyRequest) {
+    console.log(request.cookies);
+    return this.authService.refreshToken(request.cookies['refreshToken']);
   }
 
   @Public()
-  @Post('logout')
+  @Get('logout')
   async logout(@Res() response: FastifyReply) {
-    /*await this.authService.logout(response.cookies['refreshToken']);
-    response.clearCookie('refreshToken');*/
-    return response.status(200);
+    //await this.authService.logout(response.cookies['refreshToken']);
+    response.clearCookie('refreshToken',
+      {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
+        path: '/',
+      }
+    );
+    response.status(200).send()
   }
 
 }

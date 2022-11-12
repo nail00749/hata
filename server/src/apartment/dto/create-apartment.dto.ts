@@ -1,6 +1,9 @@
 import { IsLatLong, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateApartmentDto {
+  @IsNotEmpty()
+  title: string
+
   rentType: string;
 
   @IsNumber()

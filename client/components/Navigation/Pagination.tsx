@@ -29,13 +29,14 @@ export const Pagination: FC<PaginationProps> = ({ allCount, link = '' }) => {
 
   return (
     <div
-      className = 'flex'
+      className = 'flex justify-center mb-2'
     >
       {
         arr.map(i =>
           <Button
             variant = {currentPage === i ? 'active' : 'outlined'}
             onClick = {() => handlerPage(i)}
+            key={i}
           >
             {i}
           </Button>,

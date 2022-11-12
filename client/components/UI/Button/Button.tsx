@@ -24,6 +24,8 @@ export const Button: FC<ButtonProps> = ({
         return 'border-2 border-solid border-sky-500 text-sky-500';
       case 'active':
         return 'bg-sky-500 text-black'
+      default:
+        return ''
     }
   }, [variant]);
 
