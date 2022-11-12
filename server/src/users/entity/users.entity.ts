@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { BaseEntity } from '../../database/baseEntity/base.entity';
 import { ApartmentEntity } from '../../apartment/entities/apartment.entity';
+import { BookingEntity } from '../../bookings/entities/booking.entity';
 
 
 @Entity({
@@ -33,6 +34,9 @@ export class UserEntity extends BaseEntity {
 
   @Column({name: 'refresh_tokens', type: 'simple-array', default: []})
   refreshTokens: string[]
+
+  @OneToMany(() => BookingEntity, (booking) => booking.tenant)
+  bookings: BookingEntity[]
 
   @CreateDateColumn({name: 'created_at'})
   createdAt: Date

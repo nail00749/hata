@@ -27,6 +27,10 @@ export const Pagination: FC<PaginationProps> = ({ allCount, link = '' }) => {
 
   const handlerPage = (page: number) => router.push(`${link}/${page}`);
 
+  if(arr.length <= 1)
+    return null
+
+
   return (
     <div
       className = 'flex justify-center mb-2'

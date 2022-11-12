@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../../database/baseEntity/base.entity';
 import { ApartmentEntity } from '../../apartment/entities/apartment.entity';
 import { UserEntity } from '../../users/entity/users.entity';
@@ -21,8 +21,7 @@ export class BookingEntity extends BaseEntity {
   @Column()
   price: number;
 
-  @OneToOne(() => UserEntity)
-  @JoinColumn()
+  @ManyToOne(() => UserEntity, (user) => user.bookings)
   tenant: UserEntity;
 
   @ManyToOne(() => ApartmentEntity, (apartment) => apartment.bookings)
