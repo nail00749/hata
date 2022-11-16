@@ -30,23 +30,26 @@ export class ApartmentService {
   async findAll(queryLimitDto: QueryLimitDto) {
     const limit = queryLimitDto.limit || 20;
     const skip = queryLimitDto.skip || 0;
-    const allCount = await this.apartmentRepository.count()
+    const allCount = await this.apartmentRepository.count();
     const apartments = await this.apartmentRepository.find({
         skip, take: limit,
       },
     );
     return {
       apartments,
-      allCount: allCount
-    }
+      allCount: allCount,
+    };
   }
 
   findOne(id: string) {
     return this.apartmentRepository.findOne({
       where: {
-        id
-      }
-    })
+        id,
+      },
+      relations: {
+        bookings: true,
+      },
+    });
   }
 
   update(id: number, updateApartmentDto: UpdateApartmentDto) {

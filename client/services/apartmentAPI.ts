@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery, baseQueryWithReAuth } from '../store/baseQuery';
+import { baseQueryWithReAuth } from '../store/baseQuery';
 import { extractRehydrationInfo } from '../store/extraRehydrationInfo';
 import { IApartment } from '../models/IApartment';
 

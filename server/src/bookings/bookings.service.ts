@@ -19,15 +19,11 @@ export class BookingsService {
     apartment.id = createBookingDto.apartment;
     bookingEntity = { ...bookingEntity, ...createBookingDto, tenant, apartment };
 
-    return this.bookingRepository.create(bookingEntity);
+    return this.bookingRepository.save(bookingEntity);
   }
 
-  findAll(apartment: string) {
-    return this.bookingRepository.findBy({
-      where: {
-        apartment
-      }
-    })
+  findAll() {
+    return this.bookingRepository.findBy({})
   }
 
   findOne(id: string) {

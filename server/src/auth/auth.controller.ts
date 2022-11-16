@@ -34,7 +34,6 @@ export class AuthController {
   @Public()
   @Get('refresh')
   refresh(@Req() request: FastifyRequest) {
-    console.log(request.cookies);
     return this.authService.refreshToken(request.cookies['refreshToken']);
   }
 

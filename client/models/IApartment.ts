@@ -1,3 +1,5 @@
+import { IBooking } from './IBooking';
+
 export interface IApartment {
   id?: string;
   title: string;
@@ -15,6 +17,7 @@ export interface IApartment {
   houseArea: number;
   comforts: string[];
   owner?: string;
+  bookings?: IBooking[]
 }
 
 export type IApartmentCreate = Omit<IApartment, 'images'> & { images: FileList | undefined | null }

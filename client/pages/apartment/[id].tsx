@@ -9,15 +9,19 @@ import { ApartmentInfo } from '../../components/Apartment/ApartmentInfo';
 import { ApartmentComforts } from '../../components/Apartment/ApartmentComforts';
 import dynamic from 'next/dynamic';
 import { LatLng } from 'leaflet';
+import { Booking } from '../../components/Booking/Booking';
 
 const MapInfo = dynamic(() => import('../../components/Map/MapInfo'), {
   ssr: false,
   loading: () => <div>Loading...</div>,
 });
 
+
+
 const Apartment = () => {
   const { query } = useRouter();
   const { data: apartment } = useGetOneApartmentQuery(String(query.id));
+
   return (
     <div
       className = 'p-5 '
@@ -42,6 +46,11 @@ const Apartment = () => {
           />
           <MapInfo
             position = {apartment.coordinates as LatLng}
+          />
+          <Booking
+            apartmentId = {String(query.id)}
+            dayPrice = {apartment.price}
+            busyDates={apartment.bookings!}
           />
         </div>
       }
