@@ -1,4 +1,5 @@
 import { IBooking } from './IBooking';
+import { IUser } from './IUser';
 
 export interface IApartment {
   id?: string;
@@ -16,7 +17,7 @@ export interface IApartment {
   images: string[];
   houseArea: number;
   comforts: string[];
-  owner?: string;
+  owner?: IUser;
   bookings?: IBooking[]
 }
 

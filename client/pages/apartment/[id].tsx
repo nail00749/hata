@@ -1,6 +1,10 @@
 import React, { ReactElement } from 'react';
 import { Layout } from '../../components/UI/Layout';
-import { getOneApartment, getRunningOperationPromises, useGetOneApartmentQuery } from '../../services/apartmentAPI';
+import {
+  apartmentAPI,
+  getOneApartment,
+  useGetOneApartmentQuery,
+} from '../../services/apartmentAPI';
 import { useRouter } from 'next/router';
 import { wrapper } from '../../store';
 import { CarouselImages } from '../../components/Apartment/CarouselImages';
@@ -48,7 +52,7 @@ const Apartment = () => {
             position = {apartment.coordinates as LatLng}
           />
           <Booking
-            apartmentId = {String(query.id)}
+            apartment = {apartment}
             dayPrice = {apartment.price}
             busyDates={apartment.bookings!}
           />
@@ -69,9 +73,9 @@ Apartment.getLayout = function getLayout(page: ReactElement) {
 export default Apartment;
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async ({ params }) => {
-    store.dispatch(getOneApartment.initiate(String(params?.id)));
-    await Promise.all(getRunningOperationPromises());
+  ({dispatch}) => async ({ params }) => {
+    dispatch(getOneApartment.initiate(String(params?.id)));
+    await Promise.all(dispatch(apartmentAPI.util.getRunningQueriesThunk()));
     return {
       props: {},
     };

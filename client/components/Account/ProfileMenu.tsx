@@ -1,28 +1,78 @@
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { Button } from '../UI/Button/Button';
-import { AuthMenu } from './AuthMenu';
-import { showModal } from '../../store/slices/AuthSlice';
+import { useAppDispatch } from '../../hooks/redux';
+import { logOut } from '../../store/slices/AuthSlice';
+import { useLazyLogOutQuery } from '../../services/authAPI';
+import { ButtonProfile } from './ButtonProfile';
+import { profileLinks } from '../../routing/routing';
 
 export const ProfileMenu = () => {
   const dispatch = useAppDispatch();
-  const { isAuth } = useAppSelector(state => state.authSlice);
+  const [showMenu, setShowMenu] = useState(false);
+  const [trigger, { isSuccess, isLoading }] = useLazyLogOutQuery();
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(logOut());
+    }
+  }, [isSuccess]);
+
+  const handlerLogOut = () => trigger();
 
   return (
-    <div
-      className = 'rounded-xl2 px-5'
+    <button
+      onClick = {() => setShowMenu(!showMenu)}
+      className = {`
+      relative
+      rounded-2xl
+      border-solid border-2 border-neutral-800-500
+      p-2
+      px-3
+      flex justify-center items-center
+      `}
     >
+      <Image
+        className = 'ml-3'
+        src = {'/profile.svg'}
+        width = {20}
+        height = {20}
+      />
       {
-        isAuth ?
-          <AuthMenu /> :
-          <Button
-            onClick = {() => dispatch(showModal())}
-          >
-            Войти
-          </Button>
-      }
-      {
+        showMenu &&
+        <div
+          className = {`
+          absolute
+          z-20
+          top-9 right-0.5
+          bg-white
+          py-3
+          rounded-2xl
+          drop-shadow-xl
+          border-[1px] border-solid border-neutral-900-700
+          `}
+        >
+          {
+            profileLinks.map(link =>
+              <ButtonProfile
+                link = {link}
+              />,
+            )
+          }
 
+          <div
+            className = 'flex justify-center my-2'
+          >
+            <Button
+              onClick = {handlerLogOut}
+              variant = 'error'
+              isLoading = {isLoading}
+            >
+              Выйти
+            </Button>
+          </div>
+        </div>
       }
-    </div>
+    </button>
   );
 };

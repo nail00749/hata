@@ -4,6 +4,8 @@ import { useCreateBookingMutation } from '../../services/bookingAPI';
 import { IBooking } from '../../models/IBooking';
 import { Button } from '../UI/Button/Button';
 import { differenceInCalendarDays } from 'date-fns';
+import { GetContactsOwner } from './GetContactsOwner';
+import { IApartment } from '../../models/IApartment';
 
 const BookingCalendar = dynamic(() => import('../../components/Booking/BookingCalendar/BookingCalendar'), {
   ssr: false,
@@ -12,12 +14,13 @@ const BookingCalendar = dynamic(() => import('../../components/Booking/BookingCa
 export type DateRange = [Date | null, Date | null]
 
 interface BookingProps {
-  apartmentId: string;
+  apartment: IApartment;
   dayPrice: number;
   busyDates: IBooking[];
 }
 
-export const Booking: FC<BookingProps> = ({ apartmentId, dayPrice, busyDates }) => {
+export const Booking: FC<BookingProps> = ({ apartment, dayPrice, busyDates }) => {
+  const [showContacts, setShowContacts] = useState(false);
   const [date, setDate] = useState<DateRange>([null, null]);
   const [create] = useCreateBookingMutation();
 
@@ -27,19 +30,21 @@ export const Booking: FC<BookingProps> = ({ apartmentId, dayPrice, busyDates }) 
       startDate: date[0]!,
       endDate: date[1]!,
       price,
-      apartment: apartmentId,
+      apartment: apartment.id,
     };
     create(booking);
   };
 
+  const handlerShowContacts = () => setShowContacts(true);
+
   return (
     <div
-      className = 'flex items-center'
+      className = 'flex items-center sm:col-span-2'
     >
       <BookingCalendar
         date = {date}
         setDate = {setDate}
-        busyDates={busyDates}
+        busyDates = {busyDates}
       />
       <div
         className = 'ml-2'
@@ -49,6 +54,21 @@ export const Booking: FC<BookingProps> = ({ apartmentId, dayPrice, busyDates }) 
         >
           Забронировать
         </Button>
+      </div>
+      <div
+        className = 'm-2 flex'
+      >
+        {
+          showContacts ?
+            <GetContactsOwner
+              owner = {apartment.owner!}
+            /> :
+            <Button
+              onClick = {handlerShowContacts}
+            >
+              Посмотреть контакты
+            </Button>
+        }
       </div>
     </div>
   );

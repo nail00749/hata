@@ -2,8 +2,9 @@ import { Layout } from '../components/UI/Layout';
 import { ReactElement } from 'react';
 import { Filters } from '../components/Filters';
 import {
+  apartmentAPI,
   getApartments,
-  getRunningOperationPromises, useGetApartmentsQuery,
+  useGetApartmentsQuery,
 } from '../services/apartmentAPI';
 import { wrapper } from '../store';
 import { ApartmentsList } from '../components/Apartment/ApartmentsList';
@@ -48,9 +49,9 @@ Page.getLayout = function getLayout(page: ReactElement) {
 export default Page;
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (params) => {
-    store.dispatch(getApartments.initiate({ skip: 0, limit: apartmentPageSize }));
-    await Promise.all(getRunningOperationPromises());
+  ({ dispatch }) => async (params) => {
+    dispatch(getApartments.initiate({ skip: 0, limit: apartmentPageSize }));
+    await Promise.all(dispatch(apartmentAPI.util.getRunningQueriesThunk()));
 
     return {
       props: {},

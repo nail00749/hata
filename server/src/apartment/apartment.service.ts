@@ -48,6 +48,7 @@ export class ApartmentService {
       },
       relations: {
         bookings: true,
+        owner: true
       },
     });
   }

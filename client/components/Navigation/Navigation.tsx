@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { navigationLinks } from '../../routing/routing';
 import { AuthModal } from '../Modals/AuthModal';
-import { ProfileMenu } from '../Account/ProfileMenu';
+import { LoginMenu } from '../Account/LoginMenu';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../hooks/redux';
 import { initState } from '../../store/slices/AuthSlice';
@@ -37,7 +37,7 @@ export const Navigation = () => {
             )
           }
         </ul>
-        <ProfileMenu />
+        <LoginMenu />
       </nav>
       <AuthModal />
 
