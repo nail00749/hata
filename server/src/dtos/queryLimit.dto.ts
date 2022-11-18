@@ -1,11 +1,14 @@
-import { IsNumber, IsOptional } from 'class-validator';
+import { IsInt, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class QueryLimitDto {
   @IsOptional()
-  @IsNumber()
-  limit: number
+  @Type(() => Number)
+  @IsInt()
+  limit: number;
 
   @IsOptional()
-  @IsNumber()
-  skip: number
+  @Type(() => Number)
+  @IsInt()
+  skip: number;
 }

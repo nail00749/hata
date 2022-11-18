@@ -5,6 +5,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 import rentHouseSlice from '../slices/RentHouseSlice';
 import { apartmentAPI } from '../../services/apartmentAPI';
 import { authAPI } from '../../services/authAPI';
+import { userAPI } from '../../services/userAPI';
 
 const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,
@@ -12,16 +13,15 @@ const rootReducer = combineReducers({
   rentHouseSlice,
   [authAPI.reducerPath]: authAPI.reducer,
   [apartmentAPI.reducerPath]: apartmentAPI.reducer,
-
+  [userAPI.reducerPath]: userAPI.reducer,
 });
 
 export const reducer = (state: any, action: any) => {
   if (action.type === HYDRATE) {
-    const nextState = {
+    return {
       ...state,
       ...action.payload,
     };
-    return nextState;
   } else {
     return rootReducer(state, action);
   }

@@ -4,6 +4,7 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 import fastifyCookie from '@fastify/cookie';
 import { contentParser } from 'fastify-multer';
 import * as path from 'path';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule,
@@ -16,9 +17,12 @@ async function bootstrap() {
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET,
   });
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true
+  }))
 
   await app.register(contentParser);
-  app.useStaticAssets({ root: path.join(__dirname, 'src', 'static') });
+  app.useStaticAssets({ root: path.join(__dirname, '..', 'src', 'static') });
   await app.listen(5000, '0.0.0.0');
 }
 

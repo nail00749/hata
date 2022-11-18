@@ -15,6 +15,7 @@ export const authAPI = createApi({
       return action.payload[reducerPath];
     }
   },
+  tagTypes: ['Me'],
   endpoints: (build) => ({
     register: build.mutation<undefined, IPayloadAuth>({
       query: (body) => ({
@@ -52,8 +53,32 @@ export const authAPI = createApi({
       query: () => ({
         url: 'users/profile',
       }),
+      providesTags: ['Me']
+    }),
+    updateProfile: build.mutation<IUser, IUser>({
+      query: (body) => ({
+        url: 'users',
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Me']
+    }),
+    updateAvatar: build.mutation<IUser, FormData>({
+      query: (body) => ({
+        url: 'users/avatar',
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Me']
     }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useLazyLogOutQuery, useGetProfileQuery } = authAPI;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useLazyLogOutQuery,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+  useUpdateAvatarMutation,
+} = authAPI;

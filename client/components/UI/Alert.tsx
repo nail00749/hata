@@ -13,7 +13,7 @@ export const Alert: FC<AlertProps> = () => {
     if (show) {
       setTimeout(() => {
         dispatch(hideAlert());
-      }, 1500);
+      }, 3500);
     }
   }, [show]);
 
@@ -33,7 +33,7 @@ export const Alert: FC<AlertProps> = () => {
 
   return (
     <div
-      className = {`z-50 fixed bottom-3 left-0 p-3 min-w-[200px] text-center rounded-xl ${bgColor}`}
+      className = {`z-50 fixed bottom-3 left-0 p-3 min-w-[200px] text-center whitespace-pre-line rounded-xl ${bgColor}`}
       style = {{
         transform: 'translate(calc(50vw - 50%))',
       }}

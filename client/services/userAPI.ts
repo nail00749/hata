@@ -14,6 +14,7 @@ export const userAPI = createApi({
         url: `users/${id}`,
       }),
     }),
+
   }),
 });
 

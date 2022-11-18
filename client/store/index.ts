@@ -6,6 +6,7 @@ import { createWrapper } from 'next-redux-wrapper';
 import { reducer } from './reducers';
 import { nextReduxCookieMiddleware, wrapMakeStore } from 'next-redux-cookie-wrapper';
 import { authSlice } from './slices/AuthSlice';
+import { userAPI } from '../services/userAPI';
 
 export const makeStore = wrapMakeStore(() =>
   configureStore({
@@ -14,14 +15,15 @@ export const makeStore = wrapMakeStore(() =>
       nextReduxCookieMiddleware({
         subtrees: [
           authSlice.name,
-        ]
+        ],
       }),
       authAPI.middleware,
       apartmentAPI.middleware,
+      userAPI.middleware,
       errorMiddleware,
     ]),
-  })
-)
+  }),
+);
 
 export type AppStore = ReturnType<typeof makeStore>
 export type RootState = ReturnType<AppStore['getState']>

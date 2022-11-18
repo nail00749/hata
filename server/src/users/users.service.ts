@@ -10,7 +10,7 @@ import { TokenEntity } from '../tokens/entity/token.entity';
 @Injectable()
 export class UsersService {
   constructor(@InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
-              @InjectRepository(TokenEntity) private tokenRepository: Repository<TokenEntity>
+              @InjectRepository(TokenEntity) private tokenRepository: Repository<TokenEntity>,
   ) {
   }
 
@@ -40,10 +40,27 @@ export class UsersService {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     user.refreshTokens = user.refreshTokens.filter(token => token !== refreshToken);
     await this.userRepository.save(user);
-    return HttpStatus.OK
+    return HttpStatus.OK;
   }
 
-  saveUser(user: UserEntity){
-    return this.userRepository.save(user)
+  saveUser(user: UserEntity) {
+    return this.userRepository.save(user);
   }
+
+  updateProfile(user: UserEntity) {
+    return this.userRepository.update({
+      id: user.id,
+    }, user);
+  }
+
+  updateAvatar(user: UserEntity, pathAvatar: string) {
+    return this.userRepository.update({
+        id: user.id,
+      },
+      {
+        avatar: `avatars/${pathAvatar}`
+      }
+    );
+  }
+
 }

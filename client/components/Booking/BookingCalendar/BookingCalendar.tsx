@@ -11,7 +11,6 @@ interface BookingCalendarProps {
 }
 
 const BookingCalendar: FC<BookingCalendarProps> = ({ date, setDate, busyDates }) => {
-  console.log(new Date(busyDates[0].startDate).getTime());
   return (
     <div>
       <Calendar

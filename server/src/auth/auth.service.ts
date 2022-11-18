@@ -5,7 +5,6 @@ import { UserEntity } from '../users/entity/users.entity';
 import { JwtService } from '@nestjs/jwt';
 import { UserAuthDto } from '../users/dto/userAuthDto';
 import { UserModel } from '../users/user.model';
-import { TokenEntity } from '../tokens/entity/token.entity';
 
 @Injectable()
 export class AuthService {
@@ -31,8 +30,7 @@ export class AuthService {
       throw new HttpException('Пользователь с таким email существует', HttpStatus.FORBIDDEN);
     }
 
-    const newUser = await this.usersService.create(userDto);
-    return newUser;
+    return this.usersService.create(userDto);
   }
 
   async login(userDto: UserAuthDto) {
@@ -60,15 +58,13 @@ export class AuthService {
     };
   }
 
-  async validRefreshToken(token: string) {
-    const isValid = await this.jwtService.verifyAsync(token, {
+  validRefreshToken(token: string) {
+    return this.jwtService.verifyAsync(token, {
       secret: process.env.JWT_REFRESH_SECRET,
     });
-    return isValid;
   }
 
   async refreshToken(refreshToken: string) {
-    console.log(refreshToken);
     if (!refreshToken) {
       throw new HttpException('Нет токена', HttpStatus.FORBIDDEN);
     }

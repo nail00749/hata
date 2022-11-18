@@ -1,20 +1,18 @@
 import {
   Column,
-  CreateDateColumn,
-  Entity, OneToMany,
-  UpdateDateColumn,
-  VersionColumn,
+  Entity,
+  OneToMany,
 } from 'typeorm';
-import { BaseEntity } from '../../database/baseEntity/base.entity';
 import { ApartmentEntity } from '../../apartment/entities/apartment.entity';
 import { BookingEntity } from '../../bookings/entities/booking.entity';
 import { classToPlain, Exclude } from 'class-transformer';
+import { BaseWithMetadataEntity } from '../../database/baseEntity/baseWithMetadata.entity';
 
 
 @Entity({
   name: 'users',
 })
-export class UserEntity extends BaseEntity {
+export class UserEntity extends BaseWithMetadataEntity {
   @Column({ unique: true })
   email: string;
 
@@ -34,6 +32,9 @@ export class UserEntity extends BaseEntity {
   @Column({ nullable: true })
   avatar: string;
 
+  @Column({ nullable: true })
+  phone: string;
+
   @OneToMany(() => ApartmentEntity, apartment => apartment.owner)
   apartments: ApartmentEntity[];
 
@@ -44,14 +45,6 @@ export class UserEntity extends BaseEntity {
   @OneToMany(() => BookingEntity, (booking) => booking.tenant)
   bookings: BookingEntity[];
 
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
-
-  @VersionColumn()
-  version: number;
 
   toJSON() {
     return classToPlain(this);
