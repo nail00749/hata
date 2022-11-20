@@ -58,8 +58,8 @@ export class UsersService {
         id: user.id,
       },
       {
-        avatar: `avatars/${pathAvatar}`
-      }
+        avatar: `avatars/${pathAvatar}`,
+      },
     );
   }
 
