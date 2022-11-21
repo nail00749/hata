@@ -14,6 +14,8 @@ import { ApartmentComforts } from '../../components/Apartment/ApartmentComforts'
 import dynamic from 'next/dynamic';
 import { LatLng } from 'leaflet';
 import { Booking } from '../../components/Booking/Booking';
+import { useGetProfileQuery } from '../../services/authAPI';
+import { OwnerButtons } from '../../components/Apartment/OwnerButtons';
 
 const MapInfo = dynamic(() => import('../../components/Map/MapInfo'), {
   ssr: false,
@@ -21,10 +23,10 @@ const MapInfo = dynamic(() => import('../../components/Map/MapInfo'), {
 });
 
 
-
 const Apartment = () => {
   const { query } = useRouter();
   const { data: apartment } = useGetOneApartmentQuery(String(query.id));
+  const { data: user } = useGetProfileQuery();
 
   return (
     <div
@@ -51,11 +53,17 @@ const Apartment = () => {
           <MapInfo
             position = {apartment.coordinates as LatLng}
           />
-          <Booking
-            apartment = {apartment}
-            dayPrice = {apartment.price}
-            busyDates={apartment.bookings!}
-          />
+          {
+            (user && user.id === apartment?.owner?.id) ?
+              <OwnerButtons
+                apartment = {apartment}
+              /> :
+              <Booking
+                apartment = {apartment}
+                dayPrice = {apartment.price}
+                busyDates = {apartment.bookings!}
+              />
+          }
         </div>
       }
     </div>
@@ -73,8 +81,9 @@ Apartment.getLayout = function getLayout(page: ReactElement) {
 export default Apartment;
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  ({dispatch}) => async ({ params }) => {
+  ({ dispatch }) => async ({ params }) => {
     dispatch(getOneApartment.initiate(String(params?.id)));
+    // @ts-ignore
     await Promise.all(dispatch(apartmentAPI.util.getRunningQueriesThunk()));
     return {
       props: {},

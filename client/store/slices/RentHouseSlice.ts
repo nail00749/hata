@@ -56,9 +56,21 @@ const rentHouseSlice = createSlice({
       }
       state.apartment.comforts = copy;
     },
+    setDefault: () => initialState,
+    setApartment: (state, action: PayloadAction<IApartmentCreate>) => {
+      state.apartment = action.payload;
+    },
   },
 });
 
-export const { setCoords, setTypeRent, setFiles, setData, setComforts } = rentHouseSlice.actions;
+export const {
+  setCoords,
+  setTypeRent,
+  setFiles,
+  setData,
+  setComforts,
+  setDefault,
+  setApartment,
+} = rentHouseSlice.actions;
 
 export default rentHouseSlice.reducer;

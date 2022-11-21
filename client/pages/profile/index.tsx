@@ -5,17 +5,21 @@ import { ProfileInfo } from '../../components/Account/ProfileInfo';
 import { EditProfile } from '../../components/Account/EditProfile';
 import { Button } from '../../components/UI/Button/Button';
 import { Avatar } from '../../components/Account/Avatar';
+import { Spinner } from '../../components/UI/Spinner';
 
 const Page = () => {
   const [isEdit, setIsEdit] = useState(false);
-  const { data: user } = useGetProfileQuery();
+  const { data: user, isLoading } = useGetProfileQuery();
 
   const handlerEdit = () => setIsEdit(prev => !prev);
 
   return (
     <div
-      className = 'flex flex-wrap'
+      className = 'flex flex-wrap justify-center'
     >
+      {
+        isLoading && <Spinner />
+      }
       {
         user &&
         <>

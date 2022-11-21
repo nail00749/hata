@@ -9,14 +9,22 @@ export const apartmentAPI = createApi({
   extractRehydrationInfo,
   endpoints: (build) => {
     return ({
-      getApartments: build.query<{ allCount: number, apartments: IApartment[] }, { skip: number, limit: number }>({
-        query: ({ limit = 2, skip = 0 }) => ({
+      getApartments: build.query<IApartment[], number>({
+        query: (skip) => ({
           url: `/apartment`,
           params: {
             skip,
-            limit,
           },
         }),
+        serializeQueryArgs: ({ endpointName }) => {
+          return endpointName;
+        },
+        merge: (currentCache, newItems) => {
+          currentCache.push(...newItems);
+        },
+        forceRefetch({ currentArg, previousArg }) {
+          return currentArg !== previousArg;
+        },
       }),
       getOneApartment: build.query<IApartment, string>({
         query: (id) => ({
@@ -25,17 +33,39 @@ export const apartmentAPI = createApi({
         transformResponse: (response, meta, arg) => {
           let apartment = response as IApartment;
           if (apartment.comforts) {
-            const comforts = JSON.parse(String(apartment.comforts));
-            apartment.comforts = comforts;
+            apartment.comforts = JSON.parse(String(apartment.comforts));
           }
           return apartment;
         },
+      }),
+      getOneForUpdate: build.query<IApartment, string>({
+        query: (id) => ({
+          url: `/apartment/update/${id}`,
+        }),
       }),
       createApartment: build.mutation<IApartment, FormData>({
         query: (body) => ({
           url: '/apartment',
           method: 'POST',
           body,
+        }),
+      }),
+      updateApartment: build.mutation<IApartment, { formData: FormData, id: string }>({
+        query: ({ id, formData }) => ({
+          url: `/apartment/${id}`,
+          method: 'PATCH',
+          body: formData,
+        }),
+      }),
+      removeApartment: build.mutation<IApartment, string>({
+        query: (id) => ({
+          url: `/apartment/${id}`,
+          method: 'DELETE',
+        }),
+      }),
+      getMyApartments: build.query<IAparment[], void>({
+        query: () => ({
+          url: '/apartment/my',
         }),
       }),
     });
@@ -48,8 +78,11 @@ export const {
   useGetApartmentsQuery,
   useCreateApartmentMutation,
   useGetOneApartmentQuery,
-  util: { getRunningOperationPromises },
+  useUpdateApartmentMutation,
+  useRemoveApartmentMutation,
+  useGetOneForUpdateQuery,
+  useGetMyApartmentsQuery,
 } = apartmentAPI;
 
 
-export const { getApartments, getOneApartment } = apartmentAPI.endpoints;
+export const { getApartments, getOneApartment, getOneForUpdate } = apartmentAPI.endpoints;

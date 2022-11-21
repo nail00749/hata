@@ -27,18 +27,15 @@ export class ApartmentService {
     return apartment;
   }
 
-  async findAll(queryLimitDto: QueryLimitDto) {
+  findAll(queryLimitDto: QueryLimitDto) {
     const limit = queryLimitDto.limit || 20;
     const skip = queryLimitDto.skip || 0;
-    const allCount = await this.apartmentRepository.count();
-    const apartments = await this.apartmentRepository.find({
-        skip, take: limit,
+    //const allCount = await this.apartmentRepository.count();
+    return this.apartmentRepository.find({
+        skip,
+        take: limit,
       },
     );
-    return {
-      apartments,
-      allCount: allCount,
-    };
   }
 
   findOne(id: string) {
@@ -48,16 +45,40 @@ export class ApartmentService {
       },
       relations: {
         bookings: true,
-        owner: true
+        owner: true,
       },
     });
   }
 
-  update(id: number, updateApartmentDto: UpdateApartmentDto) {
-    return `This action updates a #${id} apartment`;
+  findOneForUpdate(id: string) {
+    return this.apartmentRepository.findOne({
+      where: { id },
+      select: {
+        id: true,
+        title: true,
+        price: true,
+        countRooms: true,
+        houseArea: true,
+        description: true,
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} apartment`;
+  findMyApartments(user: UserEntity) {
+    return this.apartmentRepository.createQueryBuilder('apartment')
+      .where('apartment.owner = :user', { user: user.id })
+      .getMany();
+  }
+
+  update(id: string, updateApartmentDto: UpdateApartmentDto, files: Express.Multer.File[]) {
+    return this.apartmentRepository.update(id,
+      {
+        ...updateApartmentDto,
+        images: files.map(file => file.filename),
+      });
+  }
+
+  remove(id: string) {
+    return this.apartmentRepository.delete(id);
   }
 }

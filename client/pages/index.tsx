@@ -1,5 +1,5 @@
 import { Layout } from '../components/UI/Layout';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 import { Filters } from '../components/Filters';
 import {
   apartmentAPI,
@@ -8,11 +8,42 @@ import {
 } from '../services/apartmentAPI';
 import { wrapper } from '../store';
 import { ApartmentsList } from '../components/Apartment/ApartmentsList';
-import { Pagination } from '../components/Navigation/Pagination';
-import { apartmentPageSize } from '../constants/apartmentPageSize';
+import { NextPage } from 'next';
 
-const Page = () => {
-  const { data } = useGetApartmentsQuery({ skip: 0, limit: apartmentPageSize });
+interface Props {
+  count: number
+}
+
+const Page:NextPage<Props> = ({count}) => {
+  const loader = useRef<HTMLDivElement | null>(null);
+  const ref = useRef(count);
+  const { data, refetch } = useGetApartmentsQuery(ref.current);
+
+  useEffect(() => {
+    if(data){
+      ref.current = data.length
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1,
+    };
+    const observer = new IntersectionObserver(handlerInterSection, options);
+    if (loader.current) {
+      observer.observe(loader.current!);
+    }
+  }, []);
+
+  const handlerInterSection = (entries: IntersectionObserverEntry[]) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        refetch();
+      }
+    });
+  };
 
   return (
     <div
@@ -26,11 +57,17 @@ const Page = () => {
           data &&
           <>
             <ApartmentsList
-              apartments = {data.apartments}
+              apartments = {data}
             />
-            <Pagination
+            {
+              data &&
+              <div
+                ref = {loader}
+              />
+            }
+            {/*<Pagination
               allCount = {data.allCount}
-            />
+            />*/}
           </>
         }
       </div>
@@ -38,6 +75,7 @@ const Page = () => {
   );
 };
 
+// @ts-ignore
 Page.getLayout = function getLayout(page: ReactElement) {
   return (
     <Layout>
@@ -49,12 +87,15 @@ Page.getLayout = function getLayout(page: ReactElement) {
 export default Page;
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  ({ dispatch }) => async (params) => {
-    dispatch(getApartments.initiate({ skip: 0, limit: apartmentPageSize }));
+  ({ dispatch }) => async () => {
+    const result = await dispatch(getApartments.initiate(0));
+    // @ts-ignore
     await Promise.all(dispatch(apartmentAPI.util.getRunningQueriesThunk()));
 
     return {
-      props: {},
+      props: {
+        count: result?.data?.length || 0
+      },
     };
   },
 );

@@ -2,17 +2,19 @@ import { Button } from '../UI/Button/Button';
 import React, { useEffect } from 'react';
 import { useCreateApartmentMutation } from '../../services/apartmentAPI';
 import { useRouter } from 'next/router';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { setDefault } from '../../store/slices/RentHouseSlice';
 
 export const SubmitRent = () => {
-  const router = useRouter()
+  const router = useRouter();
   const { apartment } = useAppSelector(state => state.rentHouseSlice);
+  const dispatch = useAppDispatch();
   const [create, { isLoading, isSuccess }] = useCreateApartmentMutation();
 
-
   useEffect(() => {
-    if(isSuccess) {
-      router.push('/')
+    if (isSuccess) {
+      dispatch(setDefault());
+      router.push('/');
     }
   }, [isSuccess]);
 

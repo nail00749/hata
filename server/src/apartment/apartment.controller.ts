@@ -34,13 +34,13 @@ export class ApartmentController {
       filename: editFileName,
     }),
   }))
-  async create(@Req() req: RequestWithUser,
+  async create(@Req() request: RequestWithUser,
                @Body(new ParseFromObject<CreateApartmentDto>({ fields: ['coordinates'] }))
                  createApartmentDto: CreateApartmentDto,
                @UploadedFiles() files: Express.Multer.File[],
                @Res() reply: FastifyReply,
   ) {
-    await this.apartmentService.create(createApartmentDto, req.user, files);
+    await this.apartmentService.create(createApartmentDto, request.user, files);
     reply.status(201);
   }
 
@@ -56,13 +56,31 @@ export class ApartmentController {
     return this.apartmentService.findOne(id);
   }
 
+  @Get('update/:id')
+  findOneForUpdate(@Param('id') id: string) {
+    return this.apartmentService.findOneForUpdate(id);
+  }
+
+  @Get('my')
+  findMyApartments(@Req() request: RequestWithUser) {
+    return this.apartmentService.findMyApartments(request.user);
+  }
+
+  @UseInterceptors(FileMultipleInterceptor('images', 10, {
+    storage: diskStorage({
+      destination: 'dist/./src/static',
+      filename: editFileName,
+    }),
+  }))
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateApartmentDto: UpdateApartmentDto) {
-    return this.apartmentService.update(+id, updateApartmentDto);
+  update(@Param('id') id: string,
+         @Body() updateApartmentDto: UpdateApartmentDto,
+         @UploadedFiles() files: Express.Multer.File[]) {
+    return this.apartmentService.update(id, updateApartmentDto, files);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.apartmentService.remove(+id);
+    return this.apartmentService.remove(id);
   }
 }

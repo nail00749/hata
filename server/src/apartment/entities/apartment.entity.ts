@@ -11,7 +11,7 @@ export class ApartmentEntity extends BaseEntity {
   @Column()
   rentType: string;
 
-  @Column({name: 'title', default: 'some title'})
+  @Column({ name: 'title', default: 'some title' })
   title: string;
 
   @Column({ name: 'count_rooms', default: 1 })
