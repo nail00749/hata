@@ -4,10 +4,11 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: [
-        'localhost',
-        '192.168.0.111'
-    ]
-  }
-}
+      'localhost',
+      '192.168.0.111',
+      '26.121.11.165',
+    ],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

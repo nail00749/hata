@@ -1,14 +1,19 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import * as uuid from  'uuid'
 import { UsersService } from '../users/users.service';
 import { verify } from '../helpers/hashing';
 import { UserEntity } from '../users/entity/users.entity';
 import { JwtService } from '@nestjs/jwt';
 import { UserAuthDto } from '../users/dto/userAuthDto';
 import { UserModel } from '../users/user.model';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService, private jwtService: JwtService) {
+  constructor(private usersService: UsersService,
+              private jwtService: JwtService,
+              private mailService: MailService
+              ) {
   }
 
   async validateUser(email: string, password: string) {
@@ -101,6 +106,18 @@ export class AuthService {
     });
 
     return this.usersService.removeToken(userData.sub, refreshToken);
+  }
+
+  async sendCode(user: UserEntity) {
+    const code = uuid.v4()
+    const activationLink = `${process.env.URL_SERVER}/auth/activate/${code}`
+    this.mailService.confirmationEmail(user.email, activationLink)
+    await this.usersService.updateProfile({...user, activationLink} as UserEntity)
+    return true
+  }
+
+  async confirmCode(code: string) {
+
   }
 
 

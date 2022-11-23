@@ -20,7 +20,7 @@ export class UsersController {
 
   @Get('/profile')
   getProfile(@Req() request: RequestWithUser) {
-    return request.user;
+    return this.usersService.getMeInfo(request.user.id)
   }
 
   @Get('/:id')

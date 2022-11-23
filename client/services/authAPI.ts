@@ -71,6 +71,12 @@ export const authAPI = createApi({
       }),
       invalidatesTags: ['Me']
     }),
+    sendCode: build.mutation<any, void>({
+      query: () => ({
+        url: 'auth/send-mail',
+        method: "GET"
+      })
+    })
   }),
 });
 
@@ -81,4 +87,5 @@ export const {
   useGetProfileQuery,
   useUpdateProfileMutation,
   useUpdateAvatarMutation,
+  useSendCodeMutation
 } = authAPI;

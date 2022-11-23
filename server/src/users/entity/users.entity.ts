@@ -38,6 +38,9 @@ export class UserEntity extends BaseWithMetadataEntity {
   @OneToMany(() => ApartmentEntity, apartment => apartment.owner)
   apartments: ApartmentEntity[];
 
+  @Column({ name: 'activation_link', nullable: true })
+  activationLink: string;
+
   @Column({ name: 'refresh_tokens', type: 'simple-array', default: [] })
   @Exclude({ toPlainOnly: true })
   refreshTokens: string[];

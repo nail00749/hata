@@ -9,7 +9,7 @@ import { TokenEntity } from '../tokens/entity/token.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity, TokenEntity]),
-    forwardRef(() => AuthModule)
+    forwardRef(() => AuthModule),
   ],
   controllers: [UsersController],
   providers: [UsersService],

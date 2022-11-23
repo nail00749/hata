@@ -94,6 +94,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     return {
       props: {
+        // @ts-ignore
         count: result?.data?.length || 0
       },
     };

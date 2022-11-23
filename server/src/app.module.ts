@@ -15,6 +15,8 @@ import { ApartmentEntity } from './apartment/entities/apartment.entity';
 import { RefreshGuard } from './auth/refresh.guard';
 import { BookingsModule } from './bookings/bookings.module';
 import { BookingEntity } from './bookings/entities/booking.entity';
+import { MailModule } from './mail/mail.module';
+
 
 @Module({
   imports: [
@@ -41,14 +43,15 @@ import { BookingEntity } from './bookings/entities/booking.entity';
     TokensModule,
     ApartmentModule,
     BookingsModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
-    {
+    /*{
       provide: APP_GUARD,
       useClass: RefreshGuard,
-    },
+    },*/
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

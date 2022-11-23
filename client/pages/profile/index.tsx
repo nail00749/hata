@@ -6,6 +6,7 @@ import { EditProfile } from '../../components/Account/EditProfile';
 import { Button } from '../../components/UI/Button/Button';
 import { Avatar } from '../../components/Account/Avatar';
 import { Spinner } from '../../components/UI/Spinner';
+import { ActivateEmail } from '../../components/Account/ActivateEmail';
 
 const Page = () => {
   const [isEdit, setIsEdit] = useState(false);
@@ -45,6 +46,9 @@ const Page = () => {
                       </Button>
                     </div>
                   </>
+              }
+              {
+                !user.isActive && <ActivateEmail/>
               }
             </div>
             <Avatar

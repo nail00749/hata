@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { UsersService } from '../users/users.service';
 import { Public } from '../decotarors/public.decorator';
+import { RequestWithUser } from '../models/RequestWithUser.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -47,9 +48,20 @@ export class AuthController {
         sameSite: 'none',
         secure: true,
         path: '/',
-      }
+      },
     );
-    response.status(200).send()
+    response.status(200).send();
+  }
+
+  @Get('send-mail')
+  sendConfirmation(@Req() request: RequestWithUser) {
+    return this.authService.sendCode(request.user);
+  }
+
+  @Public()
+  @Get('activate')
+  confirmEmail() {
+
   }
 
 }
