@@ -12,8 +12,8 @@ export const GetContactsOwner: FC<GetContactsOwnerProps> = ({ owner }) => {
   return (
     <div>
       <div>{`email: ${owner.email}`}</div>
-      <div>{`Имя ${owner.firstName}`}</div>
-      <div>{`Фамилия ${owner.lastName}`}</div>
+      <div>{`Имя: ${owner.firstName || 'Не указано'}`}</div>
+      <div>{`Фамилия: ${owner.lastName || 'Не указано'}`}</div>
     </div>
   );
 };

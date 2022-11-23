@@ -6,7 +6,8 @@ import { RequestWithUser } from '../models/RequestWithUser.interface';
 
 @Controller('bookings')
 export class BookingsController {
-  constructor(private readonly bookingsService: BookingsService) {}
+  constructor(private readonly bookingsService: BookingsService) {
+  }
 
   @Post()
   create(@Body() createBookingDto: CreateBookingDto, @Req() request: RequestWithUser) {
@@ -16,6 +17,11 @@ export class BookingsController {
   @Get()
   findAll() {
     return this.bookingsService.findAll();
+  }
+
+  @Get('my')
+  findMy(@Req() request: RequestWithUser) {
+    return this.bookingsService.findMy(request.user);
   }
 
   @Get(':id')

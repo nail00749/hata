@@ -18,7 +18,11 @@ const BookingCalendar: FC<BookingCalendarProps> = ({ date, setDate, busyDates })
         onChange = {setDate}
         selectRange
         tileDisabled = {({ date, view }) => {
-          return !!(view === 'month' && busyDates.find(d => new Date(d.startDate).getTime() <= date.getTime() && new Date(d.endDate).getTime() >= date.getTime()));
+          const tileDate = date.getTime();
+          return !!(view === 'month' &&
+            busyDates &&
+            (busyDates.find(d => new Date(d.startDate).getTime() <= tileDate && new Date(d.endDate).getTime() >= tileDate))
+            || tileDate <= Date.now());
         }}
       />
     </div

@@ -60,6 +60,7 @@ export const Avatar: FC<AvatarProps> = ({ urlAvatar }) => {
               className = 'absolute w-10 h-20 opacity-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
               type = 'file'
               onChange = {handlerFile}
+              accept = {'image/*'}
             />
           </div>
         }

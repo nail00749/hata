@@ -3,6 +3,6 @@ export interface IBooking {
   startDate: Date;
   endDate: Date;
   price: number;
-  tenant?: string
-  apartment?: string
+  tenant?: string;
+  apartment?: IBooking | string;
 }

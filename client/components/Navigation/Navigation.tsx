@@ -7,11 +7,11 @@ import { useAppDispatch } from '../../hooks/redux';
 import { initState } from '../../store/slices/AuthSlice';
 
 export const Navigation = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   useEffect(() => {
     setTimeout(() => {
-      dispatch(initState())
-    }, 100)
+      dispatch(initState());
+    }, 100);
   }, []);
 
   return (

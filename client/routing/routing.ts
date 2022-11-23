@@ -9,11 +9,11 @@ export const navigationLinks: IRoute[] = [
     title: 'Главная',
   },
   {
-    href: 'my-booking',
+    href: '/my-booking',
     title: 'Мои бронирования',
   },
   {
-    href: 'my-rent',
+    href: '/my-rent',
     title: 'Мои объявления',
   },
   {
@@ -24,7 +24,7 @@ export const navigationLinks: IRoute[] = [
 
 export const profileLinks: IRoute[] = [
   {
-    href: 'profile',
+    href: '/profile',
     title: 'Профиль',
   },
   {

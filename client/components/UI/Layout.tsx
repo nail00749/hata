@@ -11,7 +11,7 @@ export const Layout = ({ children }: LayoutProps) => {
     <>
       <Navigation />
       <main
-        className='flex flex-col flex-auto'
+        className='flex flex-col flex-auto p-2'
       >
         {children}
       </main>

@@ -3,7 +3,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReAuth } from '../store/baseQuery';
 import { IBooking } from '../models/IBooking';
 
-const bookingAPI = createApi({
+export const bookingAPI = createApi({
   baseQuery: baseQueryWithReAuth,
   reducerPath: 'bookingAPI',
   extractRehydrationInfo,
@@ -15,8 +15,13 @@ const bookingAPI = createApi({
         body,
       }),
     }),
+    getMyBookings: build.query<IBooking[], void>({
+      query: () => ({
+        url: '/bookings/my',
+      }),
+    }),
   }),
 });
 
-export const { useCreateBookingMutation } = bookingAPI;
+export const { useCreateBookingMutation, useGetMyBookingsQuery } = bookingAPI;
 

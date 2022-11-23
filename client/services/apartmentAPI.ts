@@ -7,6 +7,7 @@ export const apartmentAPI = createApi({
   baseQuery: baseQueryWithReAuth,
   reducerPath: 'apartmentAPI',
   extractRehydrationInfo,
+  tagTypes: ['Apartment'],
   endpoints: (build) => {
     return ({
       getApartments: build.query<IApartment[], number>({
@@ -37,6 +38,7 @@ export const apartmentAPI = createApi({
           }
           return apartment;
         },
+        providesTags: ['Apartment'],
       }),
       getOneForUpdate: build.query<IApartment, string>({
         query: (id) => ({
@@ -63,7 +65,7 @@ export const apartmentAPI = createApi({
           method: 'DELETE',
         }),
       }),
-      getMyApartments: build.query<IAparment[], void>({
+      getMyApartments: build.query<IApartment[], void>({
         query: () => ({
           url: '/apartment/my',
         }),

@@ -27,7 +27,7 @@ const Apartment = () => {
   const { query } = useRouter();
   const { data: apartment } = useGetOneApartmentQuery(String(query.id));
   const { data: user } = useGetProfileQuery();
-
+  console.log(apartment);
   return (
     <div
       className = 'p-5 '

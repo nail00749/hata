@@ -39,15 +39,11 @@ export class ApartmentService {
   }
 
   findOne(id: string) {
-    return this.apartmentRepository.findOne({
-      where: {
-        id,
-      },
-      relations: {
-        bookings: true,
-        owner: true,
-      },
-    });
+    return this.apartmentRepository.createQueryBuilder('a')
+      .leftJoinAndSelect('a.owner', 'user')
+      .leftJoinAndSelect('a.bookings', 'booking', /*'booking.start_date >= :date', { date: new Date() }*/)
+      .where('a.id = :id', { id })
+      .getOne();
   }
 
   findOneForUpdate(id: string) {

@@ -6,6 +6,7 @@ import rentHouseSlice from '../slices/RentHouseSlice';
 import { apartmentAPI } from '../../services/apartmentAPI';
 import { authAPI } from '../../services/authAPI';
 import { userAPI } from '../../services/userAPI';
+import { bookingAPI } from '../../services/bookingAPI';
 
 const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   [authAPI.reducerPath]: authAPI.reducer,
   [apartmentAPI.reducerPath]: apartmentAPI.reducer,
   [userAPI.reducerPath]: userAPI.reducer,
+  [bookingAPI.reducerPath]: bookingAPI.reducer,
 });
 
 export const reducer = (state: any, action: any) => {

@@ -1,17 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { VariantType } from '../../models/UI/variantsColor';
-import { act } from 'react-dom/test-utils';
-
 
 interface alertState {
   show: boolean;
-  text: string;
+  text: string | null;
   variant: VariantType;
 }
 
 const initialState: alertState = {
   show: false,
-  text: '',
+  text: null,
   variant: 'success',
 };
 

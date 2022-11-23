@@ -7,6 +7,7 @@ import { reducer } from './reducers';
 import { nextReduxCookieMiddleware, wrapMakeStore } from 'next-redux-cookie-wrapper';
 import { authSlice } from './slices/AuthSlice';
 import { userAPI } from '../services/userAPI';
+import { bookingAPI } from '../services/bookingAPI';
 
 export const makeStore = wrapMakeStore(() =>
   configureStore({
@@ -20,6 +21,7 @@ export const makeStore = wrapMakeStore(() =>
       authAPI.middleware,
       apartmentAPI.middleware,
       userAPI.middleware,
+      bookingAPI.middleware,
       errorMiddleware,
     ]),
   }),

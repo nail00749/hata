@@ -12,17 +12,17 @@ async function bootstrap() {
   );
   app.enableCors({
     origin: true,
-    credentials: true
+    credentials: true,
   });
   await app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET,
   });
   app.useGlobalPipes(new ValidationPipe({
-    transform: true
-  }))
+    transform: true,
+  }));
 
   await app.register(contentParser);
-  app.useStaticAssets({ root: path.join(__dirname, '..', 'src', 'static') });
+  app.useStaticAssets({ root: path.join(__dirname, 'src', 'static') });
   await app.listen(5000, '0.0.0.0');
 }
 

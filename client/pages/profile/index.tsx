@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { useState } from 'react';
 import { Layout } from '../../components/UI/Layout';
 import { useGetProfileQuery } from '../../services/authAPI';
 import { ProfileInfo } from '../../components/Account/ProfileInfo';
@@ -14,51 +14,45 @@ const Page = () => {
   const handlerEdit = () => setIsEdit(prev => !prev);
 
   return (
-    <div
-      className = 'flex flex-wrap justify-center'
-    >
-      {
-        isLoading && <Spinner />
-      }
-      {
-        user &&
-        <>
-          <div>
-            {
-              isEdit ?
-                <EditProfile
-                  editUser = {user}
-                  success = {handlerEdit}
-                /> :
-                <>
-                  <ProfileInfo
-                    user = {user}
-                  />
-                  <div
-                    className = 'mt-2'
-                  >
-                    <Button
-                      onClick = {handlerEdit}
-                    >
-                      Редактировать
-                    </Button>
-                  </div>
-                </>
-            }
-          </div>
-          <Avatar
-            urlAvatar = {user.avatar}
-          />
-        </>
-      }
-    </div>
-  );
-};
-
-Page.getLayout = function getLayout(page: ReactElement) {
-  return (
     <Layout>
-      {page}
+      <div
+        className = 'flex flex-wrap justify-center'
+      >
+        {
+          isLoading && <Spinner />
+        }
+        {
+          user &&
+          <>
+            <div>
+              {
+                isEdit ?
+                  <EditProfile
+                    editUser = {user}
+                    success = {handlerEdit}
+                  /> :
+                  <>
+                    <ProfileInfo
+                      user = {user}
+                    />
+                    <div
+                      className = 'mt-2'
+                    >
+                      <Button
+                        onClick = {handlerEdit}
+                      >
+                        Редактировать
+                      </Button>
+                    </div>
+                  </>
+              }
+            </div>
+            <Avatar
+              urlAvatar = {user.avatar}
+            />
+          </>
+        }
+      </div>
     </Layout>
   );
 };

@@ -1,8 +1,6 @@
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker,  TileLayer } from 'react-leaflet';
 import { icon, LatLng } from 'leaflet';
 import { FC } from 'react';
-import { LocationMarker } from './LocationMarker';
-import { SearchField } from './SearchField';
 
 interface MapInfoProps {
   position: LatLng;
@@ -31,7 +29,7 @@ const MapInfo: FC<MapInfoProps> = ({ position }) => {
         />
         <Marker
           position = {position}
-          icon = {icon({ iconUrl: 'http://localhost:3000/marker.svg', iconSize: [50, 50] })}
+          icon = {icon({ iconUrl: '/marker.svg', iconSize: [50, 50] })}
         >
 
         </Marker>

@@ -1,11 +1,13 @@
 import dynamic from 'next/dynamic';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useCreateBookingMutation } from '../../services/bookingAPI';
 import { IBooking } from '../../models/IBooking';
 import { Button } from '../UI/Button/Button';
-import { differenceInCalendarDays } from 'date-fns';
+import { differenceInCalendarDays, addDays } from 'date-fns';
 import { GetContactsOwner } from './GetContactsOwner';
 import { IApartment } from '../../models/IApartment';
+import { useAppDispatch } from '../../hooks/redux';
+import { apartmentAPI } from '../../services/apartmentAPI';
 
 const BookingCalendar = dynamic(() => import('../../components/Booking/BookingCalendar/BookingCalendar'), {
   ssr: false,
@@ -22,10 +24,25 @@ interface BookingProps {
 export const Booking: FC<BookingProps> = ({ apartment, dayPrice, busyDates }) => {
   const [showContacts, setShowContacts] = useState(false);
   const [date, setDate] = useState<DateRange>([null, null]);
-  const [create] = useCreateBookingMutation();
+  const [price, setPrice] = useState(0);
+  const [create, { isSuccess }] = useCreateBookingMutation();
+  const dispath = useAppDispatch();
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispath({
+        type: `${apartmentAPI.reducerPath}/invalidateTags`,
+        payload: ['Apartment'],
+      });
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    const p = differenceInCalendarDays(addDays(date[1]!, 1), date[0]!) * dayPrice;
+    setPrice(p)
+  }, [date]);
 
   const handlerBooking = () => {
-    const price = differenceInCalendarDays(date[1]!, date[0]!) * dayPrice;
     const booking: IBooking = {
       startDate: date[0]!,
       endDate: date[1]!,
@@ -39,7 +56,7 @@ export const Booking: FC<BookingProps> = ({ apartment, dayPrice, busyDates }) =>
 
   return (
     <div
-      className = 'flex items-center sm:col-span-2'
+      className = 'flex flex-wrap items-center sm:col-span-2'
     >
       <BookingCalendar
         date = {date}
@@ -47,28 +64,36 @@ export const Booking: FC<BookingProps> = ({ apartment, dayPrice, busyDates }) =>
         busyDates = {busyDates}
       />
       <div
-        className = 'ml-2'
+        className='flex flex-wrap'
       >
-        <Button
-          onClick = {handlerBooking}
+        <div
+          className = 'm-2'
         >
-          Забронировать
-        </Button>
-      </div>
-      <div
-        className = 'm-2 flex'
-      >
-        {
-          showContacts ?
-            <GetContactsOwner
-              owner = {apartment.owner!}
-            /> :
-            <Button
-              onClick = {handlerShowContacts}
-            >
-              Посмотреть контакты
-            </Button>
-        }
+          <Button
+            onClick = {handlerBooking}
+          >
+            Забронировать
+          </Button>
+          {
+            !isNaN(price) &&
+            <div>{`Ваша стоимость: ${price}`}</div>
+          }
+        </div>
+        <div
+          className = 'm-2 flex'
+        >
+          {
+            showContacts ?
+              <GetContactsOwner
+                owner = {apartment.owner!}
+              /> :
+              <Button
+                onClick = {handlerShowContacts}
+              >
+                Посмотреть контакты
+              </Button>
+          }
+        </div>
       </div>
     </div>
   );
