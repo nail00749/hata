@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
 import { UserAuthDto } from '../users/dto/userAuthDto';
 import { AuthService } from './auth.service';
 import { FastifyReply, FastifyRequest } from 'fastify';
@@ -59,9 +59,10 @@ export class AuthController {
   }
 
   @Public()
-  @Get('activate')
-  confirmEmail() {
-
+  @Get('activate/:code')
+  async confirmEmail(@Param('code') code: string, @Res() response: FastifyReply) {
+    await this.usersService.activateAccount(code)
+    response.redirect(200, `${process.env._URL_CLIENT}`)
   }
 
 }

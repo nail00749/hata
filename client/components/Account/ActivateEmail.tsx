@@ -2,7 +2,7 @@ import { Button } from '../UI/Button/Button';
 import { useSendCodeMutation } from '../../services/authAPI';
 
 export const ActivateEmail = () => {
-  const [send, { isSuccess }] = useSendCodeMutation();
+  const [send] = useSendCodeMutation();
 
   const handlerCode = () => send();
 
@@ -10,7 +10,7 @@ export const ActivateEmail = () => {
     <div
       className = ''
     >
-      <div>Потвердите свой email</div>
+      <div>Подтвердите свой email</div>
       <Button
         onClick = {handlerCode}
       >

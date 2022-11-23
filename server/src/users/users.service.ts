@@ -31,9 +31,8 @@ export class UsersService {
     return new UserModel(newUser);
   }
 
-  async getMeInfo(userId: string): Promise<UserModel> {
-    const user = await this.userRepository.findOne({ where: { id: userId } });
-    return new UserModel(user);
+  getMeInfo(userId: string): Promise<UserEntity> {
+    return this.userRepository.findOne({ where: { id: userId } });
   }
 
   async removeToken(userId: string, refreshToken: string) {
@@ -61,6 +60,11 @@ export class UsersService {
         avatar: `avatars/${pathAvatar}`,
       },
     );
+  }
+
+  async activateAccount(link: string) {
+    await this.userRepository.update({ activationLink: link }, { isActive: true });
+    return true;
   }
 
 }

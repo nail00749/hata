@@ -112,13 +112,7 @@ export class AuthService {
     const code = uuid.v4()
     const activationLink = `${process.env.URL_SERVER}/auth/activate/${code}`
     this.mailService.confirmationEmail(user.email, activationLink)
-    await this.usersService.updateProfile({...user, activationLink} as UserEntity)
+    await this.usersService.updateProfile({...user, activationLink: code} as UserEntity)
     return true
   }
-
-  async confirmCode(code: string) {
-
-  }
-
-
 }
