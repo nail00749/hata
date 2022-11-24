@@ -1,15 +1,32 @@
 import { Input } from './UI/Input/Input';
+import { ChangeEvent, FC } from 'react';
 
-export const Filters = () => {
+interface FiltersProps {
+  filters: {
+    minPrice?: number
+    maxPrice?: number
+  };
+  handlerFilters: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export const Filters: FC<FiltersProps> = ({ filters, handlerFilters }) => {
   return (
     <div
-      className='flex flex-col hidden md:flex'
+      className = 'flex flex-col hidden md:flex'
     >
       <Input
-        placeholder={'Min price'}
+        value = {filters.minPrice}
+        onChange = {handlerFilters}
+        name = 'minPrice'
+        placeholder = {'Min price'}
+        type = 'number'
       />
       <Input
-        placeholder={'Max price'}
+        value = {filters.maxPrice}
+        onChange = {handlerFilters}
+        name = 'maxPrice'
+        placeholder = {'Max price'}
+        type = 'number'
       />
     </div>
   );

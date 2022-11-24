@@ -1,6 +1,6 @@
 import { AuthModal } from '../Modals/AuthModal';
 import { LoginMenu } from '../Account/LoginMenu';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch } from '../../hooks/redux';
 import { initState } from '../../store/slices/AuthSlice';
 import { MobileMenu } from './MobileMenu';
@@ -20,11 +20,11 @@ export const Navigation = () => {
       className = 'h-20 '
     >
       <nav
-        className = 'flex justify-between items-center p-3 shadow-lg rounded-b-md '
+        className = 'flex justify-between items-center p-3 shadow-lg rounded-b-md 2xl:px-80'
       >
         <DesktopMenu />
         <MobileMenu />
-        <LoginMenu/>
+        <LoginMenu />
       </nav>
       <AuthModal />
     </header>

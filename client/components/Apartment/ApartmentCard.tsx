@@ -20,13 +20,15 @@ export const ApartmentCard: FC<ApartmentCardProps> = ({ apartment }) => {
           className = 'flex flex-col justify-center items-center m-2 p-1 cursor-pointer'
         >
           <div
-            className = {'w-40 sm:w-40 md:w-[150px] lg:w-[250px]'}
+            className = 'relative w-full h-40'
           >
             <Image
               className = 'rounded-xl'
-              width = '200'
+              /*width = '200'
               height = '200'
-              layout = 'responsive'
+              layout = 'responsive'*/
+              layout = 'fill'
+              objectFit = 'contain'
               src = {apartment.images && apartment.images[0] ? BaseURL + apartment.images[0] : homeDefault}
               alt = {''}
             />

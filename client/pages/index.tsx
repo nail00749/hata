@@ -1,5 +1,5 @@
 import { Layout } from '../components/UI/Layout';
-import { ReactElement, useEffect, useRef } from 'react';
+import { ChangeEvent, ReactElement, useEffect, useRef, useState } from 'react';
 import { Filters } from '../components/Filters';
 import {
   apartmentAPI,
@@ -11,17 +11,21 @@ import { ApartmentsList } from '../components/Apartment/ApartmentsList';
 import { NextPage } from 'next';
 
 interface Props {
-  count: number
+  count: number;
 }
 
-const Page:NextPage<Props> = ({count}) => {
+const Page: NextPage<Props> = ({ count }) => {
   const loader = useRef<HTMLDivElement | null>(null);
   const ref = useRef(count);
-  const { data, refetch } = useGetApartmentsQuery(ref.current);
-
+  const [filters, setFilters] = useState({ minPrice: undefined, maxPrice: undefined });
+  const { data, refetch } = useGetApartmentsQuery({
+    skip: ref.current,
+    minPrice: filters.minPrice,
+    maxPrice: filters.maxPrice,
+  });
   useEffect(() => {
-    if(data){
-      ref.current = data.length
+    if (data) {
+      ref.current = data.length;
     }
   }, [data]);
 
@@ -45,11 +49,22 @@ const Page:NextPage<Props> = ({count}) => {
     });
   };
 
+  /*const handlerFilters = (e: ChangeEvent<HTMLInputElement>) => {
+    setFilters(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+    ref.current = 0;
+  };*/
+
   return (
     <div
       className = 'flex flex-auto'
     >
-      <Filters />
+      {/*<Filters
+        filters = {filters}
+        handlerFilters = {handlerFilters}
+      />*/}
       <div
         className = 'flex flex-col flex-wrap justify-between flex-[1_1_100%]'
       >
@@ -88,14 +103,14 @@ export default Page;
 
 export const getServerSideProps = wrapper.getServerSideProps(
   ({ dispatch }) => async () => {
-    const result = await dispatch(getApartments.initiate(0));
+    const result = await dispatch(getApartments.initiate({ skip: 0 }));
     // @ts-ignore
     await Promise.all(dispatch(apartmentAPI.util.getRunningQueriesThunk()));
 
     return {
       props: {
         // @ts-ignore
-        count: result?.data?.length || 0
+        count: result?.data?.length || 0,
       },
     };
   },

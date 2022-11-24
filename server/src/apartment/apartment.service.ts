@@ -6,7 +6,7 @@ import { ApartmentEntity } from './entities/apartment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../users/entity/users.entity';
 import { CurrencyEnum } from 'src/models/Currency.enum';
-import { QueryLimitDto } from '../dtos/queryLimit.dto';
+import { ApartmentQueryDto } from '../dtos/apartmentQuery.dto';
 
 @Injectable()
 export class ApartmentService {
@@ -27,21 +27,26 @@ export class ApartmentService {
     return apartment;
   }
 
-  findAll(queryLimitDto: QueryLimitDto) {
+  async findAll(queryLimitDto: ApartmentQueryDto) {
     const limit = queryLimitDto.limit || 20;
     const skip = queryLimitDto.skip || 0;
-    //const allCount = await this.apartmentRepository.count();
-    return this.apartmentRepository.find({
-        skip,
-        take: limit,
-      },
-    );
+    const minPrice = queryLimitDto.minPrice || 0;
+    const maxPrice = queryLimitDto.maxPrice || 99999999;
+
+    const a = await this.apartmentRepository.createQueryBuilder('apartment')
+      .take(limit)
+      .skip(skip)
+      .where('apartment.price >= :minPrice', { minPrice: minPrice })
+      .andWhere('apartment.price <= :maxPrice', { maxPrice: maxPrice })
+      .getMany();
+    console.log(a);
+    return a;
   }
 
   findOne(id: string) {
     return this.apartmentRepository.createQueryBuilder('a')
       .leftJoinAndSelect('a.owner', 'user')
-      .leftJoinAndSelect('a.bookings', 'booking', /*'booking.start_date >= :date', { date: new Date() }*/)
+      .leftJoinAndSelect('a.bookings', 'booking' /*'booking.start_date >= :date', { date: new Date() }*/)
       .where('a.id = :id', { id })
       .getOne();
   }

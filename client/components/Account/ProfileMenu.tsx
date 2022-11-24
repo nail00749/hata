@@ -32,12 +32,18 @@ export const ProfileMenu = () => {
       flex justify-center items-center
       `}
     >
-      <Image
-        className = 'ml-3'
-        src = {'/profile.svg'}
-        width = {20}
-        height = {20}
-      />
+      <div
+        className='relative w-4 h-4'
+      >
+        <Image
+          className = 'ml-3'
+          src = {'/profile.svg'}
+          layout='fill'
+          objectFit='contain'
+          /*width = {20}
+          height = {20}*/
+        />
+      </div>
       {
         showMenu &&
         <div

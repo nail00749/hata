@@ -1,4 +1,3 @@
-import { useGetApartmentsQuery } from '../../services/apartmentAPI';
 import { ApartmentCard } from './ApartmentCard';
 import { FC } from 'react';
 import { IApartment } from '../../models/IApartment';
@@ -10,9 +9,8 @@ interface ApartmentsListProps {
 export const ApartmentsList: FC<ApartmentsListProps> = ({  apartments }) => {
 
   return (
-
     <div
-      className='grid sm:grid-cols-2 md:grid-cols-3'
+      className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'
     >
       {
         apartments.map(apartment =>

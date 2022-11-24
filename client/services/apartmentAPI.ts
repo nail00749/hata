@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReAuth } from '../store/baseQuery';
 import { extractRehydrationInfo } from '../store/extraRehydrationInfo';
 import { IApartment } from '../models/IApartment';
+import { IQueryApartment } from '../models/IQuery/IQueryApartment';
 
 export const apartmentAPI = createApi({
   baseQuery: baseQueryWithReAuth,
@@ -10,14 +11,14 @@ export const apartmentAPI = createApi({
   tagTypes: ['Apartment'],
   endpoints: (build) => {
     return ({
-      getApartments: build.query<IApartment[], number>({
-        query: (skip) => ({
+      getApartments: build.query<IApartment[], IQueryApartment>({
+        query: (params) => ({
           url: `/apartment`,
           params: {
-            skip,
+            ...params,
           },
         }),
-        serializeQueryArgs: ({ endpointName }) => {
+        serializeQueryArgs: ({ queryArgs, endpointName, endpointDefinition }) => {
           return endpointName;
         },
         merge: (currentCache, newItems) => {

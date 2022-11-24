@@ -20,7 +20,7 @@ import { FileMultipleInterceptor } from '../interceptors/FileMultipleInterceptor
 import { RequestWithUser } from '../models/RequestWithUser.interface';
 import { editFileName } from '../utils/editFileName';
 import { FastifyReply } from 'fastify';
-import { QueryLimitDto } from '../dtos/queryLimit.dto';
+import { ApartmentQueryDto } from '../dtos/apartmentQuery.dto';
 
 @Controller('apartment')
 export class ApartmentController {
@@ -46,7 +46,7 @@ export class ApartmentController {
 
   @Get()
   @Public()
-  findAll(@Query() queryLimitDto: QueryLimitDto) {
+  findAll(@Query() queryLimitDto: ApartmentQueryDto) {
     return this.apartmentService.findAll(queryLimitDto);
   }
 

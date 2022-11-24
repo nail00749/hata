@@ -7,6 +7,7 @@ export class MailService {
   }
 
   public confirmationEmail(to, url): void {
+    //todo fix email to
     this.mailerService.sendMail({
       to: 'nail00749@icloud.com',
       from: 'nail00749@gmail.com',

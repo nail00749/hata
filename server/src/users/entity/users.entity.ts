@@ -39,6 +39,7 @@ export class UserEntity extends BaseWithMetadataEntity {
   apartments: ApartmentEntity[];
 
   @Column({ name: 'activation_link', nullable: true })
+  @Exclude({ toPlainOnly: true })
   activationLink: string;
 
   @Column({ name: 'refresh_tokens', type: 'simple-array', default: [] })
