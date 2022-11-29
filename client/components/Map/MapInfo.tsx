@@ -9,7 +9,8 @@ interface MapInfoProps {
 const MapInfo: FC<MapInfoProps> = ({ position }) => {
   return (
     <div
-      className = 'z-3 pr-6 my-4 col-span-1 sm:col-span-2 max-w-full'
+      className = 'z-3 pr-6 my-4 col-span-1  max-w-full'
+      //sm:col-span-2
       style = {{
         minWidth: 300,
         height: 400,

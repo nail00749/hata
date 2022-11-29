@@ -15,13 +15,13 @@ const Page = () => {
         Мои бронирования
       </h1>
       <div
-        className = 'flex flex-wrap'
+        className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4'
       >
         {
           bookings &&
           bookings.map(booking =>
             <ApartmentCard
-              apartment = {booking.apartment as unknown as IApartment}
+              apartment = {booking.apartment as IApartment}
             />,
           )
         }

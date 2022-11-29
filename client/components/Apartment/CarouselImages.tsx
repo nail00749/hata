@@ -13,7 +13,7 @@ interface CarouselImagesProps {
 }
 
 
-export const CarouselImages: FC<CarouselImagesProps> = ({ images }) => {
+const CarouselImages: FC<CarouselImagesProps> = ({ images }) => {
   return (
     <div
       className = 'h-full w-full'
@@ -33,7 +33,7 @@ export const CarouselImages: FC<CarouselImagesProps> = ({ images }) => {
               key = {image}
             >
               <div
-                className = 'relative h-60 w-[90vw] sm:w-[50vw]'
+                className = 'relative h-60 w-full'
               >
                 <Image
                   src = {BaseURL + image}
@@ -48,3 +48,5 @@ export const CarouselImages: FC<CarouselImagesProps> = ({ images }) => {
     </div>
   );
 };
+
+export default CarouselImages;

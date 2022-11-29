@@ -14,7 +14,7 @@ const Page = () => {
         Мои объявления
       </h1>
       <div
-        className = 'flex flex-wrap m-2'
+        className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4'
       >
         {
           apartments &&
