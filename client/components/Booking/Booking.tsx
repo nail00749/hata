@@ -7,7 +7,7 @@ import { differenceInCalendarDays, addDays } from 'date-fns';
 import { GetContactsOwner } from './GetContactsOwner';
 import { IApartment } from '../../models/IApartment';
 import { useAppDispatch } from '../../hooks/redux';
-import { apartmentAPI } from '../../services/apartmentAPI';
+import { showAlert } from '../../store/slices/AlertSlice';
 
 const BookingCalendar = dynamic(() => import('../../components/Booking/BookingCalendar/BookingCalendar'), {
   ssr: false,
@@ -30,10 +30,7 @@ export const Booking: FC<BookingProps> = ({ apartment, dayPrice, busyDates }) =>
 
   useEffect(() => {
     if (isSuccess) {
-      dispath({
-        type: `${apartmentAPI.reducerPath}/invalidateTags`,
-        payload: ['Apartment'],
-      });
+      dispath(showAlert({text: 'Ваш запрос отправлен', variant: 'success'}));
     }
   }, [isSuccess]);
 
@@ -43,7 +40,7 @@ export const Booking: FC<BookingProps> = ({ apartment, dayPrice, busyDates }) =>
   }, [date]);
 
   const handlerBooking = () => {
-    const booking: IBooking = {
+    const booking: Partial<IBooking> = {
       startDate: date[0]!,
       endDate: date[1]!,
       price,

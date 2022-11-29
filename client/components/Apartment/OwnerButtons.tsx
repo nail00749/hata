@@ -27,7 +27,7 @@ export const OwnerButtons: FC<OwnerButtonsProps> = ({ apartment }) => {
       className = 'flex items-center'
     >
       {/*todo add statistics*/}
-      <div>Статистика</div>
+
       <div>
         <Button
           onClick = {handlerUpdate}

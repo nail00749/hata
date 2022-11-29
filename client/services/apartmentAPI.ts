@@ -1,14 +1,8 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithReAuth } from '../store/baseQuery';
-import { extractRehydrationInfo } from '../store/extraRehydrationInfo';
 import { IApartment } from '../models/IApartment';
 import { IQueryApartment } from '../models/IQuery/IQueryApartment';
+import { api } from './api';
 
-export const apartmentAPI = createApi({
-  baseQuery: baseQueryWithReAuth,
-  reducerPath: 'apartmentAPI',
-  extractRehydrationInfo,
-  tagTypes: ['Apartment'],
+export const apartmentAPI = api.injectEndpoints({
   endpoints: (build) => {
     return ({
       getApartments: build.query<IApartment[], IQueryApartment>({
@@ -73,7 +67,7 @@ export const apartmentAPI = createApi({
       }),
     });
   },
-
+  overrideExisting: true
 });
 
 

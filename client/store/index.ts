@@ -1,13 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authAPI } from '../services/authAPI';
 import { errorMiddleware } from './middlewares/ErrorMiddleware';
-import { apartmentAPI } from '../services/apartmentAPI';
 import { createWrapper } from 'next-redux-wrapper';
-import { reducer } from './reducers';
 import { nextReduxCookieMiddleware, wrapMakeStore } from 'next-redux-cookie-wrapper';
+import { reducer } from './reducers';
 import { authSlice } from './slices/AuthSlice';
-import { userAPI } from '../services/userAPI';
-import { bookingAPI } from '../services/bookingAPI';
+import { api } from '../services/api';
 
 export const makeStore = wrapMakeStore(() =>
   configureStore({
@@ -18,10 +15,7 @@ export const makeStore = wrapMakeStore(() =>
           authSlice.name,
         ],
       }),
-      authAPI.middleware,
-      apartmentAPI.middleware,
-      userAPI.middleware,
-      bookingAPI.middleware,
+      api.middleware,
       errorMiddleware,
     ]),
   }),

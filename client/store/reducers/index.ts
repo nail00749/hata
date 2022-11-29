@@ -3,17 +3,15 @@ import alertSlice from '../slices/AlertSlice';
 import { authSlice } from '../slices/AuthSlice';
 import { HYDRATE } from 'next-redux-wrapper';
 import rentHouseSlice from '../slices/RentHouseSlice';
-import { apartmentAPI } from '../../services/apartmentAPI';
-import { authAPI } from '../../services/authAPI';
 import { userAPI } from '../../services/userAPI';
 import { bookingAPI } from '../../services/bookingAPI';
+import { api } from '../../services/api';
 
 const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,
   alertSlice,
   rentHouseSlice,
-  [authAPI.reducerPath]: authAPI.reducer,
-  [apartmentAPI.reducerPath]: apartmentAPI.reducer,
+  [api.reducerPath]: api.reducer,
   [userAPI.reducerPath]: userAPI.reducer,
   [bookingAPI.reducerPath]: bookingAPI.reducer,
 });

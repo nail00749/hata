@@ -1,21 +1,11 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithReAuth } from '../store/baseQuery';
-import { HYDRATE } from 'next-redux-wrapper';
 import { IPayloadAuth } from '../models/IPayloadAuth';
 import { fetchAuthSuccess } from '../store/slices/AuthSlice';
 import { IToken } from '../models/IToken';
 import { IUser } from '../models/IUser';
+import { api } from './api';
 
 
-export const authAPI = createApi({
-  baseQuery: baseQueryWithReAuth,
-  reducerPath: 'authAPI',
-  extractRehydrationInfo: (action, { reducerPath }) => {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath];
-    }
-  },
-  tagTypes: ['Me'],
+export const authAPI = api.injectEndpoints({
   endpoints: (build) => ({
     register: build.mutation<undefined, IPayloadAuth>({
       query: (body) => ({
@@ -53,7 +43,7 @@ export const authAPI = createApi({
       query: () => ({
         url: 'users/profile',
       }),
-      providesTags: ['Me']
+      providesTags: ['Me'],
     }),
     updateProfile: build.mutation<IUser, IUser>({
       query: (body) => ({
@@ -61,7 +51,7 @@ export const authAPI = createApi({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: ['Me']
+      invalidatesTags: ['Me'],
     }),
     updateAvatar: build.mutation<IUser, FormData>({
       query: (body) => ({
@@ -69,16 +59,18 @@ export const authAPI = createApi({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: ['Me']
+      invalidatesTags: ['Me'],
     }),
     sendCode: build.mutation<any, void>({
       query: () => ({
         url: 'auth/send-mail',
-        method: "GET"
-      })
-    })
+        method: 'GET',
+      }),
+    }),
   }),
+  overrideExisting: true,
 });
+
 
 export const {
   useRegisterMutation,
@@ -87,5 +79,7 @@ export const {
   useGetProfileQuery,
   useUpdateProfileMutation,
   useUpdateAvatarMutation,
-  useSendCodeMutation
+  useSendCodeMutation,
 } = authAPI;
+
+export const { getProfile } = authAPI.endpoints;

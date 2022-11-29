@@ -1,21 +1,15 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithReAuth } from '../store/baseQuery';
-import { extractRehydrationInfo } from '../store/extraRehydrationInfo';
 import { IUser } from '../models/IUser';
+import { api } from './api';
 
-
-export const userAPI = createApi({
-  reducerPath: 'userAPI',
-  baseQuery: baseQueryWithReAuth,
-  extractRehydrationInfo,
+export const userAPI = api.injectEndpoints({
   endpoints: (build) => ({
     getUser: build.query<IUser, string>({
       query: (id) => ({
         url: `users/${id}`,
       }),
     }),
-
   }),
+  overrideExisting: true
 });
 
 export const { useGetUserQuery } = userAPI;

@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Patch, Req, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { RequestWithUser } from '../models/RequestWithUser.interface';
+import { RequestWithUser } from '../models';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entity/users.entity';
 import { FileInterceptor } from '../interceptors/FileInterceptor';
