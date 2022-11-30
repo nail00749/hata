@@ -10,12 +10,12 @@ export const makeStore = wrapMakeStore(() =>
   configureStore({
     reducer,
     middleware: (gDM) => gDM({ serializableCheck: false }).prepend([
+      api.middleware,
       nextReduxCookieMiddleware({
         subtrees: [
           authSlice.name,
         ],
       }),
-      api.middleware,
       errorMiddleware,
     ]),
   }),

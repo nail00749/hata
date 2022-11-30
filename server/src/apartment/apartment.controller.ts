@@ -17,7 +17,7 @@ import { Public } from '../decotarors/public.decorator';
 import { diskStorage } from 'multer';
 import { ParseFromObject } from '../pipes/ParseFromObject';
 import { FileMultipleInterceptor } from '../interceptors/FileMultipleInterceptor';
-import { RequestWithUser } from '../models/RequestWithUser.interface';
+import { RequestWithUser } from '../models';
 import { editFileName } from '../utils/editFileName';
 import { FastifyReply } from 'fastify';
 import { ApartmentQueryDto } from '../dtos/apartmentQuery.dto';

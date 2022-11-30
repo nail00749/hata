@@ -1,8 +1,9 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../database/baseEntity/base.entity';
 import { UserEntity } from '../../users/entity/users.entity';
-import { CurrencyEnum } from '../../models/Currency.enum';
+import { CurrencyEnum } from '../../models';
 import { BookingEntity } from '../../bookings/entities/booking.entity';
+import { UserRatingEntity } from '../../user-rating/entities/user-rating.entity';
 
 @Entity({
   name: 'apartments',
@@ -45,5 +46,8 @@ export class ApartmentEntity extends BaseEntity {
   owner: UserEntity;
 
   @OneToMany(() => BookingEntity, (booking) => booking.apartment)
-  bookings: BookingEntity[]
+  bookings: BookingEntity[];
+
+  @ManyToOne(() => UserRatingEntity, (rating) => rating.apartment)
+  ratings: UserRatingEntity[]
 }

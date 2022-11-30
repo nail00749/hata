@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import * as uuid from  'uuid'
+import * as uuid from 'uuid';
 import { UsersService } from '../users/users.service';
 import { verify } from '../helpers/hashing';
 import { UserEntity } from '../users/entity/users.entity';
@@ -12,8 +12,8 @@ import { MailService } from '../mail/mail.service';
 export class AuthService {
   constructor(private usersService: UsersService,
               private jwtService: JwtService,
-              private mailService: MailService
-              ) {
+              private mailService: MailService,
+  ) {
   }
 
   async validateUser(email: string, password: string) {
@@ -45,8 +45,8 @@ export class AuthService {
     }
 
     const tokens = this.generateToken(user as UserEntity);
-    //user.refreshTokens.push(tokens.refresh_token);
-    //await this.usersService.saveUser(user);
+    user.refreshToken = tokens.refresh_token;
+    await this.usersService.saveUser(user);
     return tokens;
   }
 
@@ -63,10 +63,17 @@ export class AuthService {
     };
   }
 
-  validRefreshToken(token: string) {
-    return this.jwtService.verifyAsync(token, {
-      secret: process.env.JWT_REFRESH_SECRET,
-    });
+  async validRefreshToken(token: string) {
+    try {
+      const decoded = await this.jwtService.verifyAsync(token, {
+        secret: process.env.JWT_REFRESH_SECRET,
+      });
+
+      const user = await this.usersService.findByEmail(decoded.email);
+      return !!(user.refreshToken === token && decoded);
+    } catch (e) {
+      return e
+    }
   }
 
   async refreshToken(refreshToken: string) {
@@ -86,33 +93,33 @@ export class AuthService {
       throw new HttpException('Нет такого пользователя', HttpStatus.NOT_FOUND);
     }
 
-    const tokens = this.generateToken(user);
-    const indexToken = user.refreshTokens.findIndex(t => t === refreshToken);
+    /*const indexToken = user.refreshTokens.findIndex(t => t === refreshToken);*/
     /*if (indexToken === -1) {
       throw  new HttpException('Error refresh token', HttpStatus.NOT_FOUND);
     }*/
     /*user.refreshTokens[indexToken] = tokens.refresh_token;
     await this.usersService.saveUser(user);*/
-    return tokens;
+    return this.generateToken(user);
   }
 
-  async logout(refreshToken: string) {
+  async logout(cookies: { [key: string]: string }) {
+    const refreshToken = cookies['refreshToken'];
+
     if (!refreshToken) {
       throw new HttpException('not found token', HttpStatus.NOT_FOUND);
     }
-
     const userData = await this.jwtService.verifyAsync(refreshToken, {
       secret: process.env.JWT_REFRESH_SECRET,
     });
 
-    return this.usersService.removeToken(userData.sub, refreshToken);
+    return this.usersService.removeToken(userData.sub);
   }
 
   async sendCode(user: UserEntity) {
-    const code = uuid.v4()
-    const activationLink = `${process.env.URL_SERVER}/auth/activate/${code}`
-    this.mailService.confirmationEmail(user.email, activationLink)
-    await this.usersService.updateProfile({...user, activationLink: code} as UserEntity)
-    return true
+    const code = uuid.v4();
+    const activationLink = `${process.env.URL_SERVER}/auth/activate/${code}`;
+    this.mailService.confirmationEmail(user.email, activationLink);
+    await this.usersService.updateProfile({ ...user, activationLink: code } as UserEntity);
+    return true;
   }
 }

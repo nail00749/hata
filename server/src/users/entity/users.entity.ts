@@ -1,12 +1,13 @@
 import {
   Column,
-  Entity,
+  Entity, ManyToOne,
   OneToMany,
 } from 'typeorm';
 import { ApartmentEntity } from '../../apartment/entities/apartment.entity';
 import { BookingEntity } from '../../bookings/entities/booking.entity';
 import { classToPlain, Exclude } from 'class-transformer';
 import { BaseWithMetadataEntity } from '../../database/baseEntity/baseWithMetadata.entity';
+import { UserRatingEntity } from '../../user-rating/entities/user-rating.entity';
 
 
 @Entity({
@@ -42,12 +43,15 @@ export class UserEntity extends BaseWithMetadataEntity {
   @Exclude({ toPlainOnly: true })
   activationLink: string;
 
-  @Column({ name: 'refresh_tokens', type: 'simple-array', default: [] })
+  @Column({ name: 'refresh_token', /*type: 'simple-array', default: []*/ nullable: true })
   @Exclude({ toPlainOnly: true })
-  refreshTokens: string[];
+  refreshToken: string;
 
   @OneToMany(() => BookingEntity, (booking) => booking.tenant)
   bookings: BookingEntity[];
+
+  @ManyToOne(() => UserRatingEntity, (rating) => rating.user)
+  ratings: UserRatingEntity[];
 
 
   toJSON() {

@@ -30,13 +30,14 @@ export const Booking: FC<BookingProps> = ({ apartment, dayPrice, busyDates }) =>
 
   useEffect(() => {
     if (isSuccess) {
-      dispath(showAlert({text: 'Ваш запрос отправлен', variant: 'success'}));
+      dispath(showAlert({ text: 'Ваш запрос отправлен', variant: 'success' }));
+      setDate([null, null]);
     }
   }, [isSuccess]);
 
   useEffect(() => {
     const p = differenceInCalendarDays(addDays(date[1]!, 1), date[0]!) * dayPrice;
-    setPrice(p)
+    setPrice(p);
   }, [date]);
 
   const handlerBooking = () => {
@@ -61,7 +62,7 @@ export const Booking: FC<BookingProps> = ({ apartment, dayPrice, busyDates }) =>
         busyDates = {busyDates}
       />
       <div
-        className='flex flex-wrap'
+        className = 'flex flex-wrap'
       >
         <div
           className = 'm-2'

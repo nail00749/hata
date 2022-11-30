@@ -35,9 +35,9 @@ export class UsersService {
     return this.userRepository.findOne({ where: { id: userId } });
   }
 
-  async removeToken(userId: string, refreshToken: string) {
+  async removeToken(userId: string) {
     const user = await this.userRepository.findOne({ where: { id: userId } });
-    user.refreshTokens = user.refreshTokens.filter(token => token !== refreshToken);
+    user.refreshToken = null
     await this.userRepository.save(user);
     return HttpStatus.OK;
   }

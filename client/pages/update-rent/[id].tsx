@@ -47,7 +47,6 @@ const Page = () => {
         formData.append('images', image);
       }
     }
-    console.log(formData.has('price'));
     update({
       id: apartment!.id!,
       formData,

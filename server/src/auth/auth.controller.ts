@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { UsersService } from '../users/users.service';
 import { Public } from '../decotarors/public.decorator';
-import { RequestWithUser } from '../models/RequestWithUser.interface';
+import { RequestWithUser } from '../models';
 
 @Controller('auth')
 export class AuthController {
@@ -40,8 +40,8 @@ export class AuthController {
 
   @Public()
   @Get('logout')
-  async logout(@Res() response: FastifyReply) {
-    //await this.authService.logout(response.cookies['refreshToken']);
+  async logout(@Req() request: RequestWithUser, @Res() response: FastifyReply) {
+    await this.authService.logout(request.cookies);
     response.clearCookie('refreshToken',
       {
         httpOnly: true,
@@ -61,8 +61,8 @@ export class AuthController {
   @Public()
   @Get('activate/:code')
   async confirmEmail(@Param('code') code: string, @Res() response: FastifyReply) {
-    await this.usersService.activateAccount(code)
-    response.redirect(200, `${process.env._URL_CLIENT}`)
+    await this.usersService.activateAccount(code);
+    response.redirect(200, `${process.env._URL_CLIENT}`);
   }
 
 }

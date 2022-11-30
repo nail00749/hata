@@ -16,6 +16,7 @@ import { useGetProfileQuery } from '../../services/authAPI';
 import { OwnerButtons } from '../../components/Apartment/OwnerButtons';
 import { BookingsRequests } from '../../components/Booking/BookingsRequests';
 import { api } from '../../services/api';
+import { CurrentBooking } from '../../components/Booking/CurrentBooking';
 
 const MapInfo = dynamic(() => import('../../components/Map/MapInfo'), {
   ssr: false,
@@ -59,13 +60,18 @@ const Apartment = () => {
             {
               isOwner &&
               <BookingsRequests
-                apartmentId = {apartment.id!}
+                apartmentId = {apartment.id}
               />
             }
             <MapInfo
               position = {apartment.coordinates as LatLng}
             />
-            {}
+            {
+              !isOwner &&
+              <CurrentBooking
+                apartmentId = {apartment.id}
+              />
+            }
             {
               isOwner ?
                 <OwnerButtons
@@ -77,7 +83,6 @@ const Apartment = () => {
                   busyDates = {apartment.bookings!}
                 />
             }
-
           </div>
         }
       </div>

@@ -1,4 +1,9 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateBookingDto } from './create-booking.dto';
+import { BookingStatus } from '../../models';
 
-export class UpdateBookingDto extends PartialType(CreateBookingDto) {}
+
+export class UpdateBookingDto {
+  /*id: string[];*/
+
+  status: BookingStatus;
+
+}

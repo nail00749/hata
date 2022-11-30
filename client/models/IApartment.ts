@@ -2,7 +2,7 @@ import { IBooking } from './IBooking';
 import { IUser } from './IUser';
 
 export interface IApartment {
-  id?: string;
+  id: string;
   title: string;
   rentType: string;
   countRooms: number;

@@ -11,7 +11,7 @@ export const bookingAPI = api.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Apartment']
+      invalidatesTags: ['Apartment', 'MyBooking'],
     }),
     getMyBookings: build.query<IBooking[], void>({
       query: () => ({
@@ -38,11 +38,36 @@ export const bookingAPI = api.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: ['Apartment']
+      invalidatesTags: ['Apartment'],
+    }),
+    getLastBooking: build.query<IBooking, string>({
+      query: (apartmentId) => ({
+        url: `/bookings/current/${apartmentId}`,
+      }),
+      //@ts-ignore
+      transformResponse: (response) => {
+        if(response)
+        {
+          let booking = { ...response as object } as IBooking;
+          return {
+            ...booking,
+            startDate: format(new Date(booking.startDate) as Date, 'dd.MM.yyyy'),
+            endDate: format(new Date(booking.endDate) as Date, 'dd.MM.yyyy'),
+          };
+        }
+        return null
+      },
+      providesTags: ['MyBooking'],
     }),
   }),
   overrideExisting: true,
 });
 
-export const { useCreateBookingMutation, useGetMyBookingsQuery, useGetBookingsForOwnerByApartmentQuery, useUpdateStatusMutation } = bookingAPI;
+export const {
+  useCreateBookingMutation,
+  useGetMyBookingsQuery,
+  useGetBookingsForOwnerByApartmentQuery,
+  useUpdateStatusMutation,
+  useGetLastBookingQuery,
+} = bookingAPI;
 

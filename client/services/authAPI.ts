@@ -80,6 +80,7 @@ export const {
   useUpdateProfileMutation,
   useUpdateAvatarMutation,
   useSendCodeMutation,
+  useLazyGetProfileQuery
 } = authAPI;
 
 export const { getProfile } = authAPI.endpoints;

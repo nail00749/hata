@@ -16,11 +16,14 @@ import { RefreshGuard } from './auth/refresh.guard';
 import { BookingsModule } from './bookings/bookings.module';
 import { BookingEntity } from './bookings/entities/booking.entity';
 import { MailModule } from './mail/mail.module';
-
+import { ScheduleModule } from '@nestjs/schedule';
+import { UserRatingModule } from './user-rating/user-rating.module';
+import { UserRatingEntity } from './user-rating/entities/user-rating.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -31,7 +34,7 @@ import { MailModule } from './mail/mail.module';
       synchronize: true,
       logging: ['error'],
       autoLoadEntities: true,
-      entities: [UserEntity, ApartmentEntity, BookingEntity],
+      entities: [UserEntity, ApartmentEntity, BookingEntity, UserRatingEntity],
       //entities: [
       //         'src/**/*.entity{.ts, .js}',
       //         'dist/**/*.entity{.ts, .js}'
@@ -44,14 +47,15 @@ import { MailModule } from './mail/mail.module';
     ApartmentModule,
     BookingsModule,
     MailModule,
+    UserRatingModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
-    /*{
+    {
       provide: APP_GUARD,
       useClass: RefreshGuard,
-    },*/
+    },
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

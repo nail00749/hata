@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/
 import { BookingsService } from './bookings.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
-import { RequestWithUser } from '../models/RequestWithUser.interface';
+import { RequestWithUser } from '../models';
 
 @Controller('bookings')
 export class BookingsController {
@@ -29,9 +29,19 @@ export class BookingsController {
     return this.bookingsService.findOne(id);
   }
 
+  @Get('my-apartment/:id')
+  findMyByApartment(@Param('id') id: string) {
+    return this.bookingsService.findForOwner(id);
+  }
+
+  @Get('current/:id')
+  findCurrentBooking(@Param('id') id: string, @Req() request: RequestWithUser) {
+    return this.bookingsService.findCurrentBooking(id, request.user);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBookingDto: UpdateBookingDto) {
-    return this.bookingsService.update(+id, updateBookingDto);
+    return this.bookingsService.update(id, updateBookingDto);
   }
 
   @Delete(':id')
