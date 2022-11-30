@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout } from '../../components/UI/Layout';
 import {
   getOneApartment,
-  useGetOneApartmentQuery,
+  useGetOneApartmentQuery, useLazyGetOneApartmentQuery,
 } from '../../services/apartmentAPI';
 import { useRouter } from 'next/router';
 import { wrapper } from '../../store';
@@ -17,6 +17,8 @@ import { OwnerButtons } from '../../components/Apartment/OwnerButtons';
 import { BookingsRequests } from '../../components/Booking/BookingsRequests';
 import { api } from '../../services/api';
 import { CurrentBooking } from '../../components/Booking/CurrentBooking';
+import { useAppSelector } from '../../hooks/redux';
+import rentHouseSlice from '../../store/slices/RentHouseSlice';
 
 const MapInfo = dynamic(() => import('../../components/Map/MapInfo'), {
   ssr: false,
@@ -29,10 +31,17 @@ const CarouselImages = dynamic(() => import('../../components/Apartment/Carousel
 });
 
 const Apartment = () => {
-  const { query } = useRouter();
-  const { data: apartment } = useGetOneApartmentQuery(String(query.id));
+  const { query, ...router } = useRouter();
+  //const { data: apartment } = useGetOneApartmentQuery(String(query?.id));
+  const [trigger, {data: apartment}] = useLazyGetOneApartmentQuery()
   const { data: user } = useGetProfileQuery();
   const isOwner = user && apartment && user.id === apartment.owner?.id;
+
+  useEffect(() => {
+    if (router.isReady) {
+      trigger(String(query?.id))
+    }
+  }, [router.isReady]);
 
   return (
     <Layout>
@@ -92,7 +101,7 @@ const Apartment = () => {
 
 export default Apartment;
 
-export const getServerSideProps = wrapper.getServerSideProps(
+/*export const getServerSideProps = wrapper.getServerSideProps(
   ({ dispatch }) => async ({ params }) => {
     dispatch(getOneApartment.initiate(String(params?.id)));
     // @ts-ignore
@@ -101,4 +110,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
       props: {},
     };
   },
-);
+);*/
