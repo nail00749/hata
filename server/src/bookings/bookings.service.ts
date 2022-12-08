@@ -77,7 +77,7 @@ export class BookingsService {
   }
 
   @Cron('0 0 0 * * *')
-  private bookingChecks(): void {
+  private bookingExpired(): void {
     this.bookingRepository.createQueryBuilder('booking')
       .update()
       .set({
@@ -85,6 +85,18 @@ export class BookingsService {
       })
       .where('booking.startDate > :date', { date: new Date() })
       .andWhere('booking.status = :status', { status: BookingStatus.REQUEST })
+      .execute();
+  }
+
+  @Cron('0 0 0 * * *')
+  private bookingAwaitRate() {
+    this.bookingRepository.createQueryBuilder('booking')
+      .update()
+      .set({
+        status: BookingStatus.AWAITINGRATE,
+      })
+      .where('booking.endDate < :date', { date: new Date() })
+      .andWhere('booking.status = :status', { status: BookingStatus.APPROVED })
       .execute();
   }
 

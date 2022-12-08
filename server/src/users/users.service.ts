@@ -6,6 +6,7 @@ import { UserModel } from './user.model';
 import { hash } from '../helpers/hashing';
 import { UserAuthDto } from './dto/userAuthDto';
 import { TokenEntity } from '../tokens/entity/token.entity';
+import { UserRatingEntity } from '../user-rating/entities/user-rating.entity';
 
 @Injectable()
 export class UsersService {
@@ -37,7 +38,7 @@ export class UsersService {
 
   async removeToken(userId: string) {
     const user = await this.userRepository.findOne({ where: { id: userId } });
-    user.refreshToken = null
+    user.refreshToken = null;
     await this.userRepository.save(user);
     return HttpStatus.OK;
   }

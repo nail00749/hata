@@ -48,6 +48,4 @@ export class ApartmentEntity extends BaseEntity {
   @OneToMany(() => BookingEntity, (booking) => booking.apartment)
   bookings: BookingEntity[];
 
-  @ManyToOne(() => UserRatingEntity, (rating) => rating.apartment)
-  ratings: UserRatingEntity[]
 }

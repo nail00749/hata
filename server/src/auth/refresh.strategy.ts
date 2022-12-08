@@ -35,7 +35,7 @@ export class RefreshStrategy extends PassportStrategy(Strategy, 'refresh') {
     }
     const isValid = await this.authService.validRefreshToken(token)
     if(!isValid) {
-      throw new BadRequestException('token invalidated')
+      throw new UnauthorizedException('token invalidated')
     }
     return payload
   }

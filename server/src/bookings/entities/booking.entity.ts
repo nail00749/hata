@@ -1,8 +1,9 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '../../database/baseEntity/base.entity';
 import { ApartmentEntity } from '../../apartment/entities/apartment.entity';
 import { UserEntity } from '../../users/entity/users.entity';
 import { BookingStatus } from '../../models';
+import { UserRatingEntity } from '../../user-rating/entities/user-rating.entity';
 
 @Entity({
   name: 'bookings',
@@ -30,4 +31,6 @@ export class BookingEntity extends BaseEntity {
   @ManyToOne(() => ApartmentEntity, (apartment) => apartment.bookings)
   apartment: ApartmentEntity;
 
+  @OneToMany(() => UserRatingEntity, (rating) => rating.booking)
+  ratings: UserRatingEntity[]
 }

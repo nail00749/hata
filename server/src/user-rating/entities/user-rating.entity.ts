@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
-import { ApartmentEntity } from '../../apartment/entities/apartment.entity';
 import { BaseWithMetadataEntity } from '../../database/baseEntity/baseWithMetadata.entity';
 import { UserEntity } from '../../users/entity/users.entity';
+import { BookingEntity } from '../../bookings/entities/booking.entity';
 
 @Entity({
   name: 'user_ratings',
@@ -16,6 +16,6 @@ export class UserRatingEntity extends BaseWithMetadataEntity {
   @ManyToOne(() => UserEntity, (user) => user)
   user: UserEntity;
 
-  @OneToMany(() => ApartmentEntity, (apartment) => apartment.ratings)
-  apartment: ApartmentEntity;
+  @ManyToOne(() => BookingEntity, (booking) => booking.ratings)
+  booking: BookingEntity;
 }

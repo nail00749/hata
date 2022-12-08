@@ -1,11 +1,15 @@
-import { FC, useEffect, useRef, useState } from 'react';
-import { useGetBookingsForOwnerByApartmentQuery, useUpdateStatusMutation } from '../../services/bookingAPI';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { useGetBookingsForOwnerByApartmentQuery, useUpdateStatusBookingMutation } from '../../services/bookingAPI';
 import DataTable from '../DataTable/DataTable';
 import Select from 'react-select';
 import { BookingStatus } from '../../models/BookingStatus';
-import { colorForBookingStatus } from '../../utils';
+import { localeBookingStatus } from '../../utils';
 import { Button } from '../UI/Button/Button';
 import { IBooking } from '../../models/IBooking';
+import { IColDef } from '../../models/IColDef';
+import { UserRatingModal } from '../Modals/UserRatingModal/UserRatingModal';
+import { useToggle } from '../../hooks/useToggle';
+import { useLazyGetRatingByUserQuery } from '../../services/userRatingAPI';
 
 interface BookingsRequestsProps {
   apartmentId: string;
@@ -15,8 +19,102 @@ export const BookingsRequests: FC<BookingsRequestsProps> = ({ apartmentId }) => 
   const [status, setStatus] = useState<BookingStatus | null>(null);
   const [bookings, setBookings] = useState<IBooking[] | null>(null);
   const { data } = useGetBookingsForOwnerByApartmentQuery(apartmentId);
-  const [update, {}] = useUpdateStatusMutation();
+  const [update, { isLoading, isSuccess }] = useUpdateStatusBookingMutation();
   const ref = useRef<IBooking | null>(null);
+  const [showModal, setShowModal] = useToggle(false);
+  const bookingRef = useRef<IBooking | null>(null);
+  const [triggerRating] = useLazyGetRatingByUserQuery();
+
+  const columns: IColDef<IBooking>[] = useMemo(() =>
+    [
+      {
+        field: 'tenant.email',
+        headerName: 'Email',
+      },
+      {
+        field: 'status',
+        headerName: 'Статус',
+        renderCell: (prop, item) =>
+          <div>
+            {
+              prop === BookingStatus.AWAITINGRATE ?
+                <div
+                  className = {'flex justify-center'}
+                >
+                  <Button
+                    onClick = {() => {
+                      setShowModal();
+                      bookingRef.current = item;
+                    }}
+                  >
+                    Поставить оценку
+                  </Button>
+                </div> :
+                <Select
+                  openMenuOnClick = {false}
+                  options = {options}
+                  onChange = {handlerSelect(item)}
+                  defaultValue = {
+                    Object.values(BookingStatus).map(item => ({
+                      value: item,
+                      label: localeBookingStatus(item),
+                    })).find(p => p.value === prop)
+                  }
+                  isDisabled = {prop === BookingStatus.APPROVED || prop === BookingStatus.REJECT || prop === BookingStatus.ENDED}
+                  placeholder = {'Обработайте запрос'}
+                  isSearchable = {false}
+                  isLoading = {isLoading}
+                  styles = {{
+                    menu: (baseStyles, state) => ({
+                      ...baseStyles,
+                      zIndex: 20,
+                    }),
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      width: '100%',
+                      /*height: '30px',*/
+                    }),
+                    valueContainer: (baseStyles, state) => ({
+                      ...baseStyles,
+                      width: '100%',
+                      /*height: '30px',*/
+                    }),
+                    container: (baseStyles, state) => ({
+                      ...baseStyles,
+                      width: '100%',
+                      /*height: '30px',*/
+                    }),
+                  }}
+                />
+            }
+          </div>,
+      },
+      {
+        field: 'startDate',
+        headerName: 'С',
+      },
+      {
+        field: 'endDate',
+        headerName: 'По',
+      },
+      {
+        field: '',
+        headerName: 'Рейтинг',
+        renderCell: (prop, item) =>
+          <Button
+            onClick = {() => {
+              triggerRating(item.tenant.id)
+            }}
+          >
+            Посмотреть рейтинг
+          </Button>,
+
+      },
+    ], [isSuccess, bookings]);
+  const options = useMemo(() => [
+    { label: localeBookingStatus(BookingStatus.APPROVED), value: BookingStatus.APPROVED, isDisabled: false },
+    { label: localeBookingStatus(BookingStatus.REJECT), value: BookingStatus.REJECT, isDisabled: false },
+  ], []);
 
   useEffect(() => {
     if (data) {
@@ -24,11 +122,11 @@ export const BookingsRequests: FC<BookingsRequestsProps> = ({ apartmentId }) => 
     }
   }, [data]);
 
-  const options = Object.values(BookingStatus).map(item => ({
-    value: item,
-    label: item,
-    isDisabled: item === 'request' || item === 'ended',
-  }));
+  useEffect(() => {
+    if (isSuccess) {
+      setStatus(null);
+    }
+  }, [isSuccess]);
 
   const handlerSelect = (item: any) => (e: any) => {
     if (bookings) {
@@ -42,7 +140,6 @@ export const BookingsRequests: FC<BookingsRequestsProps> = ({ apartmentId }) => 
       setStatus(e.value);
       ref.current = item;
     }
-
   };
 
   const handlerUpdate = () => {
@@ -51,11 +148,10 @@ export const BookingsRequests: FC<BookingsRequestsProps> = ({ apartmentId }) => 
         id: ref.current.id,
         status: status!,
       };
-
       update(data);
     }
-
   };
+
 
   return (
     <div
@@ -66,43 +162,9 @@ export const BookingsRequests: FC<BookingsRequestsProps> = ({ apartmentId }) => 
         <>
           {
             bookings.length ?
-              <DataTable
-                titles = {['Пользователь', 'Статус', 'С', 'По']}
-                data = {bookings}
-                properties = {['tenant.email', 'status', 'startDate', 'endDate']}
-                renderItems = {[
-                  {
-                    prop: 'status',
-                    renderFn: (prop: any, item: any) =>
-                      <div>
-                        <Select
-                          onChange = {handlerSelect(item)}
-                          options = {options}
-                          value = {options.filter(o => o.label === prop)}
-                          placeholder = {'Обработайте запрос'}
-                          styles = {{
-                            control: (baseStyles, state) => ({
-                              ...baseStyles,
-                              width: '100%',
-                            }),
-                            option: (baseStyles, { data }) => ({
-                              ...baseStyles,
-                              color: colorForBookingStatus(data.value),
-                            }),
-                            menu: (baseStyles, state) => ({
-                              ...baseStyles,
-                              zIndex: 20,
-                              /*height: '3rem',*/
-                            }),
-                            singleValue: (baseStyles, { data }) => ({
-                              ...baseStyles,
-                              color: colorForBookingStatus(data.value),
-                            }),
-                          }}
-                        />
-                      </div>,
-                  },
-                ]}
+              <DataTable<IBooking>
+                columns = {columns}
+                rows = {bookings}
               /> : <div>Здесь будут запросы по бронированию</div>
           }
           {status &&
@@ -111,6 +173,7 @@ export const BookingsRequests: FC<BookingsRequestsProps> = ({ apartmentId }) => 
             >
               <Button
                 onClick = {handlerUpdate}
+                isLoading = {isLoading}
               >
                 Обновить статус
               </Button>
@@ -118,6 +181,11 @@ export const BookingsRequests: FC<BookingsRequestsProps> = ({ apartmentId }) => 
           }
         </>
       }
+      <UserRatingModal
+        open = {showModal}
+        handlerVisible = {setShowModal}
+        booking = {bookingRef.current}
+      />
     </div>
   );
 };

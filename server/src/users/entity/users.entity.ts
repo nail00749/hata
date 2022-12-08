@@ -50,7 +50,7 @@ export class UserEntity extends BaseWithMetadataEntity {
   @OneToMany(() => BookingEntity, (booking) => booking.tenant)
   bookings: BookingEntity[];
 
-  @ManyToOne(() => UserRatingEntity, (rating) => rating.user)
+  @OneToMany(() => UserRatingEntity, (rating) => rating.user)
   ratings: UserRatingEntity[];
 
 

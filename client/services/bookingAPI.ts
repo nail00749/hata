@@ -32,7 +32,7 @@ export const bookingAPI = api.injectEndpoints({
         }));
       },
     }),
-    updateStatus: build.mutation<IBooking, Partial<IBooking>>({
+    updateStatusBooking: build.mutation<IBooking, Partial<IBooking>>({
       query: ({ id, ...body }) => ({
         url: `/bookings/${id}`,
         method: 'PATCH',
@@ -67,7 +67,7 @@ export const {
   useCreateBookingMutation,
   useGetMyBookingsQuery,
   useGetBookingsForOwnerByApartmentQuery,
-  useUpdateStatusMutation,
+  useUpdateStatusBookingMutation,
   useGetLastBookingQuery,
 } = bookingAPI;
 

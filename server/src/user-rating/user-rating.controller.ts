@@ -5,7 +5,8 @@ import { UpdateUserRatingDto } from './dto/update-user-rating.dto';
 
 @Controller('user-rating')
 export class UserRatingController {
-  constructor(private readonly userRatingService: UserRatingService) {}
+  constructor(private readonly userRatingService: UserRatingService) {
+  }
 
   @Post()
   create(@Body() createUserRatingDto: CreateUserRatingDto) {
@@ -19,12 +20,17 @@ export class UserRatingController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.userRatingService.findOne(+id);
+    return this.userRatingService.findOne(id);
+  }
+
+  @Get('/user/:id')
+  findByUser(@Param('id') id: string) {
+    return this.userRatingService.findByUser(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserRatingDto: UpdateUserRatingDto) {
-    return this.userRatingService.update(+id, updateUserRatingDto);
+    return this.userRatingService.update(id, updateUserRatingDto);
   }
 
   @Delete(':id')

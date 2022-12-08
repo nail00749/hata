@@ -1,75 +1,63 @@
 import React, { FC } from 'react';
 import { getNestedProperty } from '../../utils';
+import { IColDef } from '../../models/IColDef';
 
-interface DataTableProps {
-  titles: string[];
-  data: any[];
-  properties: string[];
-  renderItems?: [{ prop: string, renderFn: any }];
+interface DataTableProps<T> {
+  rows: any[],
+  columns: IColDef<T>[]
+  /*getRowId: (...args: any) => string | number*/
 }
 
-const DataTable: FC<DataTableProps> = ({ titles, data, properties, renderItems }) => {
-
+const DataTable = <T extends object> ({ columns, rows }: DataTableProps<T>) => {
+  const colLenght = `grid-cols-${columns.length}`;
 
   return (
     <div
-      /*className = {`flex `}*/
+      className = {'flex flex-col border-2 p-2 rounded-xl'}
     >
-      <table
-        className = 'w-full table-auto border-collapse  border border-slate-500'
+      <div
+        className = {`grid ${colLenght}  gap-2`}
       >
-        <thead>
-        <tr>
-          {
-            titles.map((title) => (
-              <th
-                className = 'border border-slate-600'
-                key = {title}
-              >
-                {title}
-              </th>
-            ))
-          }
-        </tr>
-        </thead>
-        <tbody>
         {
-          data.map((item, i) => (
-            <tr
-              key = {i}
+          columns.map((column) => (
+            <div
+              className = 'my-2 border-r-2'
+              key = {column.field}
             >
-              <>
-                {
-                  properties.map((prop, i) => {
-                    if (renderItems) {
-                      const index = renderItems.findIndex(r => r.prop === prop);
-                      if (~index) {
-                        return (
-                          <th
-                            key = {prop + i}
-                          >
-                            {renderItems[index].renderFn(getNestedProperty(item, prop), item)}
-                          </th>
-                        );
-                      }
-                    }
-
-                    return (
-                      <th
-                        className = 'border border-slate-600'
-                        key = {prop + i}
-                      >
-                        {getNestedProperty(item, prop)}
-                      </th>
-                    );
-                  })
-                }
-              </>
-            </tr>
+              {column.headerName}
+            </div>
           ))
         }
-        </tbody>
-      </table>
+      </div>
+      <div
+        className = {`grid ${colLenght} gap-2 grid-rows-2 gap-2`}
+      >
+        {
+          rows.map((row, i) => {
+            return columns.map((col, j) => {
+              const key = row.id + col.headerName;
+              if (col.renderCell) {
+                return (
+                  <div
+                    className = 'border-r-2 p-1 border-t-2'
+                    key = {key}
+                  >
+                    {col.renderCell(getNestedProperty(row, col.field), row)}
+                  </div>
+                );
+              }
+              return (
+                <div
+                  className = 'border-r-2 p-1 border-t-2'
+                  key = {key}
+                >
+                  {getNestedProperty(row, col.field)}
+                </div>
+              );
+            });
+          })
+        }
+      </div>
     </div>
   );
 };

@@ -4,6 +4,6 @@ export class UserAuthDto {
   @IsEmail()
   email: string;
 
-  @MinLength(8)
+  /*@MinLength(8)*/
   password: string;
 }
