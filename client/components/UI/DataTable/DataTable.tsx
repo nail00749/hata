@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
-import { getNestedProperty } from '../../utils';
-import { IColDef } from '../../models/IColDef';
+import React from 'react';
+import { getNestedProperty } from '../../../utils';
+import { IColDef } from '../../../models/IColDef';
 
 interface DataTableProps<T> {
   rows: any[],
@@ -8,7 +8,7 @@ interface DataTableProps<T> {
   /*getRowId: (...args: any) => string | number*/
 }
 
-const DataTable = <T extends object> ({ columns, rows }: DataTableProps<T>) => {
+const DataTable = <T extends object>({ columns, rows }: DataTableProps<T>) => {
   const colLenght = `grid-cols-${columns.length}`;
 
   return (
@@ -33,8 +33,8 @@ const DataTable = <T extends object> ({ columns, rows }: DataTableProps<T>) => {
         className = {`grid ${colLenght} gap-2 grid-rows-2 gap-2`}
       >
         {
-          rows.map((row, i) => {
-            return columns.map((col, j) => {
+          rows.map((row) => {
+            return columns.map((col) => {
               const key = row.id + col.headerName;
               if (col.renderCell) {
                 return (

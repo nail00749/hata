@@ -1,9 +1,9 @@
 import { Modal } from '../Modal';
-import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useCreateUserRatingMutation } from '../../../services/userRatingAPI';
 import { IBooking } from '../../../models/IBooking';
 import { IUserRating } from '../../../models/IUserRating';
-import { TextArea } from '../../UI/TextArea';
+import { TextArea } from '../../UI/TextArea/TextArea';
 import { Button } from '../../UI/Button/Button';
 import { Rating } from '../../Rating/Rating';
 
@@ -13,14 +13,14 @@ interface UserRatingModalProps {
   booking: IBooking | null;
 }
 
-export const UserRatingModal: FC<UserRatingModalProps> = ({ open, handlerVisible, booking }) => {
+const SetUserRateModal: FC<UserRatingModalProps> = ({ open, handlerVisible, booking }) => {
   const [create, { isLoading, isSuccess }] = useCreateUserRatingMutation();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
 
   useEffect(() => {
-    if(isSuccess){
-      handlerVisible()
+    if (isSuccess) {
+      handlerVisible();
     }
   }, [isSuccess]);
 
@@ -30,7 +30,7 @@ export const UserRatingModal: FC<UserRatingModalProps> = ({ open, handlerVisible
         rating,
         comment,
         booking: booking.id,
-        user: booking.tenant.id
+        user: booking.tenant.id,
       };
       create(data);
     }
@@ -71,3 +71,5 @@ export const UserRatingModal: FC<UserRatingModalProps> = ({ open, handlerVisible
     </Modal>
   );
 };
+
+export default SetUserRateModal;

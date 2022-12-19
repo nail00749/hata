@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { hideAlert } from '../../store/slices/AlertSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { hideAlert } from '../../../store/slices/AlertSlice';
 
 interface AlertProps {
 }

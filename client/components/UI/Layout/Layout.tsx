@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { Navigation } from '../Navigation/Navigation';
-import { Alert } from './Alert';
+import { Navigation } from '../../Navigation/Navigation';
+import { Alert } from '../Alert/Alert';
 
 interface LayoutProps {
   children?: ReactNode;
