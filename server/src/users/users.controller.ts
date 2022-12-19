@@ -35,7 +35,7 @@ export class UsersController {
 
   @UseInterceptors(FileInterceptor('avatar', {
     storage: diskStorage({
-      destination: 'dist/./src/static/avatars',
+      destination: 'dist/static/avatars',
       filename: editFileName,
     }),
   }))

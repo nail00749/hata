@@ -31,6 +31,7 @@ export const ApartmentCard: FC<ApartmentCardProps> = ({ apartment }) => {
               objectFit = 'contain'
               src = {apartment.images && apartment.images[0] ? BaseURL + apartment.images[0] : homeDefault}
               alt = {''}
+              priority={false}
             />
           </div>
           <div

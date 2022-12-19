@@ -22,7 +22,7 @@ async function bootstrap() {
   }));
 
   await app.register(contentParser);
-  app.useStaticAssets({ root: path.join(__dirname, 'src', 'static') });
+  app.useStaticAssets({ root: path.join(__dirname, 'static') });
   await app.listen(5000, '0.0.0.0');
 }
 

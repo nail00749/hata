@@ -30,7 +30,7 @@ export class ApartmentController {
   @Post()
   @UseInterceptors(FileMultipleInterceptor('images', 10, {
     storage: diskStorage({
-      destination: 'dist/./src/static',
+      destination: 'dist/static/apartments',
       filename: editFileName,
     }),
   }))
@@ -68,7 +68,7 @@ export class ApartmentController {
 
   @UseInterceptors(FileMultipleInterceptor('images', 10, {
     storage: diskStorage({
-      destination: 'dist/./src/static',
+      destination: 'dist/static/apartments',
       filename: editFileName,
     }),
   }))

@@ -20,7 +20,7 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
 
     if (user) {
-      const isComparePassword = verify(password, user.password);
+      const isComparePassword = await verify(password, user.password);
       if (isComparePassword) {
         const { password, ...result } = user;
         return result;
@@ -72,7 +72,7 @@ export class AuthService {
       const user = await this.usersService.findByEmail(decoded.email);
       return !!(user.refreshToken === token && decoded);
     } catch (e) {
-      return e
+      return e;
     }
   }
 

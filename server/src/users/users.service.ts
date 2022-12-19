@@ -6,7 +6,6 @@ import { UserModel } from './user.model';
 import { hash } from '../helpers/hashing';
 import { UserAuthDto } from './dto/userAuthDto';
 import { TokenEntity } from '../tokens/entity/token.entity';
-import { UserRatingEntity } from '../user-rating/entities/user-rating.entity';
 
 @Injectable()
 export class UsersService {
@@ -24,7 +23,7 @@ export class UsersService {
   }
 
   async create(userDto: UserAuthDto): Promise<UserModel> {
-    const hashPassword = hash(userDto.password);
+    const hashPassword = await hash(userDto.password);
     const newUser = new UserEntity();
     newUser.email = userDto.email;
     newUser.password = hashPassword;

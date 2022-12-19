@@ -9,7 +9,7 @@ import {
 import { wrapper } from '../store';
 import { ApartmentsList } from '../components/Apartment/ApartmentsList';
 import { NextPage } from 'next';
-import { Skeleton } from '../components/Skeleton/Skeleton';
+
 
 interface Props {
   count: number;
@@ -66,7 +66,6 @@ const Page: NextPage<Props> = ({ count }) => {
         filters = {filters}
         handlerFilters = {handlerFilters}
       />*/}
-      {<Skeleton>123</Skeleton>}
       <div
         className = 'flex flex-col flex-wrap justify-between flex-[1_1_100%]'
       >

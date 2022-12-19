@@ -1,16 +1,21 @@
-import * as crypto from 'crypto'
+import * as crypto from 'crypto';
+import { promisify } from 'util';
 
-export const hash = (data: string) => {
+const scryptAsync = promisify(crypto.scrypt);
+export const hash = async (data: string) => {
   try {
-    return crypto.createHash('md5').update(data).digest('hex')
-  }
-  catch (e){
-    console.log(e);
-    return e
+    const salt = crypto.randomBytes(16).toString('hex');
+    const buf = (await scryptAsync(data, salt, 64)) as Buffer;
+    return `${buf.toString('hex')}.${salt}}`;
+  } catch (e) {
+    return e;
   }
 
-}
+};
 
-export const verify = (data: string, hashingData: string) => {
-  return hash(data) === hashingData
-}
+export const verify = async (data: string, hashingData: string) => {
+  const [hashedPassword, salt] = hashingData.split('.');
+  const hashedPasswordBuffer = Buffer.from(hashedPassword, 'hex');
+  const suppliedPasswordBuff = (await scryptAsync(data, salt, 64)) as Buffer;
+  return crypto.timingSafeEqual(hashedPasswordBuffer, suppliedPasswordBuff);
+};

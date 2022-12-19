@@ -21,7 +21,7 @@ export class ApartmentService {
       ...createApartmentDto,
       currency: CurrencyEnum.RUB,
       owner: user,
-      images: files.map(file => file.filename),
+      images: files.map(file => 'apartments/' + file.filename),
     };
     await this.apartmentRepository.save(apartment);
     return apartment;
@@ -70,10 +70,13 @@ export class ApartmentService {
   }
 
   update(id: string, updateApartmentDto: UpdateApartmentDto, files: Express.Multer.File[]) {
+    const updatedApartment = {
+      ...updateApartmentDto,
+      ...((files && files.length) && { images: files.map(file => 'apartments/' + file.filename) }),
+    };
     return this.apartmentRepository.update(id,
       {
-        ...updateApartmentDto,
-        images: files.map(file => file.filename),
+        ...updatedApartment,
       });
   }
 
