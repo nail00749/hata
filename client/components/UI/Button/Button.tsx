@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes, FC, ReactNode, useMemo } from 'react';
-import { Spinner } from '../Spinner';
+import { Spinner } from '../Spinner/Spinner';
 import { VariantType } from '../../../models/UI/variantsColor';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

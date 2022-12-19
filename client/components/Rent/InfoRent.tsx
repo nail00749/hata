@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { Input } from '../UI/Input/Input';
-import { TextArea } from '../UI/TextArea';
-import { FileInput } from '../UI/FileInput';
+import { TextArea } from '../UI/TextArea/TextArea';
+import { FileInput } from '../UI/FileInput/FileInput';
 import React, { ChangeEvent } from 'react';
 import { rentHouseState, setData, setFiles } from '../../store/slices/RentHouseSlice';
 

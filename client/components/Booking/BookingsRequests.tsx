@@ -1,15 +1,22 @@
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useGetBookingsForOwnerByApartmentQuery, useUpdateStatusBookingMutation } from '../../services/bookingAPI';
-import DataTable from '../DataTable/DataTable';
+import DataTable from '../UI/DataTable/DataTable';
 import Select from 'react-select';
 import { BookingStatus } from '../../models/BookingStatus';
 import { localeBookingStatus } from '../../utils';
 import { Button } from '../UI/Button/Button';
 import { IBooking } from '../../models/IBooking';
 import { IColDef } from '../../models/IColDef';
-import { UserRatingModal } from '../Modals/UserRatingModal/UserRatingModal';
 import { useToggle } from '../../hooks/useToggle';
-import { useLazyGetRatingByUserQuery } from '../../services/userRatingAPI';
+import dynamic from 'next/dynamic';
+
+const SetUserRateModal = dynamic(() => import('../../components/Modals/SetUserRatingModal/SetUserRateModal'),
+  { ssr: false },
+);
+const ShowUserRateModal = dynamic(() => import('../../components/Modals/ShowUserRateModal/ShowUserRateModal'),
+  { ssr: false },
+);
+
 
 interface BookingsRequestsProps {
   apartmentId: string;
@@ -21,9 +28,10 @@ export const BookingsRequests: FC<BookingsRequestsProps> = ({ apartmentId }) => 
   const { data } = useGetBookingsForOwnerByApartmentQuery(apartmentId);
   const [update, { isLoading, isSuccess }] = useUpdateStatusBookingMutation();
   const ref = useRef<IBooking | null>(null);
-  const [showModal, setShowModal] = useToggle(false);
+  const [showSetModal, togglerSetModal] = useToggle(false);
+  const [showRateModal, togglerRateModal] = useToggle(false);
   const bookingRef = useRef<IBooking | null>(null);
-  const [triggerRating] = useLazyGetRatingByUserQuery();
+  const userIdRef = useRef<string | null>(null);
 
   const columns: IColDef<IBooking>[] = useMemo(() =>
     [
@@ -43,7 +51,7 @@ export const BookingsRequests: FC<BookingsRequestsProps> = ({ apartmentId }) => 
                 >
                   <Button
                     onClick = {() => {
-                      setShowModal();
+                      togglerSetModal();
                       bookingRef.current = item;
                     }}
                   >
@@ -102,9 +110,7 @@ export const BookingsRequests: FC<BookingsRequestsProps> = ({ apartmentId }) => 
         headerName: 'Рейтинг',
         renderCell: (prop, item) =>
           <Button
-            onClick = {() => {
-              triggerRating(item.tenant.id)
-            }}
+            onClick = {handlerUserRate(item.tenant.id)}
           >
             Посмотреть рейтинг
           </Button>,
@@ -152,6 +158,11 @@ export const BookingsRequests: FC<BookingsRequestsProps> = ({ apartmentId }) => 
     }
   };
 
+  const handlerUserRate = (userId: string) => () => {
+    userIdRef.current = userId;
+    togglerRateModal();
+  };
+
 
   return (
     <div
@@ -181,10 +192,15 @@ export const BookingsRequests: FC<BookingsRequestsProps> = ({ apartmentId }) => 
           }
         </>
       }
-      <UserRatingModal
-        open = {showModal}
-        handlerVisible = {setShowModal}
+      <SetUserRateModal
+        open = {showSetModal}
+        handlerVisible = {togglerSetModal}
         booking = {bookingRef.current}
+      />
+      <ShowUserRateModal
+        open = {showRateModal}
+        handlerVisible = {togglerRateModal}
+        userId = {userIdRef.current}
       />
     </div>
   );

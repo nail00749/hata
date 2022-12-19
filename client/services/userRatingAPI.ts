@@ -11,7 +11,7 @@ export const userRatingAPI = api.injectEndpoints({
         body,
       }),
     }),
-    getRatingByUser: build.query<IUserRating, string>({
+    getRatingByUser: build.query<{ rates: IUserRating[], avg: string }, string>({
       query: (id) => ({
         url: `/user-rating/user/${id}`,
       }),

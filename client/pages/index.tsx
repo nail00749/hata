@@ -1,6 +1,6 @@
-import { Layout } from '../components/UI/Layout';
-import { ChangeEvent, ReactElement, useEffect, useRef, useState } from 'react';
-import { Filters } from '../components/Filters';
+import { Layout } from '../components/UI/Layout/Layout';
+import {  ReactElement, useEffect, useRef, useState } from 'react';
+import { Filters } from '../components/Filters/Filters';
 import {
   apartmentAPI,
   getApartments,
@@ -9,6 +9,7 @@ import {
 import { wrapper } from '../store';
 import { ApartmentsList } from '../components/Apartment/ApartmentsList';
 import { NextPage } from 'next';
+import { Skeleton } from '../components/Skeleton/Skeleton';
 
 interface Props {
   count: number;
@@ -18,7 +19,7 @@ const Page: NextPage<Props> = ({ count }) => {
   const loader = useRef<HTMLDivElement | null>(null);
   const ref = useRef(count);
   const [filters, setFilters] = useState({ minPrice: undefined, maxPrice: undefined });
-  const { data, refetch } = useGetApartmentsQuery({
+  const { data, refetch, isLoading } = useGetApartmentsQuery({
     skip: ref.current,
     minPrice: filters.minPrice,
     maxPrice: filters.maxPrice,
@@ -65,6 +66,7 @@ const Page: NextPage<Props> = ({ count }) => {
         filters = {filters}
         handlerFilters = {handlerFilters}
       />*/}
+      {<Skeleton>123</Skeleton>}
       <div
         className = 'flex flex-col flex-wrap justify-between flex-[1_1_100%]'
       >
@@ -87,7 +89,8 @@ const Page: NextPage<Props> = ({ count }) => {
         }
       </div>
     </div>
-  );
+  )
+    ;
 };
 
 // @ts-ignore

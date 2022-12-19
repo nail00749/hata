@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout } from '../../components/UI/Layout';
+import { Layout } from '../../components/UI/Layout/Layout';
 import { useGetMyBookingsQuery } from '../../services/bookingAPI';
 import { ApartmentCard } from '../../components/Apartment/ApartmentCard';
 import { IApartment } from '../../models/IApartment';

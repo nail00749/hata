@@ -53,3 +53,16 @@ a {
 .leaflet-control-geosearch .results > * {
   color: black;
 }
+
+.accordeon-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .3s ease-in-out;
+
+  &.full {
+	max-height: 300px;
+	transition: max-height .3s ease-in-out;
+  }
+}
+
+

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Layout } from '../../components/UI/Layout';
+import { Layout } from '../../components/UI/Layout/Layout';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import {
   useGetOneForUpdateQuery,

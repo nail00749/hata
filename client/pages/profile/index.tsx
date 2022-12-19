@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Layout } from '../../components/UI/Layout';
+import { Layout } from '../../components/UI/Layout/Layout';
 import { useGetProfileQuery } from '../../services/authAPI';
 import { ProfileInfo } from '../../components/Account/ProfileInfo';
 import { EditProfile } from '../../components/Account/EditProfile';
 import { Button } from '../../components/UI/Button/Button';
 import { Avatar } from '../../components/Account/Avatar';
-import { Spinner } from '../../components/UI/Spinner';
+import { Spinner } from '../../components/UI/Spinner/Spinner';
 import { ActivateEmail } from '../../components/Account/ActivateEmail';
 
 const Page = () => {

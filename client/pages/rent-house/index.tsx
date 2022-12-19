@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Layout } from '../../components/UI/Layout';
+import { Layout } from '../../components/UI/Layout/Layout';
 import dynamic from 'next/dynamic';
 import { RentType } from '../../components/Rent/RentType';
 import { InfoRent } from '../../components/Rent/InfoRent';

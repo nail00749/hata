@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import { Layout } from '../../components/UI/Layout';
+import { Layout } from '../../components/UI/Layout/Layout';
 import {
-  getOneApartment,
-  useGetOneApartmentQuery, useLazyGetOneApartmentQuery,
+  useLazyGetOneApartmentQuery,
 } from '../../services/apartmentAPI';
 import { useRouter } from 'next/router';
-import { wrapper } from '../../store';
 import { ApartmentHeader } from '../../components/Apartment/ApartmentHeader';
 import { ApartmentInfo } from '../../components/Apartment/ApartmentInfo';
 import { ApartmentComforts } from '../../components/Apartment/ApartmentComforts';
@@ -15,10 +13,8 @@ import { Booking } from '../../components/Booking/Booking';
 import { useGetProfileQuery } from '../../services/authAPI';
 import { OwnerButtons } from '../../components/Apartment/OwnerButtons';
 import { BookingsRequests } from '../../components/Booking/BookingsRequests';
-import { api } from '../../services/api';
 import { CurrentBooking } from '../../components/Booking/CurrentBooking';
-import { useAppSelector } from '../../hooks/redux';
-import rentHouseSlice from '../../store/slices/RentHouseSlice';
+
 
 const MapInfo = dynamic(() => import('../../components/Map/MapInfo'), {
   ssr: false,
