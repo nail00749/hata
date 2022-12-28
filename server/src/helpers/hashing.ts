@@ -6,7 +6,7 @@ export const hash = async (data: string) => {
   try {
     const salt = crypto.randomBytes(16).toString('hex');
     const buf = (await scryptAsync(data, salt, 64)) as Buffer;
-    return `${buf.toString('hex')}.${salt}}`;
+    return `${buf.toString('hex')}.${salt}`;
   } catch (e) {
     return e;
   }
